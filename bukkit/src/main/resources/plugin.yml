@@ -13,8 +13,19 @@ commands:
       /<command> add <key> <name>
       /<command> remove <name>
       /<command> list
+  server:
+    description: 'Manage the server side.'
+    permission: 'helper.server'
+    usage: |
+      /<command> start
+      /<command> stop
+      /<command> restart
+      /<command> port [Integer]
 
 permissions:
   helper.keyring:
     description: 'Allows you to manage the keyring of server.'
+    default: 'op'
+  helper.server:
+    description: 'Allows you to manage the server.'
     default: 'op'

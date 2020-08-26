@@ -3,7 +3,7 @@ info:
   code: 'en'
 
 error:
-  usage: 'Invalidate command.'
+  usage: 'Invalidate command use.'
 
 keyring:
   error:
@@ -19,3 +19,28 @@ keyring:
     success: 'Added %s to local keyring successfully.'
   remove:
     success: 'Removed %s from local keyring successfully.'
+  port:
+    success: 'Changed port to %s successfully.'
+    check: 'Server port is at %s.'
+    notInteger: 'Argument %s is not an integer.'
+
+server:
+  error:
+    permission: 'You are not permitted to modify the server side.'
+  status:
+    running: 'Bukkit Helper server is running on port %s.'
+    stopped: 'Bukkit Helper server is not running.'
+  start:
+    error:
+      alreadyRunning: 'Bukkit Helper server has already been started.'
+      exception: 'Failed to start Bukkit Helper server: %s: %s.'
+    success: 'Started Bukkit Helper server on port %s successfully.'
+  stop:
+    error:
+      notRunning: 'Bukkit Helper server is not running.'
+      exception: 'Failed to stop Bukkit Helper server: %s: %s.'
+    success: 'Stopped Bukkit Helper server successfully.'
+  restart:
+    error:
+      exception: 'Failed to restart Bukkit Helper server: %s: %s.'
+    success: 'Restart Bukkit Helper server on port %s successfully.'

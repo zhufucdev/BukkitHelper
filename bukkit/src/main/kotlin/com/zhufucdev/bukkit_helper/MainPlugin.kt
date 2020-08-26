@@ -12,7 +12,13 @@ class MainPlugin : JavaPlugin() {
 
     override fun onEnable() {
         getCommand("keyring")!!.apply {
-            val e = MainCommandExecutor()
+            val e = KeyringCommandExecutor()
+            tabCompleter = e
+            setExecutor(e)
+        }
+
+        getCommand("server")!!.apply {
+            val e = ServerCommandExecutor()
             tabCompleter = e
             setExecutor(e)
         }
@@ -23,6 +29,7 @@ class MainPlugin : JavaPlugin() {
     override fun onDisable() {
         PlayerInfoManager.saveAll()
         KeyringManager.saveAll()
+        saveConfig()
     }
 
     companion object {

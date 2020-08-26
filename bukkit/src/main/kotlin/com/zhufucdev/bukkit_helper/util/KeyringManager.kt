@@ -33,7 +33,11 @@ object KeyringManager {
      * Remove a specific key.
      * @return true if the key is removed, false otherwise.
      */
-    fun remove(name: String): Boolean = list.removeAll { it.name == name }
+    fun remove(name: String): Boolean = list.removeAll {
+        val r = it.name == name
+        if (r) it.file.delete()
+        r
+    }
 
     @Synchronized
     fun saveAll() {

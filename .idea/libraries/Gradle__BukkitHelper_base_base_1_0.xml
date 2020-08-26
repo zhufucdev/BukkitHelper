@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: BukkitHelper.base.base-1.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/base/build/libs/base-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -21,3 +21,28 @@ keyring:
     success: '成功将%s加入本地密钥'
   remove:
     success: '成功将%s从本地密钥中移除'
+  port:
+    success: '成功将端口修改为%s'
+    check: '服务器端口为%s'
+    notInteger: '参数%s不是整数'
+
+server:
+  error:
+    permission: '您没有更改服务器的权限'
+  status:
+    running: 'Bukkit Helper服务器正在端口%s上运行'
+    stopped: 'Bukkit Helper服务器不在运行'
+  start:
+    error:
+      alreadyRunning: 'Bukkit Helper服务器已经运行'
+      exception: '无法启动Bukkit Helper服务器: %s: %s'
+    success: '成功在%s端口上启动了Bukkit Helper服务器'
+  stop:
+    error:
+      notRunning: 'Bukkit Server服务器已停止'
+      exception: '无法停止Bukkit Server服务器:%s :%s'
+    success: '成功停止了Bukkit Server'
+  restart:
+    error:
+      exception: '无法重启Bukkit Helper服务器: %s: %s'
+    success: '成功在%s端口重启了Bukkit Helper服务器'

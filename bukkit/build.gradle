@@ -18,7 +18,7 @@ compileTestKotlin {
 }
 
 jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    from { configurations.compileOnly.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 task copyJar(type: Copy) {
@@ -28,9 +28,9 @@ task copyJar(type: Copy) {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'com.destroystokyo.paper:paper-api:1.16.1-R0.1-SNAPSHOT'
-    implementation "io.netty:netty-all:$netty_version"
-    compile project(':base')
+    compileOnly "io.netty:netty-all:$netty_version"
+    compileOnly project(':base')
     testImplementation group: 'junit', name: 'junit', version: '4.13'
 }

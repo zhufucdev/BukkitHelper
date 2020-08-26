@@ -13,7 +13,7 @@
 
     <fragment
             android:id="@+id/navigation_dashboard"
-            android:name="com.zhufucdev.bukkithelper.ui.dashboard.DashboardFragment"
+            android:name="com.zhufucdev.bukkithelper.ui.console.ConsoleFragment"
             android:label="@string/title_console"
             tools:layout="@layout/fragment_console"/>
 
