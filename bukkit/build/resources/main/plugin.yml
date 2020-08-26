@@ -1,0 +1,20 @@
+name: 'BukkitHelper'
+author: 'zhufucdev'
+main: 'com.zhufucdev.bukkit_helper.MainPlugin'
+description: 'A bridge between bukkit server and Android devices.'
+version: 'Alpha 0.1'
+api-version: '1.16'
+
+commands:
+  keyring:
+    description: 'Manage keyring via which Android is connected.'
+    permission: 'helper.keyring'
+    usage: |
+      /<command> add <key> <name>
+      /<command> remove <name>
+      /<command> list
+
+permissions:
+  helper.keyring:
+    description: 'Allows you to manage the keyring of server.'
+    default: 'op'

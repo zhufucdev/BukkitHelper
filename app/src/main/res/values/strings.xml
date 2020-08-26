@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Bukkit Helper</string>
+    <string name="title_home">Home</string>
+    <string name="title_console">Console</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="text_no_connection">No server is connected</string>
+</resources>

@@ -1,0 +1,32 @@
+buildscript {
+    ext {
+        kotlin_version = '1.4.0'
+        netty_version = "4.1.51.Final"
+    }
+
+    repositories {
+        mavenCentral()
+        google()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.0.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.0'
+}
+
+group 'com.zhufucdev.bukkit_helper'
+version '1.0-SNAPSHOT'
+
+allprojects {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
