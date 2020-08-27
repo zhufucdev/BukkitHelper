@@ -21,10 +21,6 @@ keyring:
     success: '成功将%s加入本地密钥'
   remove:
     success: '成功将%s从本地密钥中移除'
-  port:
-    success: '成功将端口修改为%s'
-    check: '服务器端口为%s'
-    notInteger: '参数%s不是整数'
 
 server:
   error:
@@ -46,3 +42,16 @@ server:
     error:
       exception: '无法重启Bukkit Helper服务器: %s: %s'
     success: '成功在%s端口重启了Bukkit Helper服务器'
+  settings:
+    success: '成功将%s修改为%s%s'
+    check: '选项%s为%s%s'
+    list: '可用选项（代号和名称）有:'
+    noSuchSettings: '没有这样的选项: %s'
+    unknown: '未知选项类型: %s'
+    notInteger: '参数%s不是整数'
+  port:
+    name: '端口'
+    unit: ''
+  tokenSurvive:
+    success: 'Token生存时间'
+    unit: '游戏刻'

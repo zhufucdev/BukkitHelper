@@ -16,7 +16,7 @@ open class Key {
      */
     constructor() {
         val md = MessageDigest.getInstance("SHA-1")
-        bytes = md.digest(Random.nextBytes(128))
+        bytes = md.digest(Random.nextBytes(KEY_LENGTH))
     }
 
     /**
@@ -27,11 +27,18 @@ open class Key {
     }
 
     /**
+     * Constructs a certain key via [ByteArray].
+     */
+    constructor(bytes: ByteArray) {
+        this.bytes = bytes
+    }
+
+    /**
      * Determine whether this key matches another.
      * @param other The key to match from client.
      * @param clientBehind Network latency in ms assuming server and client's clocks are exactly the same.
      */
-    fun matches(other: Key, clientBehind: Long): Boolean {
+    fun matches(other: Key, clientBehind: Int): Boolean {
         val calendar = Calendar.getInstance()
         // The other key should be sent this time ago.
         calendar.timeInMillis -= clientBehind
@@ -62,6 +69,10 @@ open class Key {
     override fun toString(): String = Base64.encodeBase64String(bytes)
 
     companion object {
-        fun isKey(content: String) = Base64.isBase64(content) && Base64.decodeBase64(content).size >= 20
+        const val KEY_LENGTH = 128
+        /**
+         * Determine whether a [String] can construct a [Key].
+         */
+        fun isKey(content: String) = Base64.isBase64(content) && Base64.decodeBase64(content).size == KEY_LENGTH
     }
 }

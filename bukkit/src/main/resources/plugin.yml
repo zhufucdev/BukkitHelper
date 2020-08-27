@@ -20,7 +20,7 @@ commands:
       /<command> start
       /<command> stop
       /<command> restart
-      /<command> port [Integer]
+      /<command> settings <name> [new value]
 
 permissions:
   helper.keyring:

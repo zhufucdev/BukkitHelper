@@ -4,4 +4,9 @@
     <string name="title_console">Console</string>
     <string name="title_notifications">Notifications</string>
     <string name="text_no_connection">No server is connected</string>
+    <string name="title_clock_late">Your Clock is Late</string>
+    <string name="text_clock_late">Clock of your device has a latency of more than one minute after the server, which
+        leads to an insecure connection.
+    </string>
+    <string name="action_connect">Connect</string>
 </resources>

@@ -19,10 +19,6 @@ keyring:
     success: 'Added %s to local keyring successfully.'
   remove:
     success: 'Removed %s from local keyring successfully.'
-  port:
-    success: 'Changed port to %s successfully.'
-    check: 'Server port is at %s.'
-    notInteger: 'Argument %s is not an integer.'
 
 server:
   error:
@@ -44,3 +40,16 @@ server:
     error:
       exception: 'Failed to restart Bukkit Helper server: %s: %s.'
     success: 'Restart Bukkit Helper server on port %s successfully.'
+  settings:
+    success: 'Changed %s to %s %s successfully.'
+    check: 'Setting %s is %s %s.'
+    list: 'Available settings (code&name) are:'
+    noSuchSettings: 'No such settings: %s.'
+    unknown: 'Unknown settings type: %s.'
+    notInteger: 'Argument %s is not an integer.'
+  port:
+    name: 'port'
+    unit: ''
+  tokenSurvive:
+    success: 'token survive time'
+    unit: 'tick'

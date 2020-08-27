@@ -29,6 +29,7 @@ task copyJar(type: Copy) {
 
 dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compileOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'com.destroystokyo.paper:paper-api:1.16.1-R0.1-SNAPSHOT'
     compileOnly "io.netty:netty-all:$netty_version"
     compileOnly project(':base')

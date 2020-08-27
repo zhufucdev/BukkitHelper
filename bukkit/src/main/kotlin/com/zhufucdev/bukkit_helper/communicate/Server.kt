@@ -1,9 +1,11 @@
 package com.zhufucdev.bukkit_helper.communicate
 
 import com.zhufucdev.bukkit_helper.MainPlugin
+import com.zhufucdev.bukkit_helper.Token
 import io.netty.bootstrap.ServerBootstrap
-import io.netty.buffer.ByteBuf
-import io.netty.channel.*
+import io.netty.channel.ChannelFuture
+import io.netty.channel.ChannelInitializer
+import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
@@ -18,11 +20,18 @@ object Server {
                 saveConfig()
             }
         }
-    val handler = object : ChannelInboundHandlerAdapter() {
-        override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
-
+    var tokenSurvive: Long
+        get() = MainPlugin.default.config.getLong("tokenSurvive", 15 * 60 * 20)
+        set(value) {
+            MainPlugin.default.apply {
+                config.set("tokenSurvive", value)
+                saveConfig()
+            }
         }
-    }
+    val options get() = listOf("port", "tokenSurvive")
+
+    val tokens = arrayListOf<Token>()
+
     private var cFuture: ChannelFuture? = null
     val running: Boolean
         get() = cFuture != null
@@ -37,7 +46,9 @@ object Server {
                     .channel(NioServerSocketChannel::class.java)
                     .childHandler(object : ChannelInitializer<SocketChannel>() {
                         override fun initChannel(ch: SocketChannel) {
-                            ch.pipeline().addLast(handler)
+                            ch.pipeline()
+                                .addLast(CommandDecoder())
+                                .addLast(CommandExecutor())
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)
@@ -54,4 +65,13 @@ object Server {
         cFuture?.channel()?.closeFuture()?.sync()
         cFuture = null
     }
+
+    fun newToken(holder: String) = Token(holder).also {
+        tokens.add(it)
+        Bukkit.getScheduler().runTaskLater(MainPlugin.default, { _ ->
+
+        }, 200)
+    }
+    fun hasToken(holder: String) = tokens.any { it.holder == holder }
+    fun hasToken(content: ByteArray) = tokens.any { it.bytes.contentEquals(content) }
 }
