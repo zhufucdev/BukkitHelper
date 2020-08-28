@@ -5,7 +5,7 @@ import kotlin.random.Random
 /**
  * A token is a temporary certificate that is held by client.
  */
-class Token {
+open class Token {
     val holder: String
     val bytes: ByteArray
     /**

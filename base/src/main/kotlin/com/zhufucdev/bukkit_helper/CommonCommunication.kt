@@ -12,40 +12,28 @@ object CommonCommunication {
         var sum = 0 // length of all parameters read
         val r = arrayListOf<ByteArray>()
         for (i in 0 until length) {
-            if (input.readableBytes() < i * 4 + sum + 5) return null
-            val bufLenThisPar = ByteArray(4)
-            input.getBytes(i * 4 + sum + 1, bufLenThisPar, 0, 4)
-            val lenThisPar = kotlin.run {
-                var s = 0
-                bufLenThisPar.forEachIndexed { index, byte ->
-                    s += byte.toInt() shl (3 - index) * 8
-                }
-                s
-            }
-            // Read parameter
-            if (input.readableBytes() < i * 4 + sum + lenThisPar + 1) return null
-            val buffer = ByteArray(lenThisPar)
-            input.getBytes(i * 4 + sum + 1, buffer, 0, lenThisPar)
-            r.add(buffer)
-            sum += lenThisPar
+            if (input.readableBytes() < 4) return null
+            val len = input.readInt()
+            if (input.readableBytes() < len) return null
+            val buf = ByteArray(len)
+            input.readBytes(buf, 0, len)
+            r.add(buf)
+
+            sum += len
         }
         return r
     }
 
     private fun sendFormat(ctx: ChannelHandlerContext, header: Byte, pars: Array<out ByteArray>) {
-        ctx.write(header)
+        val buf = ctx.alloc().buffer(1 + pars.sumBy { it.size } + pars.size * 4)
+        buf.writeByte(header.toInt())
         pars.forEach {
             // Write length
-            val lenBuf = ByteArray(4)
-            val len = it.size
-            for (i in 0 until 4) {
-                lenBuf[i] = (len shr 24 - i * 8).toByte()
-            }
-            ctx.write(lenBuf)
-            // Write pars
-            ctx.write(it)
+            buf.writeInt(it.size)
+            // Write par
+            buf.writeBytes(it)
         }
-        ctx.flush()
+        ctx.writeAndFlush(buf)
     }
 
     /**

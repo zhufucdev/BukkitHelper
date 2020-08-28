@@ -36,7 +36,8 @@ object Translation {
         val translation = translations[code] ?: throw IllegalArgumentException("Translation $code doesn't exist.")
         var str = translation.getString(path) ?: return ""
         var replaceIndex = 0
-        for (i in 0 until str.length - 1) {
+        var i = 0
+        while (i < str.length - 1) {
             if (str[i] == '%' && str[i + 1] == 's') {
                 var hasDigit = false
                 val index =
@@ -49,6 +50,7 @@ object Translation {
                 str = str.replaceRange(i..if (hasDigit) i + 2 else i + 1, args[index].toString())
                 replaceIndex = index + 1
             }
+            i ++
         }
         return str
     }

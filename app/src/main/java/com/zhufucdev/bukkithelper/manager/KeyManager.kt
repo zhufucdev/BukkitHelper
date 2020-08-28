@@ -13,11 +13,11 @@ object KeyManager {
     private lateinit var preference: SharedPreferences
     fun init(context: Context) {
         preference = context.getSharedPreferences("key_store", Context.MODE_PRIVATE)
-        val strings = preference.getStringSet("keys", mutableSetOf())!!
+        val strings = preference.all
 
-        strings.forEach {
-            if (PreferenceKey.isKey(it)) {
-                list.add(PreferenceKey.deserialize(it))
+        strings.forEach { (name, value) ->
+            if (Key.isKey(value as String)) {
+                list.add(PreferenceKey(name, value))
             }
         }
     }
@@ -35,10 +35,10 @@ object KeyManager {
      * Add a existing key to shared preference.
      */
     fun add(key: PreferenceKey) {
+        if (list.contains(key)) return
         list.add(key)
         preference.edit().apply {
-            val original = preference.getStringSet("keys", mutableSetOf())!!
-            putStringSet("keys", original.plus(key.toString()))
+            putString(key.name, key.toString())
             apply()
         }
     }
@@ -46,13 +46,10 @@ object KeyManager {
     /**
      * Remove a existing [Key].
      */
-    fun remove(key: Key) {
-        list.remove(key)
-        val string = key.toString()
+    fun remove(key: PreferenceKey) {
+        list.remove(key).let { if (!it) return }
         preference.edit().apply {
-            val original = preference.getStringSet("keys", mutableSetOf())!!
-            original.remove(string)
-            putStringSet("keys", original)
+            remove(key.name)
             apply()
         }
     }

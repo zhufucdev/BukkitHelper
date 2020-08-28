@@ -45,7 +45,7 @@ server:
   settings:
     success: '成功将%s修改为%s%s'
     check: '选项%s为%s%s'
-    list: '可用选项（代号和名称）有:'
+    list: '可用选项（代号和名称）有: %s'
     noSuchSettings: '没有这样的选项: %s'
     unknown: '未知选项类型: %s'
     notInteger: '参数%s不是整数'
@@ -53,5 +53,5 @@ server:
     name: '端口'
     unit: ''
   tokenSurvive:
-    success: 'Token生存时间'
+    name: 'Token生存时间'
     unit: '游戏刻'

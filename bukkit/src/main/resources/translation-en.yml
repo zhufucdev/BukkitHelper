@@ -43,7 +43,7 @@ server:
   settings:
     success: 'Changed %s to %s %s successfully.'
     check: 'Setting %s is %s %s.'
-    list: 'Available settings (code&name) are:'
+    list: 'Available settings (code&name) are: %s'
     noSuchSettings: 'No such settings: %s.'
     unknown: 'Unknown settings type: %s.'
     notInteger: 'Argument %s is not an integer.'
@@ -51,5 +51,5 @@ server:
     name: 'port'
     unit: ''
   tokenSurvive:
-    success: 'token survive time'
+    name: 'token survive time'
     unit: 'tick'

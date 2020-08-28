@@ -10,7 +10,7 @@ commands:
     description: 'Manage keyring via which Android is connected.'
     permission: 'helper.keyring'
     usage: |
-      /<command> add <key> <name>
+      /<command> add <name> <key>
       /<command> remove <name>
       /<command> list
   server:

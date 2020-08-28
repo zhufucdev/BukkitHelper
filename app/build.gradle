@@ -53,6 +53,7 @@ dependencies {
     // Third-part
     implementation "io.netty:netty-all:$netty_version"
     implementation 'commons-codec:commons-codec:1.10'
+    implementation 'com.google.code.gson:gson:2.8.6'
     // Internal
     implementation project(':base')
 }

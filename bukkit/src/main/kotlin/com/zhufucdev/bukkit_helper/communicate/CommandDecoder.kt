@@ -19,10 +19,10 @@ import java.net.SocketAddress
 class CommandDecoder : ByteToMessageDecoder() {
     override fun decode(ctx: ChannelHandlerContext, input: ByteBuf, out: MutableList<Any>) {
         if (input.readableBytes() < 1) return
-        when (Command.of(input.getByte(0))) {
+        when (Command.of(input.readByte())) {
             Command.LOGIN -> {
                 val pars = CommonCommunication.parsePars(input, 2) ?: return
-                out.add(Login(ctx, Key(pars.first()), pars[1].toString().toInt()))
+                out.add(Login(ctx, Key(pars.first()), pars[1].decodeToString().toInt()))
             }
             Command.TIME -> {
                 out.add(ValidateTime(ctx))

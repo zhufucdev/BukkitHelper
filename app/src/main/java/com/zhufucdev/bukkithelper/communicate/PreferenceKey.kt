@@ -1,7 +1,6 @@
 package com.zhufucdev.bukkithelper.communicate
 
 import com.zhufucdev.bukkit_helper.Key
-import org.apache.commons.codec.binary.Base64
 import java.io.Serializable
 
 /**
@@ -20,23 +19,5 @@ class PreferenceKey: Key, Serializable {
 
     constructor(name: String, content: String): super(content) {
         this.name = name
-    }
-
-    override fun toString(): String {
-        return "$name: ${super.toString()}"
-    }
-
-    companion object {
-        fun deserialize(text: String): PreferenceKey {
-            val split = text.indexOf(": ")
-            if (split == -1) throw IllegalArgumentException("text")
-            return PreferenceKey(text.substring(0 until split), Base64.decodeBase64(text.substring(split + 2)))
-        }
-
-        fun isKey(content: String): Boolean {
-            val split = content.indexOf(": ")
-            if (split == -1) return false
-            return Base64.decodeBase64(content.substring(split + 2)).size == KEY_BYTES_LENGTH
-        }
     }
 }

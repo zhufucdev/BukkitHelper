@@ -24,8 +24,8 @@ class ServerCommandExecutor : TabExecutor {
                 if (Server.running) translation["server.status.running", Server.port]
                 else translation["server.status.stopped"]
             )
-            1 -> {
-                when (args[1]) {
+            else -> {
+                when (args.first()) {
                     "start" -> {
                         // <editor-fold desc="/server start">
                         if (Server.running) {
@@ -89,13 +89,24 @@ class ServerCommandExecutor : TabExecutor {
                             }
                             2 -> {
                                 // <editor-fold desc="/server settings <?>"
-                                val property = checkProperty() ?: return true
-                                sender.info(translation["server.settings.check", property.get(Server).toString()])
+                                val property = checkProperty()
+                                if (property == null) {
+                                    sender.error(translation["server.settings.noSuchSettings", args[1]])
+                                    return true
+                                }
+                                sender.info(
+                                    translation["server.settings.check", args[1], property.get(Server)
+                                        .toString(), translation["server.${args[1]}.unit"]]
+                                )
                                 // </editor-fold>
                             }
                             3 -> {
                                 // <editor-fold desc="/server settings <?> <?>"
-                                val property = checkProperty() ?: return true
+                                val property = checkProperty()
+                                if (property == null) {
+                                    sender.error(translation["server.settings.noSuchSettings", args[1]])
+                                    return true
+                                }
                                 when (val test = property.get(Server)) {
                                     is Int -> {
                                         val value = args[2].toIntOrNull()
@@ -118,8 +129,10 @@ class ServerCommandExecutor : TabExecutor {
                                     }
                                     else -> {
                                         sender.error(translation["server.settings.unknown", test!!::class.simpleName.toString()])
+                                        return true
                                     }
                                 }
+                                sender.success(translation["server.settings.success", args[1], args[2], translation["server.${args[1]}.unit"]])
                             }
                             else -> sender.error(translation["error.usage"])
                         }

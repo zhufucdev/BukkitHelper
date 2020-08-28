@@ -33,8 +33,13 @@ class HomeFragment : Fragment() {
 
         val fab: ExtendedFloatingActionButton = requireActivity().findViewById(R.id.fab_main)
         fab.apply {
+            if (text != context.getString(R.string.action_connect)) {
+                hide()
+            }
             setText(R.string.action_connect)
             setIconResource(R.drawable.ic_baseline_add_24)
+            setBackgroundColor(context.getColor(R.color.colorAccent))
+            show()
             setOnClickListener {
                 navController.navigate(R.id.action_navigation_home_to_serverConnectFragment)
             }

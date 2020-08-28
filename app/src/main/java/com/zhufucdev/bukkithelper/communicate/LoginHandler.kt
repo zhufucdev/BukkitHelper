@@ -10,10 +10,11 @@ import kotlin.reflect.KMutableProperty0
 class LoginHandler(
     private val key: Key,
     private val onComplete: (LoginResult) -> Unit,
-    private val token: KMutableProperty0<Token?>
+    private val token: KMutableProperty0<TimeToken?>
 ) : ChannelInboundHandlerAdapter() {
     var success: Boolean = false
         private set
+    private var sent = false
 
     override fun channelActive(ctx: ChannelHandlerContext) {
         val last = ctx.pipeline().get(TimeValidateHandler::class.java)
@@ -22,20 +23,23 @@ class LoginHandler(
             // give up
             ctx.close()
         }
+        if (sent) return
+
         CommonCommunication.sendRequest(
             ctx,
             Command.LOGIN,
             key.generateValidate(),
             last.latency.toString().toByteArray()
         )
+        sent = true
     }
 
     override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
         if ((msg as ByteBuf).readableBytes() < 1) return
-        when (Respond.of(msg.getByte(0))) {
+        when (Respond.of(msg.readByte())) {
             Respond.SUCCESS -> {
-                val args = CommonCommunication.parsePars(msg, 1) ?: return
-                token.set(Token(ServerManager.LOCAL_TOKEN_HOLDER, args.first()))
+                val args = CommonCommunication.parsePars(msg, 2) ?: return
+                token.set(TimeToken(args.first(), args[1].decodeToString().toLong()))
                 onComplete(LoginResult.SUCCESS)
                 success = true
             }
@@ -46,9 +50,7 @@ class LoginHandler(
                 onComplete(LoginResult.SUCCESS)
                 success = true
             }
-            else -> {
-
-            }
+            else -> { }
         }
     }
 }

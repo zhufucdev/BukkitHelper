@@ -30,11 +30,11 @@ object Server {
         }
     val options get() = listOf("port", "tokenSurvive")
 
-    val tokens = arrayListOf<Token>()
+    private val tokens = arrayListOf<Token>()
 
     private var cFuture: ChannelFuture? = null
     val running: Boolean
-        get() = cFuture != null
+        get() = cFuture.let { it != null && it.channel().isActive }
 
     fun run() {
         Bukkit.getScheduler().runTaskAsynchronously(MainPlugin.default) { _ ->
@@ -53,7 +53,9 @@ object Server {
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
-                cFuture = b.bind(8080).sync()
+                cFuture = b.bind(port).sync()
+
+                cFuture!!.channel().closeFuture().sync()
             } finally {
                 workerGroup.shutdownGracefully()
                 bossGroup.shutdownGracefully()
@@ -62,7 +64,7 @@ object Server {
     }
 
     fun stop() {
-        cFuture?.channel()?.closeFuture()?.sync()
+        cFuture?.channel()?.close()?.sync()
         cFuture = null
     }
 

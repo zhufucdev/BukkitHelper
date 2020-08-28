@@ -21,6 +21,12 @@ class Login(ctx: ChannelHandlerContext, val key: Key, val latency: Int) : Client
             CommonCommunication.sendRespond(ctx, Respond.DUPLICATED)
             return
         }
-        CommonCommunication.sendRespond(ctx, Respond.SUCCESS, Server.newToken(registry.name).bytes)
+        // Parameters return: Token & The token's survive time in ms
+        CommonCommunication.sendRespond(
+            ctx,
+            Respond.SUCCESS,
+            Server.newToken(registry.name).bytes,
+            (Server.tokenSurvive * 50).toString().toByteArray()
+        )
     }
 }
