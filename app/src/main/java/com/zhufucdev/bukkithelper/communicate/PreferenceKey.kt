@@ -2,11 +2,12 @@ package com.zhufucdev.bukkithelper.communicate
 
 import com.zhufucdev.bukkit_helper.Key
 import org.apache.commons.codec.binary.Base64
+import java.io.Serializable
 
 /**
  * Represent a [Key] stored in SharedPreference.
  */
-class PreferenceKey: Key {
+class PreferenceKey: Key, Serializable {
     val name: String
 
     constructor(name: String): super() {
@@ -14,6 +15,10 @@ class PreferenceKey: Key {
     }
 
     constructor(name: String, bytes: ByteArray): super(bytes) {
+        this.name = name
+    }
+
+    constructor(name: String, content: String): super(content) {
         this.name = name
     }
 
@@ -31,7 +36,7 @@ class PreferenceKey: Key {
         fun isKey(content: String): Boolean {
             val split = content.indexOf(": ")
             if (split == -1) return false
-            return Base64.decodeBase64(content.substring(split + 2)).size == KEY_LENGTH
+            return Base64.decodeBase64(content.substring(split + 2)).size == KEY_BYTES_LENGTH
         }
     }
 }

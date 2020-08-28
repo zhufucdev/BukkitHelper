@@ -30,62 +30,32 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93afc6b2-2c1e-4613-b9bd-741464dad464" name="Default Changelist" comment="Initial commit.">
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_asynclayoutinflater_asynclayoutinflater_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_documentfile_documentfile_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_ui_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_v4_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_media_media_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_preference_preference_1_1_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_preference_preference_ktx_1_1_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_slidingpanelayout_slidingpanelayout_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_swiperefreshlayout_swiperefreshlayout_1_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__kotlin_reflect_1_4_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/communicate/LoginHandler.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/communicate/LoginResult.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/communicate/PreferenceKey.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/communicate/TimeValidateHandler.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/connect/ServerConnectFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/connect/ServerConnectViewModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_add_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_server_connect.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/main/kotlin/com/zhufucdev/bukkit_helper/Command.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/main/kotlin/com/zhufucdev/bukkit_helper/CommonCommunication.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/main/kotlin/com/zhufucdev/bukkit_helper/Respond.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/base/src/main/kotlin/com/zhufucdev/bukkit_helper/Token.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/communicate/ClientCommand.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/communicate/CommandDecoder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/communicate/CommandExecutor.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/communicate/command/Login.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/communicate/command/ValidateTime.kt" afterDir="false" />
+    <list default="true" id="93afc6b2-2c1e-4613-b9bd-741464dad464" name="Default Changelist" comment="Server created.">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_codec_commons_codec_1_10_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/navEditor.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/connect/KeyAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/key/KeyEditFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_auto_fix.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_done_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_vpn_key_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/dropdown_creatre_item.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/dropdown_key_item.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_key_edit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__BukkitHelper_bukkit_bukkit_Indev_0_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/communicate/Server.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/communicate/Server.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/communicate/PreferenceKey.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/communicate/PreferenceKey.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/manager/KeyManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/manager/KeyManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/manager/ServerManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/manager/ServerManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/connect/ServerConnectFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/connect/ServerConnectFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/connect/ServerConnectViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/connect/ServerConnectViewModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/home/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/ui/home/HomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_console.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_console.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_server_connect.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_server_connect.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/mobile_navigation.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/base/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/base/src/main/kotlin/com/zhufucdev/bukkit_helper/Key.kt" beforeDir="false" afterPath="$PROJECT_DIR$/base/src/main/kotlin/com/zhufucdev/bukkit_helper/Key.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bukkit/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/bukkit/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/ServerCommandExecutor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/ServerCommandExecutor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/communicate/Server.kt" beforeDir="false" afterPath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/communicate/Server.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/util/Extends.kt" beforeDir="false" afterPath="$PROJECT_DIR$/bukkit/src/main/kotlin/com/zhufucdev/bukkit_helper/util/Extends.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bukkit/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bukkit/src/main/resources/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bukkit/src/main/resources/translation-default.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bukkit/src/main/resources/translation-default.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bukkit/src/main/resources/translation-en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/bukkit/src/main/resources/translation-en.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +89,9 @@
       <list>
         <option value="Kotlin Object" />
         <option value="Kotlin Enum" />
+        <option value="layoutResourceFile" />
         <option value="Kotlin Class" />
+        <option value="layoutResourceFile_vertical" />
       </list>
     </option>
   </component>
@@ -142,7 +114,9 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ResourceManagerPrefKey.ResourceType" value="DRAWABLE" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../../Android" />
@@ -150,9 +124,11 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.5091954" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.zhufucdev.bukkithelper.ui.key" />
       <recent name="com.zhufucdev.bukkit_helper" />
       <recent name="com.zhufucdev.bukkithelper.manager" />
     </key>
@@ -266,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598482761516</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Server created.">
+      <created>1598566299353</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1598566299353</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -282,9 +265,11 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Initial commit." />
     <MESSAGE value="Bukkit-side server wrapper." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bukkit-side server wrapper." />
+    <MESSAGE value="Server created." />
+    <option name="LAST_COMMIT_MESSAGE" value="Server created." />
   </component>
   <component name="WindowStateProjectService">
     <state x="367" y="74" key="#JSON_Schema_Mappings" timestamp="1598445819695">
@@ -296,11 +281,15 @@
     </state>
     <state x="230" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598482730775" />
     <state x="230" y="71" width="1089" height="738" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1549.831@0.0.1549.831" timestamp="1598432479947" />
-    <state x="565" y="132" key="#com.intellij.ide.util.MemberChooser" timestamp="1598513402145">
+    <state x="565" y="132" key="#com.intellij.ide.util.MemberChooser" timestamp="1598580875064">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="565" y="132" key="#com.intellij.ide.util.MemberChooser/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598513402145" />
+    <state x="565" y="132" key="#com.intellij.ide.util.MemberChooser/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598580875064" />
     <state x="565" y="132" key="#com.intellij.ide.util.MemberChooser/0.0.1549.831@0.0.1549.831" timestamp="1598445502797" />
+    <state x="505" y="205" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1598578386589">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="505" y="205" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598578386589" />
     <state x="507" y="94" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1598427559243">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
@@ -309,53 +298,85 @@
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="413" y="12" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1549.831@0.0.1549.831" timestamp="1598436128082" />
-    <state x="554" y="192" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1598519064153">
+    <state x="505" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598576747457">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="554" y="192" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598519064153" />
+    <state x="505" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598576747457" />
+    <state x="554" y="192" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1598575734562">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="554" y="192" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598575734562" />
     <state x="554" y="192" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1549.831@0.0.1549.831" timestamp="1598436247627" />
+    <state x="530" y="118" key="#xdebugger.evaluate" timestamp="1598582545852">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="530" y="118" key="#xdebugger.evaluate/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598582545852" />
+    <state x="355" y="171" key="AndroidCreateResourceFileDialog" timestamp="1598583832089">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="355" y="171" key="AndroidCreateResourceFileDialog/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598583832089" />
+    <state width="485" height="466" key="DebuggerActiveHint" timestamp="1598582350214">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="485" height="466" key="DebuggerActiveHint/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598582350214" />
     <state x="555" y="157" key="FileChooserDialogImpl" timestamp="1598431649731">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="555" y="157" key="FileChooserDialogImpl/0.0.1549.831@0.0.1549.831" timestamp="1598431649731" />
-    <state width="1506" height="268" key="GridCell.Tab.0.bottom" timestamp="1598526169561">
+    <state width="1506" height="213" key="GridCell.Tab.0.bottom" timestamp="1598583789324">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state width="1506" height="268" key="GridCell.Tab.0.bottom/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598526169561" />
+    <state width="1506" height="213" key="GridCell.Tab.0.bottom/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598583789324" />
     <state width="1506" height="213" key="GridCell.Tab.0.bottom/0.0.1549.831@0.0.1549.831" timestamp="1598480149561" />
-    <state width="1506" height="268" key="GridCell.Tab.0.center" timestamp="1598526169561">
+    <state width="1506" height="213" key="GridCell.Tab.0.center" timestamp="1598583789324">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state width="1506" height="268" key="GridCell.Tab.0.center/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598526169561" />
+    <state width="1506" height="213" key="GridCell.Tab.0.center/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598583789324" />
     <state width="1506" height="213" key="GridCell.Tab.0.center/0.0.1549.831@0.0.1549.831" timestamp="1598480149561" />
-    <state width="1506" height="268" key="GridCell.Tab.0.left" timestamp="1598526169561">
+    <state width="1506" height="213" key="GridCell.Tab.0.left" timestamp="1598583789324">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state width="1506" height="268" key="GridCell.Tab.0.left/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598526169561" />
+    <state width="1506" height="213" key="GridCell.Tab.0.left/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598583789324" />
     <state width="1506" height="213" key="GridCell.Tab.0.left/0.0.1549.831@0.0.1549.831" timestamp="1598480149561" />
-    <state width="1506" height="268" key="GridCell.Tab.0.right" timestamp="1598526169561">
+    <state width="1506" height="213" key="GridCell.Tab.0.right" timestamp="1598583789324">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state width="1506" height="268" key="GridCell.Tab.0.right/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598526169561" />
+    <state width="1506" height="213" key="GridCell.Tab.0.right/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598583789324" />
     <state width="1506" height="213" key="GridCell.Tab.0.right/0.0.1549.831@0.0.1549.831" timestamp="1598480149561" />
+    <state width="1506" height="264" key="GridCell.Tab.1.bottom" timestamp="1598583157116">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="264" key="GridCell.Tab.1.bottom/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598583157116" />
+    <state width="1506" height="264" key="GridCell.Tab.1.center" timestamp="1598583157116">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="264" key="GridCell.Tab.1.center/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598583157116" />
+    <state width="1506" height="264" key="GridCell.Tab.1.left" timestamp="1598583157116">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="264" key="GridCell.Tab.1.left/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598583157116" />
+    <state width="1506" height="264" key="GridCell.Tab.1.right" timestamp="1598583157116">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state width="1506" height="264" key="GridCell.Tab.1.right/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598583157116" />
     <state x="524" y="117" key="RollbackChangesDialog" timestamp="1598432770418">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="524" y="117" key="RollbackChangesDialog/0.0.1549.831@0.0.1549.831" timestamp="1598432770418" />
-    <state x="255" y="0" key="SettingsEditor" timestamp="1598503128622">
+    <state x="255" y="0" key="SettingsEditor" timestamp="1598570342261">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="255" y="0" key="SettingsEditor/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598503128622" />
+    <state x="255" y="0" key="SettingsEditor/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598570342261" />
     <state x="255" y="0" key="SettingsEditor/0.0.1549.831@0.0.1549.831" timestamp="1598434130250" />
-    <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1598482770429">
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1598566302212">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598482770429" />
-    <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1598432898702" />
-    <state x="116" y="20" width="1112" height="817" key="dock-window-1" timestamp="1598523562620">
-      <screen x="0" y="0" width="1549" height="831" />
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1598566302212" />
+    <state x="68" y="-1057" width="1077" height="817" key="dock-window-1" timestamp="1598580643731">
+      <screen x="0" y="-1080" width="1549" height="831" />
     </state>
-    <state x="116" y="20" width="1112" height="817" key="dock-window-1/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598523562620" />
+    <state x="68" y="-1057" width="1077" height="817" key="dock-window-1/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598580643731" />
     <state x="473" y="0" width="602" height="831" key="find.popup" timestamp="1598533071946">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
@@ -373,10 +394,10 @@
     </state>
     <state x="432" y="189" key="run.anything.popup/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598514444467" />
     <state x="432" y="189" key="run.anything.popup/0.0.1549.831@0.0.1549.831" timestamp="1598434714399" />
-    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup" timestamp="1598513861247">
+    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup" timestamp="1598579860579">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598513861247" />
+    <state x="437" y="152" width="672" height="678" key="search.everywhere.popup/0.0.1549.831/0.-1080.1549.831@0.0.1549.831" timestamp="1598579860579" />
     <state x="437" y="152" width="672" height="678" key="search.everywhere.popup/0.0.1549.831@0.0.1549.831" timestamp="1598447027845" />
   </component>
 </project>

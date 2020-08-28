@@ -7,7 +7,7 @@ import com.zhufucdev.bukkithelper.manager.KeyManager
 
 class ServerConnectViewModel : ViewModel() {
     private val _keys = MutableLiveData<List<String>>().apply {
-        value = KeyManager.keys.map {  }
+        value = KeyManager.keys.map { it.name }
     }
     val keys: LiveData<List<String>> = _keys
 }

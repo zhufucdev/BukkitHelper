@@ -68,11 +68,18 @@ open class Key {
 
     override fun toString(): String = Base64.encodeBase64String(bytes)
 
+    override fun equals(other: Any?): Boolean = other is Key && other.bytes.contentEquals(bytes)
+
+    override fun hashCode(): Int {
+        return bytes.contentHashCode() * 31
+    }
+
     companion object {
         const val KEY_LENGTH = 128
+        const val KEY_BYTES_LENGTH = 20
         /**
          * Determine whether a [String] can construct a [Key].
          */
-        fun isKey(content: String) = Base64.isBase64(content) && Base64.decodeBase64(content).size == KEY_LENGTH
+        fun isKey(content: String) = Base64.isBase64(content) && Base64.decodeBase64(content).size == KEY_BYTES_LENGTH
     }
 }

@@ -12,9 +12,8 @@ object KeyManager {
 
     private lateinit var preference: SharedPreferences
     fun init(context: Context) {
-        preference = PreferenceManager.getDefaultSharedPreferences(context)
-        val strings = mutableSetOf<String>()
-        preference.getStringSet("keys", strings)
+        preference = context.getSharedPreferences("key_store", Context.MODE_PRIVATE)
+        val strings = preference.getStringSet("keys", mutableSetOf())!!
 
         strings.forEach {
             if (PreferenceKey.isKey(it)) {
@@ -28,14 +27,20 @@ object KeyManager {
      */
     fun newRandom(name: String): Key {
         val key = PreferenceKey(name)
+        add(key)
+        return key
+    }
+
+    /**
+     * Add a existing key to shared preference.
+     */
+    fun add(key: PreferenceKey) {
         list.add(key)
         preference.edit().apply {
-            val original = mutableSetOf<String>()
-            preference.getStringSet("keys", original)
+            val original = preference.getStringSet("keys", mutableSetOf())!!
             putStringSet("keys", original.plus(key.toString()))
             apply()
         }
-        return key
     }
 
     /**
@@ -45,11 +50,16 @@ object KeyManager {
         list.remove(key)
         val string = key.toString()
         preference.edit().apply {
-            val original = mutableSetOf<String>()
-            preference.getStringSet("keys", original)
+            val original = preference.getStringSet("keys", mutableSetOf())!!
             original.remove(string)
             putStringSet("keys", original)
             apply()
         }
     }
+
+    /**
+     * Get a existing key with name.
+     * @return The key, or null if it doesn't exist.
+     */
+    operator fun get(name: String) = keys.firstOrNull { it.name == name }
 }
