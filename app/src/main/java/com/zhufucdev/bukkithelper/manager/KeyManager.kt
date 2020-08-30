@@ -12,6 +12,8 @@ object KeyManager {
 
     private lateinit var preference: SharedPreferences
     fun init(context: Context) {
+        if (::preference.isInitialized) return
+
         preference = context.getSharedPreferences("key_store", Context.MODE_PRIVATE)
         val strings = preference.all
 

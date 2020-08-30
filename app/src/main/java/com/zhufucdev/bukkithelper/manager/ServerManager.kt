@@ -13,6 +13,9 @@ object ServerManager {
     const val LOCAL_TOKEN_HOLDER = "local"
 
     private var mDefaultServer: Server? = null
+    fun clearDefault() {
+        mDefaultServer = null
+    }
     var default: Server
         get() = mDefaultServer ?: list.first()
         set(value) {
@@ -42,6 +45,8 @@ object ServerManager {
     private val list = arrayListOf<Server>()
     private lateinit var preference: SharedPreferences
     fun init(context: Context) {
+        if (::preference.isInitialized) return
+
         preference = context.getSharedPreferences("server_store", Context.MODE_PRIVATE)
         preference.all.forEach { (name, json) ->
             val obj = JsonParser.parseString(json as String).asJsonObject
@@ -84,6 +89,13 @@ object ServerManager {
      */
     fun remove(server: Server) {
         list.remove(server)
+        preference.edit().apply {
+            remove(server.name)
+            apply()
+        }
+        if (mDefaultServer == server) {
+            clearDefault()
+        }
     }
 
     /**

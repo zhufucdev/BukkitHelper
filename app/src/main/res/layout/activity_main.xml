@@ -5,15 +5,27 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <fragment
-            android:id="@+id/nav_host_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toTopOf="@id/nav_view"
             android:layout_marginBottom="?attr/actionBarSize"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/mobile_navigation"/>
+            app:layout_constraintTop_toTopOf="parent">
+        <fragment
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/mobile_navigation"/>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/widget_margin_big"
+                android:layout_gravity="center_horizontal|bottom"
+                android:text="@string/action_connect"
+                app:icon="@drawable/ic_baseline_add_24"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
@@ -23,14 +35,4 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_nav_menu"/>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/widget_margin_big"
-            android:text="@string/action_connect"
-            app:layout_constraintBottom_toTopOf="@id/nav_view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:icon="@drawable/ic_baseline_add_24"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

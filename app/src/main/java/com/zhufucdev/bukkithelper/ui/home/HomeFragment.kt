@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.animateScale
@@ -42,7 +43,11 @@ class HomeFragment : Fragment(), NavController.OnDestinationChangedListener {
 
         navController.addOnDestinationChangedListener(this)
 
+        val serverConnectedCard: MaterialCardView = root.findViewById(R.id.card_server_connected)
         val fab: ExtendedFloatingActionButton = requireActivity().findViewById(R.id.fab_main)
+        serverConnectedCard.setOnClickListener {
+            navController.navigate(R.id.action_navigation_home_to_serverSelection)
+        }
         fab.apply {
             if (text != context.getString(R.string.action_connect)) {
                 hide()
@@ -52,9 +57,17 @@ class HomeFragment : Fragment(), NavController.OnDestinationChangedListener {
             setBackgroundColor(context.getColor(R.color.colorAccent))
             show()
             setOnClickListener {
-                navController.navigate(R.id.action_navigation_home_to_serverConnectFragment)
+                navController.navigate(R.id.action_navigation_home_to_serverSelection)
             }
         }
+        return root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val root = requireView()
+        val fab: ExtendedFloatingActionButton = requireActivity().findViewById(R.id.fab_main)
+
         // <editor-fold desc="Connect">
         val mainLayout: ScrollView = root.findViewById(R.id.scroll_content)
         val noConnectionIcon: ServerNotConnectedIcon = root.findViewById(R.id.icon_no_connection)
@@ -109,7 +122,6 @@ class HomeFragment : Fragment(), NavController.OnDestinationChangedListener {
             playerChart.invalidate()
         }
         // </editor-fold>
-        return root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

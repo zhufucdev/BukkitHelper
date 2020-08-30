@@ -37,4 +37,12 @@
     <string name="title_server_monitor">Server Monitor</string>
     <string name="title_player_count">Player Count</string>
     <string name="title_player_online">Player Online</string>
+    <string name="title_server_selection">Select Server</string>
+    <string name="title_latency">%sms behind</string>
+    <string name="text_latency_test_failed">Failed to test latency: %s: %s.</string>
+    <string name="text_latency_testing">Testing latency...</string>
+    <string name="title_add_server">Add Server</string>
+    <string name="text_connection_timeout">Connection timeout</string>
+    <string name="title_undo">Undo</string>
+    <string name="text_deleted">Deleted %s</string>
 </resources>

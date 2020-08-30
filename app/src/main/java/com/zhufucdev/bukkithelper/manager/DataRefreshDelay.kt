@@ -7,6 +7,8 @@ import java.util.*
 object DataRefreshDelay {
     private lateinit var preference: SharedPreferences
     fun init(context: Context) {
+        if (::preference.isInitialized) return
+
         preference = context.getSharedPreferences("refresh_delay", Context.MODE_PRIVATE)
     }
 

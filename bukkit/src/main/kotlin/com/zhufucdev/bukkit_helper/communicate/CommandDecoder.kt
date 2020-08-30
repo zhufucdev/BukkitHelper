@@ -14,11 +14,6 @@ import io.netty.handler.codec.ByteToMessageDecoder
  * The next four ones indicate the first parameter's length, and the process goes on.
  */
 class CommandDecoder : ByteToMessageDecoder() {
-    override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
-        (msg as ByteBuf).readerIndex(0)
-        super.channelRead(ctx, msg)
-    }
-
     override fun decode(ctx: ChannelHandlerContext, input: ByteBuf, out: MutableList<Any>) {
         if (input.readableBytes() < 1) return
         when (val command = Command.of(input.readByte())) {

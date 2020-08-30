@@ -4,6 +4,7 @@ import com.zhufucdev.bukkithelper.communicate.listener.LoginListener
 import com.zhufucdev.bukkithelper.manager.ServerManager
 import io.netty.bootstrap.Bootstrap
 import io.netty.channel.*
+import io.netty.channel.nio.NioEventLoop
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioSocketChannel
@@ -59,6 +60,29 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
         }
     }
 
+    /**
+     * Test the network latency.
+     * @param onComplete called when the operation succeeded or failed. Parameter is -2 when connection was timeout, or
+     * the latency result in ms.
+     */
+    fun testLatency(onComplete: (Int) -> Unit): Channel {
+        val workers = NioEventLoopGroup()
+        val b = Bootstrap().apply {
+            group(workers)
+            channel(NioSocketChannel::class.java)
+            option(ChannelOption.SO_KEEPALIVE, true)
+            handler(LatencyTestHandler { it, c ->
+                if (it != null) {
+                    onComplete(it)
+                }
+                c.close().sync()
+            })
+        }
+        val f = b.connect(host, port)
+        f.addListener { if (!it.isSuccess) onComplete(-2) }
+        return f.channel()
+    }
+
     private val loginListeners = arrayListOf<LoginListener>()
 
     /**
@@ -88,17 +112,29 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
 
     private val disconnectListeners = arrayListOf<() -> Unit>()
 
+    /**
+     * Add a listener for disconnection.
+     */
     fun addDisconnectListener(l: () -> Unit) {
         disconnectListeners.add(l)
     }
 
+    /**
+     * Remove a listener for disconnection.
+     */
     fun removeDisconnectListener(l: () -> Unit) {
-
+        disconnectListeners.remove(l)
     }
 
+    /**
+     * Disconnect from the server.
+     * @throws IllegalStateException if this server isn't connected.
+     */
     fun disconnect() {
         val f = cFuture ?: error("Server is not connected.")
         f.channel().close().sync()
+        token = null
+        if (ServerManager.connected == this) ServerManager.connected = null
     }
 
     override fun equals(other: Any?): Boolean = other is Server

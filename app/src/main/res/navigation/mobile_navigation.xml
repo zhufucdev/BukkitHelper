@@ -10,10 +10,10 @@
             android:name="com.zhufucdev.bukkithelper.ui.home.HomeFragment"
             android:label="@string/title_home"
             tools:layout="@layout/fragment_home">
-        <action android:id="@+id/action_navigation_home_to_serverConnectFragment"
-                app:destination="@id/navigation_server_connect" app:enterAnim="@anim/fragment_open_enter"
-                app:exitAnim="@anim/fragment_open_exit" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action android:id="@+id/action_navigation_home_to_serverSelection" app:destination="@id/navigate_server_selection"
+                app:enterAnim="@anim/fragment_fade_enter" app:exitAnim="@anim/fragment_fade_exit"
+                app:popEnterAnim="@anim/fragment_open_enter" app:popExitAnim="@anim/fragment_open_exit"/>
+        <argument android:name="refresh" android:defaultValue="false" app:argType="boolean"/>
     </fragment>
 
     <fragment
@@ -46,4 +46,12 @@
     <fragment android:id="@+id/clockLateFragment"
               android:name="com.zhufucdev.bukkithelper.ui.clock_late.ClockLateFragment"
               android:label="@string/title_clock_late"/>
+    <fragment android:id="@+id/navigate_server_selection"
+              android:name="com.zhufucdev.bukkithelper.ui.server_selection.ServerSelectionFragment"
+              android:label="@string/title_server_selection" tools:layout="@layout/server_selection_fragment">
+        <action android:id="@+id/action_serverSelection_to_navigation_server_connect"
+                app:destination="@id/navigation_server_connect" app:enterAnim="@anim/fragment_fade_enter"
+                app:exitAnim="@anim/fragment_fade_exit" app:popEnterAnim="@anim/fragment_open_enter"
+                app:popExitAnim="@anim/fragment_open_exit"/>
+    </fragment>
 </navigation>

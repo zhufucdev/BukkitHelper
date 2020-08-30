@@ -39,6 +39,7 @@
                     android:id="@+id/card_server_connected"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="4dp">
                 <androidx.constraintlayout.widget.ConstraintLayout
