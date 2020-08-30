@@ -25,6 +25,7 @@ keyring:
 server:
   error:
     permission: '您没有更改服务器的权限'
+    exception: '无法处理%s的请求:'
   status:
     running: 'Bukkit Helper服务器正在端口%s上运行'
     stopped: 'Bukkit Helper服务器不在运行'
@@ -49,9 +50,13 @@ server:
     noSuchSettings: '没有这样的选项: %s'
     unknown: '未知选项类型: %s'
     notInteger: '参数%s不是整数'
+    notBool: '参数%s不是布尔'
   port:
     name: '端口'
     unit: ''
   tokenSurvive:
     name: 'Token生存时间'
     unit: '游戏刻'
+  debug:
+    name: '调试模式'
+    unit: ''

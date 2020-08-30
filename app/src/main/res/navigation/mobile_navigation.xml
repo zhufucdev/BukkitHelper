@@ -11,7 +11,7 @@
             android:label="@string/title_home"
             tools:layout="@layout/fragment_home">
         <action android:id="@+id/action_navigation_home_to_serverConnectFragment"
-                app:destination="@id/serverConnectFragment" app:enterAnim="@anim/fragment_open_enter"
+                app:destination="@id/navigation_server_connect" app:enterAnim="@anim/fragment_open_enter"
                 app:exitAnim="@anim/fragment_open_exit" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
@@ -27,7 +27,7 @@
             android:name="com.zhufucdev.bukkithelper.ui.notifications.NotificationsFragment"
             android:label="@string/title_notifications"
             tools:layout="@layout/fragment_notifications"/>
-    <fragment android:id="@+id/serverConnectFragment"
+    <fragment android:id="@+id/navigation_server_connect"
               android:name="com.zhufucdev.bukkithelper.ui.connect.ServerConnectFragment"
               android:label="@string/title_connect_to_server" tools:layout="@layout/fragment_server_connect">
         <action android:id="@+id/action_serverConnectFragment_to_keyEditFragment"

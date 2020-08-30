@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/JetBrains/IntelliJ%20IDEA%20Community%20Edition/plugins/android/lib/android.jar!/images/material/icons/materialicons/timer/baseline_timer_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/JetBrains/IntelliJ%20IDEA%20Community%20Edition/plugins/android/lib/android.jar!/images/material/icons/materialicons/arrow_forward/baseline_arrow_forward_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_baseline_timer_24" />
+                            <entry key="outputName" value="ic_baseline_arrow_forward_24" />
                             <entry key="sourceFile" value="D:\IdeaProjects\BukkitHelper" />
                           </map>
                         </option>

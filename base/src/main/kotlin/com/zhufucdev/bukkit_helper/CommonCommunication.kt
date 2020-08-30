@@ -24,8 +24,7 @@ object CommonCommunication {
         return r
     }
 
-    private fun sendFormat(ctx: ChannelHandlerContext, header: Byte, pars: Array<out ByteArray>) {
-        val buf = ctx.alloc().buffer(1 + pars.sumBy { it.size } + pars.size * 4)
+    private fun writeFormat(buf: ByteBuf, header: Byte, pars: Array<out ByteArray>) {
         buf.writeByte(header.toInt())
         pars.forEach {
             // Write length
@@ -33,7 +32,12 @@ object CommonCommunication {
             // Write par
             buf.writeBytes(it)
         }
-        ctx.writeAndFlush(buf)
+    }
+
+    private fun sendFormat(ctx: ChannelHandlerContext, header: Byte, pars: Array<out ByteArray>) {
+        val buf = ctx.alloc().buffer(1 + pars.sumBy { it.size } + pars.size * 4)
+        writeFormat(buf, header, pars)
+        ctx.writeAndFlush(buf).sync()
     }
 
     /**
@@ -41,6 +45,10 @@ object CommonCommunication {
      */
     fun sendRequest(ctx: ChannelHandlerContext, command: Command, vararg pars: ByteArray) {
         sendFormat(ctx, command.code, pars)
+    }
+
+    fun writeRequest(buf: ByteBuf, command: Command, token: Token, id: Int, vararg pars: ByteArray) {
+        writeFormat(buf, command.code, arrayOf(token.bytes, id.toString().toByteArray()).plus(pars))
     }
 
     /**

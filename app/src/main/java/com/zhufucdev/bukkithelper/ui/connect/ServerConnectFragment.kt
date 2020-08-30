@@ -20,11 +20,13 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.zhufucdev.bukkit_helper.Key
 import com.zhufucdev.bukkithelper.R
+import com.zhufucdev.bukkithelper.animateScale
 import com.zhufucdev.bukkithelper.communicate.LoginResult
 import com.zhufucdev.bukkithelper.communicate.PreferenceKey
 import com.zhufucdev.bukkithelper.communicate.Server
 import com.zhufucdev.bukkithelper.manager.KeyManager
 import com.zhufucdev.bukkithelper.manager.ServerManager
+import kotlin.math.roundToLong
 
 class ServerConnectFragment : Fragment(), NavController.OnDestinationChangedListener {
     private lateinit var keyEdit: AutoCompleteTextView
@@ -164,7 +166,7 @@ class ServerConnectFragment : Fragment(), NavController.OnDestinationChangedList
                 viewModel.tryConnecting(server) {
                     when (it) {
                         LoginResult.SUCCESS -> {
-                            navigator.navigateUp()
+                            backWithSuccess()
                             forceAdd = false
                         }
                         LoginResult.CONNECTION_FAILED -> {
@@ -190,7 +192,7 @@ class ServerConnectFragment : Fragment(), NavController.OnDestinationChangedList
                     if (connecting) {
                         fab.hide()
                         ObjectAnimator.ofFloat(0F, 0.7F).apply {
-                            duration = 300
+                            duration = (300 * animateScale(requireContext())).roundToLong()
                             doOnStart {
                                 block.alpha = 0F
                                 block.visibility = View.VISIBLE
@@ -203,7 +205,7 @@ class ServerConnectFragment : Fragment(), NavController.OnDestinationChangedList
                     } else {
                         fab.show()
                         ObjectAnimator.ofFloat(0.7F, 0F).apply {
-                            duration = 300
+                            duration = (300 * animateScale(requireContext())).roundToLong()
                             doOnEnd {
                                 block.visibility = View.GONE
                             }
@@ -222,13 +224,18 @@ class ServerConnectFragment : Fragment(), NavController.OnDestinationChangedList
         return root
     }
 
-    private fun forceAdd(server: Server) {
-        ServerManager.add(server)
+    private fun backWithSuccess() {
+        navigator.previousBackStackEntry?.arguments?.putBoolean("refresh", true)
         navigator.navigateUp()
     }
 
+    private fun forceAdd(server: Server) {
+        ServerManager.add(server)
+        backWithSuccess()
+    }
+
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
-        if (arguments == null) {
+        if (arguments == null || destination.id != R.id.navigation_server_connect) {
             return
         }
         if (arguments.containsKey("keyName")) {

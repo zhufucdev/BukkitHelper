@@ -21,8 +21,6 @@ class ConsoleFragment : Fragment() {
         consoleViewModel =
                 ViewModelProvider(this).get(ConsoleViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_console, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-
         return root
     }
 }

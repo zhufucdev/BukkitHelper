@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.zhufucdev.bukkithelper.manager.DataRefreshDelay
 import com.zhufucdev.bukkithelper.manager.KeyManager
 import com.zhufucdev.bukkithelper.manager.ServerManager
 
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         // <editor-fold desc="Data" defaultstate="collapsed">
         KeyManager.init(this)
         ServerManager.init(this)
+        DataRefreshDelay.init(this)
         // </editor-fold>
     }
 

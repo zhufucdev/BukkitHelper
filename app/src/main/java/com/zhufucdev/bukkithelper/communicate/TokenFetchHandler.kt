@@ -1,20 +1,23 @@
 package com.zhufucdev.bukkithelper.communicate
 
 import com.zhufucdev.bukkit_helper.*
-import com.zhufucdev.bukkithelper.manager.ServerManager
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
 import kotlin.reflect.KMutableProperty0
+import kotlin.reflect.jvm.isAccessible
 
-class LoginHandler(
+class TokenFetchHandler(
     private val key: Key,
     private val onComplete: (LoginResult) -> Unit,
     private val token: KMutableProperty0<TimeToken?>
 ) : ChannelInboundHandlerAdapter() {
+    init {
+        token.isAccessible = true
+    }
+
     var success: Boolean = false
         private set
-    private var sent = false
 
     override fun channelActive(ctx: ChannelHandlerContext) {
         val last = ctx.pipeline().get(TimeValidateHandler::class.java)
@@ -23,34 +26,44 @@ class LoginHandler(
             // give up
             ctx.close()
         }
-        if (sent) return
-
+        if (success) {
+            // If already login&token is alive
+            val token = token.get()
+            if (token != null && System.currentTimeMillis() < token.deathTime) {
+                ctx.fireChannelActive()
+            }
+        }
+        // Send login request
         CommonCommunication.sendRequest(
             ctx,
             Command.LOGIN,
-            key.generateValidate(),
-            last.latency.toString().toByteArray()
+            key.generateValidate(), // First par: the key
+            last.latency.toString().toByteArray() // Second par: server latency
         )
-        sent = true
     }
 
     override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
+        val t = token.get()
+        if (t != null && System.currentTimeMillis() < t.deathTime) {
+            ctx.fireChannelRead(msg)
+            return
+        }
         if ((msg as ByteBuf).readableBytes() < 1) return
         when (Respond.of(msg.readByte())) {
             Respond.SUCCESS -> {
                 val args = CommonCommunication.parsePars(msg, 2) ?: return
                 token.set(TimeToken(args.first(), args[1].decodeToString().toLong()))
-                onComplete(LoginResult.SUCCESS)
+                if (!success) onComplete(LoginResult.SUCCESS)
                 success = true
+                ctx.fireChannelActive()
             }
             Respond.FORBIDDEN -> {
                 onComplete(LoginResult.FAILED)
+                token.set(null)
+                ctx.close()
             }
-            Respond.DUPLICATED -> {
-                onComplete(LoginResult.SUCCESS)
-                success = true
+            else -> {
             }
-            else -> { }
         }
     }
 }

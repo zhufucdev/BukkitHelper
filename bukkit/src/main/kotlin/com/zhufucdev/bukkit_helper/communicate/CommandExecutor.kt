@@ -1,5 +1,6 @@
 package com.zhufucdev.bukkit_helper.communicate
 
+import io.netty.channel.ChannelFutureListener
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
 

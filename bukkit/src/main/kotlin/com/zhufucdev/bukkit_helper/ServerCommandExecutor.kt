@@ -127,6 +127,14 @@ class ServerCommandExecutor : TabExecutor {
                                     is String -> {
                                         (property as KMutableProperty1<Server, String>).set(Server, args[2])
                                     }
+                                    is Boolean -> {
+                                        val arg = if (args[2] == "true") true else if (args[2] == "false") false else null
+                                        if (arg == null) {
+                                            sender.error(translation["server.settings.notBool", args[2]])
+                                            return true
+                                        }
+                                        (property as KMutableProperty1<Server, Boolean>).set(Server, arg)
+                                    }
                                     else -> {
                                         sender.error(translation["server.settings.unknown", test!!::class.simpleName.toString()])
                                         return true

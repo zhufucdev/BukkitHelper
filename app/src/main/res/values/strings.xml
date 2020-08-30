@@ -28,4 +28,13 @@
     <string name="text_connection_failed">Connection failed</string>
     <string name="action_force_add">Force Add</string>
     <string name="text_wrong_key">This key is not registered in server</string>
+    <string name="title_server_connected">Server Connected</string>
+    <string name="text_connected_to">Connected to %s. Tap to change.</string>
+    <string name="title_tps">Tick Per Second</string>
+    <string name="title_connecting_to_server">Connecting to Server</string>
+    <string name="title_tick">Tick</string>
+    <string name="title_unit_s">%ss</string>
+    <string name="title_server_monitor">Server Monitor</string>
+    <string name="title_player_count">Player Count</string>
+    <string name="title_player_online">Player Online</string>
 </resources>

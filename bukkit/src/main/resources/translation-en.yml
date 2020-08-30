@@ -23,6 +23,7 @@ keyring:
 server:
   error:
     permission: 'You are not permitted to modify the server side.'
+    exception: 'Failed to handle request of %s:'
   status:
     running: 'Bukkit Helper server is running on port %s.'
     stopped: 'Bukkit Helper server is not running.'
@@ -47,9 +48,13 @@ server:
     noSuchSettings: 'No such settings: %s.'
     unknown: 'Unknown settings type: %s.'
     notInteger: 'Argument %s is not an integer.'
+    notBool: 'Argument %s is not a boolean.'
   port:
     name: 'port'
     unit: ''
   tokenSurvive:
     name: 'token survive time'
     unit: 'tick'
+  debug:
+    name: 'debug mode'
+    unit: ''

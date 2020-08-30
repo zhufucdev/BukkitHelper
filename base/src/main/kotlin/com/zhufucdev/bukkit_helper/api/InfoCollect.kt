@@ -5,6 +5,7 @@ import java.util.*
 
 object InfoCollect {
     private var method: ((UUID) -> PlayerInfo?)? = null
+    val hasMethod: Boolean get() = method != null
     fun setMethod(method: (UUID) -> PlayerInfo?) {
         this.method = method
     }

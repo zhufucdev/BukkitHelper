@@ -5,10 +5,26 @@ import com.zhufucdev.bukkit_helper.util.PlayerInfoManager
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.configuration.file.YamlConfiguration
+import org.bukkit.entity.Player
 import java.io.File
 import java.util.*
 
-class DefaultPlayerInfo(val uuid: UUID, private val tag: YamlConfiguration): PlayerInfo {
+class DefaultPlayerInfo: PlayerInfo {
+    val uuid: UUID
+    private val tag: YamlConfiguration
+    constructor(uuid: UUID, tag: YamlConfiguration) {
+        this.uuid = uuid
+        this.tag = tag
+    }
+
+    /**
+     * Construct a new [DefaultPlayerInfo] according to the given [player].
+     */
+    constructor(player: OfflinePlayer) {
+        this.uuid = player.uniqueId
+        tag = YamlConfiguration()
+    }
+
     override val name: String
         get() = bukkit.name!!
 

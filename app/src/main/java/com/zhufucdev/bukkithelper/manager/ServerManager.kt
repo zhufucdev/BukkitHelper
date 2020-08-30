@@ -7,9 +7,37 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.zhufucdev.bukkithelper.communicate.LoginResult
 import com.zhufucdev.bukkithelper.communicate.Server
+import com.zhufucdev.bukkithelper.communicate.listener.LoginListener
 
 object ServerManager {
     const val LOCAL_TOKEN_HOLDER = "local"
+
+    private var mDefaultServer: Server? = null
+    var default: Server
+        get() = mDefaultServer ?: list.first()
+        set(value) {
+            mDefaultServer = value
+            preference.edit().apply {
+                if (!preference.contains(value.name)) {
+                    add(value)
+                } else {
+                    val obj = JsonParser.parseString(preference.getString(value.name, "")).asJsonObject
+                    obj.addProperty("default", true)
+                    putString(value.name, obj.toString())
+                }
+                // <editor-fold desc="Overwrite existing defaults">
+                preference.all.forEach { (s, any) ->
+                    if (s == value.name) return@forEach
+                    val obj = JsonParser.parseString(any as String).asJsonObject
+                    if (obj.has("default")) {
+                        obj.remove("default")
+                        putString(s, obj.toString())
+                    }
+                }
+                // </editor-fold>
+                apply()
+            }
+        }
 
     private val list = arrayListOf<Server>()
     private lateinit var preference: SharedPreferences
@@ -17,18 +45,21 @@ object ServerManager {
         preference = context.getSharedPreferences("server_store", Context.MODE_PRIVATE)
         preference.all.forEach { (name, json) ->
             val obj = JsonParser.parseString(json as String).asJsonObject
-            list.add(
-                Server(
-                    name,
-                    obj["host"].asString,
-                    obj["port"].asInt,
-                    KeyManager[obj["key"].asString] ?: return@forEach
-                )
+            val it = Server(
+                name,
+                obj["host"].asString,
+                obj["port"].asInt,
+                KeyManager[obj["key"].asString] ?: return@forEach
             )
+            list.add(it)
+            if (obj.has("default") && obj["default"].asBoolean) {
+                // Set default
+                mDefaultServer = it
+            }
         }
     }
 
-    private var connected: Server? = null
+    var connected: Server? = null
     val servers: List<Server> get() = list
 
     /**
@@ -42,6 +73,7 @@ object ServerManager {
             obj.addProperty("host", server.host)
             obj.addProperty("port", server.port)
             obj.addProperty("key", server.key.name)
+            if (mDefaultServer == server) obj.addProperty("default", true)
             putString(server.name, obj.toString())
             apply()
         }
@@ -59,8 +91,21 @@ object ServerManager {
      */
     fun connect(server: Server, onComplete: (LoginResult) -> Unit) {
         add(server)
-        server.connect(onComplete)
+        server.addLoginListener(
+            object : LoginListener {
+                override fun invoke(result: LoginResult) {
+                    onComplete(result)
+                    server.removeLoginListener(this)
+                }
+            }
+        )
+        server.connect()
         connected = server
+        default = server
+    }
+
+    fun disconnectCurrent() {
+        connected?.disconnect()
     }
 
     /**

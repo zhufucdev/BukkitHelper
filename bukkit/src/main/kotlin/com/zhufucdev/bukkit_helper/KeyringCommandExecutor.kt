@@ -26,7 +26,7 @@ class KeyringCommandExecutor : TabExecutor {
                 }
                 sender.info(translation["keyring.list.title"])
                 buildString {
-                    KeyringManager.keys.forEach { append("${it.name}, ") }
+                    KeyringManager.keys.forEach { append("${it.name} $it, ") }
                     delete(lastIndex - 1, length)
                 }.let {
                     sender.info(it)

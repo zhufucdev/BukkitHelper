@@ -16,17 +16,13 @@ class Login(ctx: ChannelHandlerContext, val key: Key, val latency: Int) : Client
             CommonCommunication.sendRespond(ctx, Respond.FORBIDDEN)
             return
         }
-        if (Server.hasToken(registry.name)) {
-            // Already login
-            CommonCommunication.sendRespond(ctx, Respond.DUPLICATED)
-            return
-        }
         // Parameters return: Token & The token's survive time in ms
+        val token = Server.getToken(registry.name)
         CommonCommunication.sendRespond(
             ctx,
             Respond.SUCCESS,
-            Server.newToken(registry.name).bytes,
-            (Server.tokenSurvive * 50).toString().toByteArray()
+            token.bytes,
+            token.timeDeath.toString().toByteArray()
         )
     }
 }
