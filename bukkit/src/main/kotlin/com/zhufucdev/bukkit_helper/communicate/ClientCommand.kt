@@ -1,5 +1,7 @@
 package com.zhufucdev.bukkit_helper.communicate
 
-import io.netty.channel.ChannelHandlerContext
+import com.zhufucdev.bukkit_helper.communicate.command.util.CommandResult
 
-abstract class ClientCommand(val ctx: ChannelHandlerContext): Runnable
+abstract class ClientCommand(val id: ByteArray) {
+    abstract fun run(): CommandResult
+}

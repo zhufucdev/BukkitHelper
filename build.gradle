@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        kotlin_version = '1.4.0'
-        netty_version = "4.1.51.Final"
+        kotlin_version = '1.4.10'
+        netty_version = "4.1.52.Final"
     }
 
     repositories {

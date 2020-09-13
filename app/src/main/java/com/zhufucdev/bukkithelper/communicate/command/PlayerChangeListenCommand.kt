@@ -3,10 +3,9 @@ package com.zhufucdev.bukkithelper.communicate.command
 import com.zhufucdev.bukkit_helper.Command
 import com.zhufucdev.bukkit_helper.CommonCommunication
 import com.zhufucdev.bukkit_helper.Token
+import com.zhufucdev.bukkithelper.communicate.CommandRequest
 import io.netty.buffer.ByteBuf
 
 class PlayerChangeListenCommand : PlayerListCommand() {
-    override fun write(out: ByteBuf, token: Token) {
-        CommonCommunication.writeRequest(out, Command.PLAYER_CHANGE, token, hashCode())
-    }
+    override fun run(): CommandRequest = CommandRequest(Command.PLAYER_CHANGE)
 }

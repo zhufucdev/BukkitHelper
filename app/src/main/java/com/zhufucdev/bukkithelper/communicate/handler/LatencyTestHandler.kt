@@ -1,4 +1,4 @@
-package com.zhufucdev.bukkithelper.communicate
+package com.zhufucdev.bukkithelper.communicate.handler
 
 import com.zhufucdev.bukkit_helper.Command
 import com.zhufucdev.bukkit_helper.CommonCommunication
@@ -10,7 +10,7 @@ class LatencyTestHandler(private val onComplete: (Int?, Channel) -> Unit) : Chan
     private var timeStart: Long = -1
     override fun channelActive(ctx: ChannelHandlerContext) {
         timeStart = System.currentTimeMillis()
-        CommonCommunication.sendRequest(ctx, Command.TIME)
+        CommonCommunication.sendRequest(ctx, Command.TIME, byteArrayOf(Byte.MAX_VALUE))
     }
 
     override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {

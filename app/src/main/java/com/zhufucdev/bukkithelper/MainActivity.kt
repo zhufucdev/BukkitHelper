@@ -1,19 +1,13 @@
 package com.zhufucdev.bukkithelper
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.MenuItem
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.navigation.createGraph
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zhufucdev.bukkithelper.manager.DataRefreshDelay
 import com.zhufucdev.bukkithelper.manager.KeyManager
 import com.zhufucdev.bukkithelper.manager.ServerManager

@@ -1,14 +1,18 @@
 package com.zhufucdev.bukkithelper.communicate
 
+import com.zhufucdev.bukkithelper.communicate.command.GetServerTime
+import com.zhufucdev.bukkithelper.communicate.command.Login
+import com.zhufucdev.bukkithelper.communicate.handler.*
 import com.zhufucdev.bukkithelper.communicate.listener.LoginListener
 import com.zhufucdev.bukkithelper.manager.ServerManager
 import io.netty.bootstrap.Bootstrap
 import io.netty.channel.*
-import io.netty.channel.nio.NioEventLoop
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioSocketChannel
+import io.netty.handler.codec.LineBasedFrameDecoder
 import kotlin.concurrent.thread
+import kotlin.math.abs
 
 class Server(val name: String, val host: String, val port: Int, val key: PreferenceKey) {
     private var token: TimeToken? = null
@@ -37,8 +41,9 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
             option(ChannelOption.SO_KEEPALIVE, true)
             handler(object : ChannelInitializer<SocketChannel>() {
                 override fun initChannel(ch: SocketChannel) {
-                    ch.pipeline().addLast(TimeValidateHandler(onComplete), TokenFetchHandler(key, onComplete, ::token))
-                        .addLast(CommandEncoder(commandStack, ::token), RespondHandler(commandStack))
+                    ch.pipeline()
+                        .addLast(TokenOutboundHandler(this@Server), CommandEncoder(commandStack, ::token))
+                        .addLast(RespondHandler(commandStack))
                         .addLast(ExceptionHandler())
                 }
             })
@@ -47,9 +52,12 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
         thread {
             try {
                 val f = b.connect(host, port).sync()
-                if (!f.isSuccess) onComplete(LoginResult.FAILED)
-                cFuture = f
-                ServerManager.connected = this
+                if (!f.isSuccess) onComplete(LoginResult.CONNECTION_FAILED)
+                else {
+                    cFuture = f
+                    ServerManager.connected = this
+                    login()
+                }
             } catch (e: Exception) {
                 onComplete(LoginResult.FAILED)
             } finally {
@@ -57,6 +65,39 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
                 ServerManager.connected = null
                 disconnectListeners.forEach { it.invoke() }
             }
+        }
+    }
+
+    private fun login() {
+        val onComplete: (LoginResult) -> Unit = { r ->
+            loginListeners.forEach { it.invoke(r) }
+        }
+
+        fun doLogin(latency: Long) {
+            Login(key, latency.toInt()).apply {
+                addCompleteListener {
+                    token = it.second
+                    onComplete(it.first)
+                }
+                addFailureListener {
+                    onComplete(LoginResult.FAILED)
+                }
+                channel.writeAndFlush(this).sync()
+            }
+        }
+
+        GetServerTime().apply {
+            addCompleteListener {
+                if (abs(it - latency - timeStart) > 30000L)
+                // When server and client argue time
+                    onComplete(LoginResult.TIME)
+                else
+                    doLogin(latency)
+            }
+            addFailureListener {
+                onComplete(LoginResult.FAILED)
+            }
+            channel.writeAndFlush(this).sync()
         }
     }
 
@@ -79,7 +120,10 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
             })
         }
         val f = b.connect(host, port)
-        f.addListener { if (!it.isSuccess) onComplete(-2) }
+        f.addListener {
+            if (!it.isSuccess) onComplete(-2)
+            workers.shutdownGracefully()
+        }
         return f.channel()
     }
 

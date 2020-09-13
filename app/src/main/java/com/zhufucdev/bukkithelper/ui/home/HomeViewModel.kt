@@ -6,11 +6,9 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.zhufucdev.bukkit_helper.PlayerInfo
 import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.communicate.LoginResult
 import com.zhufucdev.bukkithelper.communicate.command.PlayerChangeListenCommand
@@ -19,7 +17,6 @@ import com.zhufucdev.bukkithelper.communicate.command.TPSFetchCommand
 import com.zhufucdev.bukkithelper.communicate.listener.LoginListener
 import com.zhufucdev.bukkithelper.manager.DataRefreshDelay
 import com.zhufucdev.bukkithelper.manager.ServerManager
-import com.zhufucdev.bukkithelper.ui.DateValueFormatter
 import com.zhufucdev.bukkithelper.ui.TPSValueFormatter
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
@@ -90,8 +87,8 @@ class HomeViewModel : ViewModel() {
                         period = DataRefreshDelay[DataRefreshDelay.DataType.TPS].toLong()
                     ) {
                         val command = TPSFetchCommand()
-                        command.addListener {
-                            if (it == null) return@addListener
+                        command.addCompleteListener {
+                            if (it == null) return@addCompleteListener
                             tpsDataSet.add(Entry(timeElapsed() / 1000F, it.toFloat()))
                             if (tpsDataSet.size >= 10) {
                                 tpsDataSet.removeAt(0)
@@ -117,7 +114,7 @@ class HomeViewModel : ViewModel() {
                     _playerData.value = getPlayerData()
                 }
                 server.channel.writeAndFlush(PlayerChangeListenCommand().apply {
-                    addListener {
+                    addCompleteListener {
                         if (it != null) {
                             playerDataSet.add(Entry((System.currentTimeMillis() - timeStart).toFloat(), it.size.toFloat()))
                             notifyNextPlayerChange()
@@ -127,7 +124,7 @@ class HomeViewModel : ViewModel() {
             }
 
             server.channel.writeAndFlush(PlayerListCommand().apply {
-                addListener {
+                addCompleteListener {
                     if (it != null) {
                         playerDataSet.add(Entry((System.currentTimeMillis() - timeStart).toFloat(), it.size.toFloat()))
                         notifyNextPlayerChange()

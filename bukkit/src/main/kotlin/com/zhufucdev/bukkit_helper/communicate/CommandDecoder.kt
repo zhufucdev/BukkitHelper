@@ -4,6 +4,7 @@ import com.zhufucdev.bukkit_helper.Command
 import com.zhufucdev.bukkit_helper.CommonCommunication
 import com.zhufucdev.bukkit_helper.Key
 import com.zhufucdev.bukkit_helper.communicate.command.*
+import com.zhufucdev.bukkit_helper.toInt
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.ByteToMessageDecoder
@@ -16,35 +17,38 @@ import io.netty.handler.codec.ByteToMessageDecoder
 class CommandDecoder : ByteToMessageDecoder() {
     override fun decode(ctx: ChannelHandlerContext, input: ByteBuf, out: MutableList<Any>) {
         if (input.readableBytes() < 1) return
-        when (val command = Command.of(input.readByte())) {
+        val command = Command.of(input.readByte())
+        val id = CommonCommunication.parsePars(input, 1)?.first()
+            ?: error("Command ${command.name} requires an ID but doesn't have one.")
+        when (command) {
             Command.LOGIN -> {
                 val pars = CommonCommunication.parsePars(input, 2) ?: return
-                out.add(Login(ctx, Key(pars.first()), pars[1].decodeToString().toInt()))
+                // Pars:
+                // 1.Key
+                // 2.Latency
+                out.add(Login(Key(pars.first()), pars[1].toInt(), id))
             }
             Command.TIME -> {
-                out.add(ValidateTime(ctx))
+                out.add(ValidateTime(id))
             }
             else -> {
                 // Other commands that require a token
                 val token = CommonCommunication.parsePars(input, 1)?.first() ?: return
                 if (!Server.hasToken(token)) {
-                    out.add(ReturnForbidden(ctx))
+                    out.add(ReturnForbidden(id))
                     return
                 }
                 when (command) {
                     Command.TPS -> {
-                        val pars = CommonCommunication.parsePars(input, 1) ?: return
-                        out.add(TestTPS(ctx, pars.first()))
+                        out.add(TestTPS(id))
                     }
                     Command.ONLINE_PLAYERS -> {
-                        val pars = CommonCommunication.parsePars(input, 1) ?: return
-                        out.add(OnlinePlayers(ctx, pars.first()))
+                        out.add(OnlinePlayers(id))
                     }
                     Command.PLAYER_CHANGE -> {
-                        val pars = CommonCommunication.parsePars(input, 1) ?: return
-                        out.add(WaitPlayerChange(ctx, pars.first()))
+                        out.add(WaitPlayerChange(id))
                     }
-                    else -> out.add(ReturnUnknown(ctx))
+                    else -> out.add(ReturnUnknown(id))
                 }
             }
         }

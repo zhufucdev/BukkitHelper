@@ -47,8 +47,12 @@ object CommonCommunication {
         sendFormat(ctx, command.code, pars)
     }
 
+    fun writeRequest(buf: ByteBuf, command: Command, id: Int, vararg pars: ByteArray) {
+        writeFormat(buf, command.code, arrayOf(id.toByteArray()).plus(pars))
+    }
+
     fun writeRequest(buf: ByteBuf, command: Command, token: Token, id: Int, vararg pars: ByteArray) {
-        writeFormat(buf, command.code, arrayOf(token.bytes, id.toString().toByteArray()).plus(pars))
+        writeFormat(buf, command.code, arrayOf(id.toByteArray(), token.bytes).plus(pars))
     }
 
     /**
