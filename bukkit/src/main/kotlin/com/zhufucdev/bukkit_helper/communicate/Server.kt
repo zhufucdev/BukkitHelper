@@ -66,8 +66,8 @@ object Server {
                     .childHandler(object : ChannelInitializer<SocketChannel>() {
                         override fun initChannel(ch: SocketChannel) {
                             ch.pipeline()
-                                .addLast(CommandDecoder())
-                                .addLast(CommandExecutor())
+                                .addLast(SizeBasedFrameEncoder())
+                                .addLast(SizeBasedFrameDecoder(), CommandDecoder(), CommandExecutor())
                                 .addLast(ExceptionHandler())
                         }
                     })

@@ -1,5 +1,6 @@
 package com.zhufucdev.bukkithelper.communicate.handler
 
+import android.util.Log
 import com.zhufucdev.bukkit_helper.CommonCommunication
 import com.zhufucdev.bukkit_helper.Respond
 import com.zhufucdev.bukkit_helper.toInt
@@ -19,8 +20,13 @@ class RespondHandler(private val stack: ArrayList<ServerCommand<*>>) : ChannelIn
             ?: error("command#$id was not found.")
         // </editor-fold>
         command.respond = respond
+        kotlin.run {
+            val data = ByteArray(msg.readableBytes())
+            msg.getBytes(msg.readerIndex(), data)
+            Log.d("${command::class.simpleName}#$id", "respond = ${respond.name}, data = ${data.contentToString()}")
+        }
         if (respond == Respond.SUCCESS) {
-            command.complete(msg.discardReadBytes())
+            command.complete(msg)
         } else {
             command.failure(respond)
         }

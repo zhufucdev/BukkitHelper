@@ -1,6 +1,5 @@
 package com.zhufucdev.bukkit_helper.api
 
-import com.zhufucdev.bukkit_helper.PlayerInfo
 import java.util.*
 
 object InfoCollect {

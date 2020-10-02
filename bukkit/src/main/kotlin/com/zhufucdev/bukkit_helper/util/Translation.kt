@@ -1,6 +1,6 @@
 package com.zhufucdev.bukkit_helper.util
 
-import com.zhufucdev.bukkit_helper.PlayerInfo
+import com.zhufucdev.bukkit_helper.api.PlayerInfo
 import com.zhufucdev.bukkit_helper.api.InfoCollect
 import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender

@@ -1,11 +1,10 @@
 package com.zhufucdev.bukkit_helper.player
 
-import com.zhufucdev.bukkit_helper.PlayerInfo
+import com.zhufucdev.bukkit_helper.api.PlayerInfo
 import com.zhufucdev.bukkit_helper.util.PlayerInfoManager
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.entity.Player
 import java.io.File
 import java.util.*
 

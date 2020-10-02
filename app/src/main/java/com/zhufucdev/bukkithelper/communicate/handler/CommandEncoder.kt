@@ -31,7 +31,7 @@ class CommandEncoder(private val stack: ArrayList<ServerCommand<*>>, private val
             // If this command requires a token
             val token = token.get() ?: error("Token is null.")
             out = ctx.alloc().buffer(
-                1 + token.bytes.size + 8 + request.pars.sumBy { it.size } + request.pars.size * 4
+                1 + token.bytes.size + 4 + request.pars.sumBy { it.size } + request.pars.size * 4
             )
 
             CommonCommunication.writeRequest(
@@ -42,7 +42,7 @@ class CommandEncoder(private val stack: ArrayList<ServerCommand<*>>, private val
                 *request.pars.toTypedArray()
             )
         } else {
-            out = ctx.alloc().buffer(1 + 8 + request.pars.sumBy { it.size } + request.pars.size * 4)
+            out = ctx.alloc().buffer(1 + 4 + request.pars.sumBy { it.size } + request.pars.size * 4)
             CommonCommunication.writeRequest(
                 out,
                 request.command,

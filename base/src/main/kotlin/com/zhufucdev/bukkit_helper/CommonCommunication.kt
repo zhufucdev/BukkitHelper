@@ -1,36 +1,54 @@
 package com.zhufucdev.bukkit_helper
 
 import io.netty.buffer.ByteBuf
+import io.netty.buffer.ByteBufAllocator
 import io.netty.channel.ChannelHandlerContext
+import java.nio.ByteBuffer
 
 object CommonCommunication {
+    const val SEPARATOR: Byte = 32
+
     /**
      * Parses the [input].
      * @return a [List] contains all parameters, or null if the [input] is too short.
      */
     fun parsePars(input: ByteBuf, length: Int): List<ByteArray>? {
-        var sum = 0 // length of all parameters read
         val r = arrayListOf<ByteArray>()
-        for (i in 0 until length) {
-            if (input.readableBytes() < 4) return null
-            val len = input.readInt()
-            if (input.readableBytes() < len) return null
-            val buf = ByteArray(len)
-            input.readBytes(buf, 0, len)
-            r.add(buf)
 
-            sum += len
+        for (i in 0 until length) {
+            if (input.readableBytes() < 1) return null
+
+            val buf = ByteBufAllocator.DEFAULT.buffer(20)
+            while (true) {
+                val b = input.readByte()
+                if (b == SEPARATOR)
+                    if (input.readableBytes() < 1 || input.getByte(input.readerIndex()) != SEPARATOR) {
+                        break
+                    } else {
+                        input.readerIndex(input.readerIndex() + 1)
+                    }
+                buf.writeByte(b.toInt())
+            }
+            val array = ByteArray(buf.readableBytes())
+            buf.readBytes(array)
+            r.add(array)
         }
         return r
     }
 
+    /**
+     * Format data for [parsePars].
+     */
     private fun writeFormat(buf: ByteBuf, header: Byte, pars: Array<out ByteArray>) {
         buf.writeByte(header.toInt())
         pars.forEach {
-            // Write length
-            buf.writeInt(it.size)
             // Write par
-            buf.writeBytes(it)
+            it.forEach { b ->
+                buf.writeByte(b.toInt())
+                if (b == SEPARATOR) buf.writeByte(b.toInt())
+            }
+            // Write separator
+            buf.writeByte(SEPARATOR.toInt())
         }
     }
 
@@ -41,12 +59,8 @@ object CommonCommunication {
     }
 
     /**
-     * Encode and send the given command to [ctx].
+     * Encode the given command.
      */
-    fun sendRequest(ctx: ChannelHandlerContext, command: Command, vararg pars: ByteArray) {
-        sendFormat(ctx, command.code, pars)
-    }
-
     fun writeRequest(buf: ByteBuf, command: Command, id: Int, vararg pars: ByteArray) {
         writeFormat(buf, command.code, arrayOf(id.toByteArray()).plus(pars))
     }

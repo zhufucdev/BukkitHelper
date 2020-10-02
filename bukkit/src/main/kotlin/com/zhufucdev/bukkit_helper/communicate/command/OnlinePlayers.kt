@@ -13,11 +13,10 @@ open class OnlinePlayers(id: ByteArray) : ClientCommand(id) {
     override fun run(): CommandResult {
         val list = Bukkit.getOnlinePlayers().map { InfoCollect[it.uniqueId]!! }
         val r = arrayListOf<ByteArray>()
-        r.add(id)
         r.add(list.size.toByteArray())
         list.forEach {
-            r.add(it.name.toByteArray()) // 2.First par: name length
-            r.add(it.preferredLanguage?.toByteArray() ?: byteArrayOf()) // 2.Second par: preferred language
+            r.add(it.name.toByteArray())
+            r.add(it.preferredLanguage?.toByteArray() ?: byteArrayOf())
         }
         return CommandResult(
             Respond.SUCCESS,

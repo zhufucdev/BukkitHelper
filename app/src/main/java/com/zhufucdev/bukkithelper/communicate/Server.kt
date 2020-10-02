@@ -1,5 +1,8 @@
 package com.zhufucdev.bukkithelper.communicate
 
+import android.util.Log
+import com.zhufucdev.bukkit_helper.communicate.SizeBasedFrameDecoder
+import com.zhufucdev.bukkit_helper.communicate.SizeBasedFrameEncoder
 import com.zhufucdev.bukkithelper.communicate.command.GetServerTime
 import com.zhufucdev.bukkithelper.communicate.command.Login
 import com.zhufucdev.bukkithelper.communicate.handler.*
@@ -42,8 +45,15 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
             handler(object : ChannelInitializer<SocketChannel>() {
                 override fun initChannel(ch: SocketChannel) {
                     ch.pipeline()
-                        .addLast(TokenOutboundHandler(this@Server), CommandEncoder(commandStack, ::token))
-                        .addLast(RespondHandler(commandStack))
+                        .addLast(
+                            SizeBasedFrameEncoder(),
+                            //TokenOutboundHandler(this@Server),
+                            CommandEncoder(commandStack, ::token)
+                        )
+                        .addLast(
+                            SizeBasedFrameDecoder(),
+                            RespondHandler(commandStack)
+                        )
                         .addLast(ExceptionHandler())
                 }
             })
@@ -108,21 +118,37 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
      */
     fun testLatency(onComplete: (Int) -> Unit): Channel {
         val workers = NioEventLoopGroup()
+        val sandbox = arrayListOf<ServerCommand<*>>()
         val b = Bootstrap().apply {
             group(workers)
             channel(NioSocketChannel::class.java)
             option(ChannelOption.SO_KEEPALIVE, true)
-            handler(LatencyTestHandler { it, c ->
-                if (it != null) {
-                    onComplete(it)
+            handler(object : ChannelInitializer<SocketChannel>() {
+                override fun initChannel(ch: SocketChannel) {
+                    ch.pipeline()
+                        .addLast(SizeBasedFrameEncoder(), CommandEncoder(sandbox, ::token))
+                        .addLast(SizeBasedFrameDecoder(), RespondHandler(sandbox))
                 }
-                c.close().sync()
             })
         }
         val f = b.connect(host, port)
         f.addListener {
             if (!it.isSuccess) onComplete(-2)
+        }
+        f.channel().closeFuture().addListener {
             workers.shutdownGracefully()
+        }
+        val start = System.currentTimeMillis()
+        GetServerTime().apply {
+            addCompleteListener {
+                onComplete((System.currentTimeMillis() - start).toInt())
+                f.channel().close()
+            }
+            addFailureListener {
+                onComplete(-1)
+                f.channel().close()
+            }
+            f.sync().channel().writeAndFlush(this).sync()
         }
         return f.channel()
     }

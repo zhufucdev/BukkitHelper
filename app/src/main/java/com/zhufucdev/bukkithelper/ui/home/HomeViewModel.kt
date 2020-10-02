@@ -20,6 +20,7 @@ import com.zhufucdev.bukkithelper.manager.ServerManager
 import com.zhufucdev.bukkithelper.ui.TPSValueFormatter
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
+import kotlin.concurrent.thread
 
 class HomeViewModel : ViewModel() {
     private val handler = Handler(Looper.getMainLooper())
@@ -70,50 +71,62 @@ class HomeViewModel : ViewModel() {
 
         if (login != LoginResult.SUCCESS) return // TODO: Handle Login Failure Better
         // <editor-fold desc="Dynamic">
-        timeStart = System.currentTimeMillis()
-        fun timeElapsed(): Long = System.currentTimeMillis() - timeStart
-        // <editor-fold desc="TPS" defaultstate="collapsed">
-        run {
-            val tpsDataSet = arrayListOf<Entry>()
-            fun getTpsData() = LineData(LineDataSet(tpsDataSet, context.getString(R.string.title_tick))).apply {
-                setValueFormatter(TPSValueFormatter(context))
-            }
+        thread {
+            timeStart = System.currentTimeMillis()
+            fun timeElapsed(): Long = System.currentTimeMillis() - timeStart
+            // <editor-fold desc="TPS" defaultstate="collapsed">
+            run {
+                val tpsDataSet = arrayListOf<Entry>()
+                fun getTpsData() = LineData(LineDataSet(tpsDataSet, context.getString(R.string.title_tick))).apply {
+                    setValueFormatter(TPSValueFormatter(context))
+                }
 
-            fun applyTpsTask() {
-                tpsTask?.cancel()
-                tpsTask =
-                    fixedRateTimer(
-                        name = "TPS-Task",
-                        period = DataRefreshDelay[DataRefreshDelay.DataType.TPS].toLong()
-                    ) {
-                        val command = TPSFetchCommand()
-                        command.addCompleteListener {
-                            if (it == null) return@addCompleteListener
-                            tpsDataSet.add(Entry(timeElapsed() / 1000F, it.toFloat()))
-                            if (tpsDataSet.size >= 10) {
-                                tpsDataSet.removeAt(0)
+                fun applyTpsTask() {
+                    tpsTask?.cancel()
+                    tpsTask =
+                        fixedRateTimer(
+                            name = "TPS-Task",
+                            period = DataRefreshDelay[DataRefreshDelay.DataType.TPS].toLong()
+                        ) {
+                            val command = TPSFetchCommand()
+                            command.addCompleteListener {
+                                if (it == null) return@addCompleteListener
+                                tpsDataSet.add(Entry(timeElapsed() / 1000F, it.toFloat()))
+                                if (tpsDataSet.size >= 10) {
+                                    tpsDataSet.removeAt(0)
+                                }
+                                handler.post {
+                                    _tpsData.value = getTpsData()
+                                }
                             }
-                            handler.post {
-                                _tpsData.value = getTpsData()
+                            server.channel.writeAndFlush(command)
+                        }
+                }
+                applyTpsTask()
+                // Listen changes
+                DataRefreshDelay.addDelayChangeListener(DataRefreshDelay.DataType.TPS) { applyTpsTask() }
+            }
+            // </editor-fold>
+            Thread.sleep(300)
+            // <editor-fold desc="List players" defaultstate="collapsed">
+            run {
+                val playerDataSet = arrayListOf<Entry>()
+                fun getPlayerData() = LineData(LineDataSet(playerDataSet, context.getString(R.string.title_player_count)))
+                fun notifyNextPlayerChange() {
+                    handler.post {
+                        _playerData.value = getPlayerData()
+                    }
+                    server.channel.writeAndFlush(PlayerChangeListenCommand().apply {
+                        addCompleteListener {
+                            if (it != null) {
+                                playerDataSet.add(Entry((System.currentTimeMillis() - timeStart).toFloat(), it.size.toFloat()))
+                                notifyNextPlayerChange()
                             }
                         }
-                        server.channel.writeAndFlush(command)
-                    }
-            }
-            applyTpsTask()
-            // Listen changes
-            DataRefreshDelay.addDelayChangeListener(DataRefreshDelay.DataType.TPS) { applyTpsTask() }
-        }
-        // </editor-fold>
-        // <editor-fold desc="List players" defaultstate="collapsed">
-        run {
-            val playerDataSet = arrayListOf<Entry>()
-            fun getPlayerData() = LineData(LineDataSet(playerDataSet, context.getString(R.string.title_player_count)))
-            fun notifyNextPlayerChange() {
-                handler.post {
-                    _playerData.value = getPlayerData()
+                    })
                 }
-                server.channel.writeAndFlush(PlayerChangeListenCommand().apply {
+
+                server.channel.writeAndFlush(PlayerListCommand().apply {
                     addCompleteListener {
                         if (it != null) {
                             playerDataSet.add(Entry((System.currentTimeMillis() - timeStart).toFloat(), it.size.toFloat()))
@@ -122,17 +135,8 @@ class HomeViewModel : ViewModel() {
                     }
                 })
             }
-
-            server.channel.writeAndFlush(PlayerListCommand().apply {
-                addCompleteListener {
-                    if (it != null) {
-                        playerDataSet.add(Entry((System.currentTimeMillis() - timeStart).toFloat(), it.size.toFloat()))
-                        notifyNextPlayerChange()
-                    }
-                }
-            })
+            // </editor-fold>
         }
-        // </editor-fold>
         // </editor-fold>
     }
 
