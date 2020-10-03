@@ -47,7 +47,7 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
                     ch.pipeline()
                         .addLast(
                             SizeBasedFrameEncoder(),
-                            //TokenOutboundHandler(this@Server),
+                            TokenOutboundHandler(this@Server),
                             CommandEncoder(commandStack, ::token)
                         )
                         .addLast(

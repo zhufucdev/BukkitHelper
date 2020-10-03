@@ -7,6 +7,7 @@ import java.nio.ByteBuffer
 
 object CommonCommunication {
     const val SEPARATOR: Byte = 32
+    const val TRANSLATOR: Byte = 64
 
     /**
      * Parses the [input].
@@ -21,13 +22,14 @@ object CommonCommunication {
             val buf = ByteBufAllocator.DEFAULT.buffer(20)
             while (true) {
                 val b = input.readByte()
-                if (b == SEPARATOR)
-                    if (input.readableBytes() < 1 || input.getByte(input.readerIndex()) != SEPARATOR) {
-                        break
-                    } else {
-                        input.readerIndex(input.readerIndex() + 1)
-                    }
-                buf.writeByte(b.toInt())
+                if (b == TRANSLATOR) {
+                    if (input.readableBytes() < 1) buf.writeByte(b.toInt())
+                    else buf.writeByte(input.readByte().toInt())
+                } else if (b == SEPARATOR) {
+                    break
+                } else {
+                    buf.writeByte(b.toInt())
+                }
             }
             val array = ByteArray(buf.readableBytes())
             buf.readBytes(array)
@@ -44,8 +46,8 @@ object CommonCommunication {
         pars.forEach {
             // Write par
             it.forEach { b ->
+                if (b == SEPARATOR || b == TRANSLATOR) buf.writeByte(TRANSLATOR.toInt())
                 buf.writeByte(b.toInt())
-                if (b == SEPARATOR) buf.writeByte(b.toInt())
             }
             // Write separator
             buf.writeByte(SEPARATOR.toInt())

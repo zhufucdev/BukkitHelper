@@ -1,9 +1,7 @@
 package com.zhufucdev.bukkit_helper.communicate.command
 
 import com.zhufucdev.bukkit_helper.MainPlugin
-import com.zhufucdev.bukkit_helper.Respond
-import com.zhufucdev.bukkit_helper.communicate.command.util.CommandResult
-import io.netty.channel.ChannelHandlerContext
+import com.zhufucdev.bukkit_helper.communicate.command.util.CommandFuture
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
@@ -22,12 +20,14 @@ class WaitPlayerChange(id: ByteArray) : OnlinePlayers(id), Listener {
     }
 
     private var changed = false
-    override fun run(): CommandResult {
+    override fun run(): CommandFuture {
         Bukkit.getPluginManager().registerEvents(this, MainPlugin.default)
-        while (!changed) {
-            Thread.sleep(400)
+        return CommandFuture {
+            while (!changed) {
+                Thread.sleep(400)
+            }
+            super.run().sync().result
         }
-        return CommandResult(Respond.SUCCESS)
     }
 
     private fun notifyPlayerChange() {

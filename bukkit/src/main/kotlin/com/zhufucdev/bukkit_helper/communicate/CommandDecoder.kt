@@ -8,6 +8,7 @@ import com.zhufucdev.bukkit_helper.toInt
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.ByteToMessageDecoder
+import org.bukkit.Bukkit
 
 /**
  * A decoder that transfers bytes into command.
