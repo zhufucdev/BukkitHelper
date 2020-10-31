@@ -1,0 +1,7 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "io.netty:netty-all:$netty_version"
+    implementation project(':base')
+}

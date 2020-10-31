@@ -9,18 +9,16 @@ import androidx.lifecycle.ViewModel
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.zhufucdev.bukkit_helper.plugin.ChartPlugin
 import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.communicate.LoginResult
+import com.zhufucdev.bukkithelper.communicate.Server
 import com.zhufucdev.bukkithelper.communicate.command.PlayerChangeListenCommand
 import com.zhufucdev.bukkithelper.communicate.command.PlayerListCommand
-import com.zhufucdev.bukkithelper.communicate.command.TPSFetchCommand
 import com.zhufucdev.bukkithelper.communicate.listener.LoginListener
-import com.zhufucdev.bukkithelper.manager.DataRefreshDelay
+import com.zhufucdev.bukkithelper.impl.AbstractPlugin
+import com.zhufucdev.bukkithelper.manager.PluginManager
 import com.zhufucdev.bukkithelper.manager.ServerManager
-import com.zhufucdev.bukkithelper.ui.TPSValueFormatter
-import java.util.*
-import kotlin.concurrent.fixedRateTimer
-import kotlin.concurrent.thread
 
 class HomeViewModel : ViewModel() {
     private val handler = Handler(Looper.getMainLooper())
@@ -36,9 +34,7 @@ class HomeViewModel : ViewModel() {
             clearLoginListener()
             addLoginListener(object : LoginListener {
                 override fun invoke(result: LoginResult) {
-                    handler.post {
-                        updateInfo(result)
-                    }
+                    updateInfo(result)
                 }
             })
             addDisconnectListener {
@@ -48,64 +44,38 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    private var tpsTask: Timer? = null
-    private fun cancelAllTasks() {
-        tpsTask?.cancel()
-    }
-
     var timeStart = System.currentTimeMillis()
         private set
 
+    private var previousConnected: Server? = null
     private fun updateInfo(login: LoginResult = LoginResult.SUCCESS) {
-        cancelAllTasks()
-
         val server = ServerManager.connected
+
+        watchForPlugins()
+        // Main Concern: ChartPlugin
+        val plugins = PluginManager[ChartPlugin::class.java]
+        plugins.disableAll()
+
         if (server == null) {
             handler.post {
                 _status.value = ConnectionStatus.DISCONNECTED
             }
             return
         }
-        _connectionName.value = server.name
-        _status.value = ConnectionStatus.CONNECTED
+        handler.post {
+            _connectionName.value = server.name
+            _status.value = ConnectionStatus.CONNECTED
+        }
+
+        if (previousConnected == server)
+            return
+        previousConnected = server
 
         if (login != LoginResult.SUCCESS) return // TODO: Handle Login Failure Better
-        // <editor-fold desc="Dynamic">
-        timeStart = System.currentTimeMillis()
-        fun timeElapsed(): Long = System.currentTimeMillis() - timeStart
-        // <editor-fold desc="TPS" defaultstate="collapsed">
-        run {
-            val tpsDataSet = arrayListOf<Entry>()
-            fun getTpsData() = LineData(LineDataSet(tpsDataSet, context.getString(R.string.title_tick))).apply {
-                setValueFormatter(TPSValueFormatter(context))
-            }
 
-            fun applyTpsTask() {
-                tpsTask?.cancel()
-                tpsTask =
-                    fixedRateTimer(
-                        name = "TPS-Task",
-                        period = DataRefreshDelay[DataRefreshDelay.DataType.TPS].toLong()
-                    ) {
-                        val command = TPSFetchCommand()
-                        command.addCompleteListener {
-                            if (it == null) return@addCompleteListener
-                            tpsDataSet.add(Entry(timeElapsed() / 1000F, it.toFloat()))
-                            if (tpsDataSet.size >= 10) {
-                                tpsDataSet.removeAt(0)
-                            }
-                            handler.post {
-                                _tpsData.value = getTpsData()
-                            }
-                        }
-                        server.channel.writeAndFlush(command)
-                    }
-            }
-            applyTpsTask()
-            // Listen changes
-            DataRefreshDelay.addDelayChangeListener(DataRefreshDelay.DataType.TPS) { applyTpsTask() }
-        }
-        // </editor-fold>
+        plugins.enableAll()
+
+        // <editor-fold desc="Dynamic">
         // <editor-fold desc="List players" defaultstate="collapsed">
         run {
             val playerDataSet = arrayListOf<Entry>()
@@ -137,9 +107,25 @@ class HomeViewModel : ViewModel() {
         // </editor-fold>
     }
 
+    private val pluginEnabled: (AbstractPlugin, Throwable?) -> Unit = { plugin, _ ->
+
+    }
+    private val pluginDisabled: (AbstractPlugin, Throwable?) -> Unit = { plugin, _ ->
+
+    }
     override fun onCleared() {
         super.onCleared()
-        cancelAllTasks()
+        PluginManager.apply {
+            removeEnabledListener(pluginEnabled)
+            removeDisabledListener(pluginDisabled)
+        }
+    }
+
+    private fun watchForPlugins() {
+        PluginManager.apply {
+            addEnabledListener(pluginEnabled)
+            addDisabledListener(pluginDisabled)
+        }
     }
 
     private val _status = MutableLiveData<ConnectionStatus>()

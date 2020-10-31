@@ -2,9 +2,10 @@ package com.zhufucdev.bukkithelper.manager
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.zhufucdev.bukkit_helper.DynamicRefreshInterval
 import java.util.*
 
-object DataRefreshDelay {
+object DataRefreshDelay : DynamicRefreshInterval {
     private lateinit var preference: SharedPreferences
     fun init(context: Context) {
         if (::preference.isInitialized) return
@@ -12,9 +13,9 @@ object DataRefreshDelay {
         preference = context.getSharedPreferences("refresh_delay", Context.MODE_PRIVATE)
     }
 
-    private val listeners = hashMapOf<DataType, MutableList<(Int) -> Unit>>()
+    private val listeners = hashMapOf<String, MutableList<(Int) -> Unit>>()
 
-    fun addDelayChangeListener(name: DataType, l: (Int) -> Unit) {
+    override fun addDelayChangeListener(name: String, l: (Int) -> Unit) {
         val list = listeners[name]
         if (list == null) {
             listeners[name] = mutableListOf(l)
@@ -23,24 +24,20 @@ object DataRefreshDelay {
         }
     }
 
-    fun removeDelayChangeListener(name: DataType, l: (Int) -> Unit) {
-        listeners[name]?.remove(l)
+    override fun removeDelayChangeListener(type: String, l: (Int) -> Unit) {
+        listeners[type]?.remove(l)
     }
 
-    fun clearDelayListener(name: DataType) {
-        listeners.remove(name)
+    override fun clearDelayListener(type: String) {
+        listeners.remove(type)
     }
 
-    operator fun get(name: DataType) = preference.getInt(name.name.toLowerCase(Locale.ENGLISH), 500)
+    override operator fun get(type: String) = preference.getInt(type.toLowerCase(Locale.ENGLISH), 500)
 
-    operator fun set(name: DataType, value: Int) {
+    operator fun set(name: String, value: Int) {
         preference.edit().apply {
-            putInt(name.name.toLowerCase(Locale.ENGLISH), value)
+            putInt(name.toLowerCase(Locale.ENGLISH), value)
             apply()
         }
-    }
-
-    enum class DataType {
-        TPS
     }
 }

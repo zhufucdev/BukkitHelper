@@ -1,9 +1,9 @@
 package com.zhufucdev.bukkithelper.communicate.handler
 
-import com.zhufucdev.bukkit_helper.Command
+import com.zhufucdev.bukkit_helper.KnownCommand
 import com.zhufucdev.bukkithelper.communicate.LoginResult
 import com.zhufucdev.bukkithelper.communicate.Server
-import com.zhufucdev.bukkithelper.communicate.ServerTokenCommand
+import com.zhufucdev.bukkit_helper.communicate.ServerTokenCommand
 import com.zhufucdev.bukkithelper.communicate.command.GetServerTime
 import com.zhufucdev.bukkithelper.communicate.command.Login
 import io.netty.channel.ChannelHandlerContext
@@ -27,7 +27,7 @@ class TokenOutboundHandler(private val parent: Server) : ChannelOutboundHandlerA
                             if (it.first == LoginResult.SUCCESS) {
                                 ctx.writeAndFlush(msg, promise)
                             } else {
-                                if (msg is Command)
+                                if (msg is KnownCommand)
                                     error("Failed to send command#${msg.hashCode()}: Login refused.")
                                 else
                                     error("Failed to send data: Login refused.")

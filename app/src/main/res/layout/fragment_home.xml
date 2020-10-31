@@ -5,7 +5,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/rootContainer_padding"
         tools:context=".ui.home.HomeFragment">
 
 
@@ -34,6 +33,7 @@
             app:layout_constraintTop_toTopOf="parent">
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
+                      android:padding="@dimen/rootContainer_padding"
                       android:orientation="vertical">
             <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_server_connected"

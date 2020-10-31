@@ -16,10 +16,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.zhufucdev.bukkithelper.R
-import com.zhufucdev.bukkithelper.animateScale
-import com.zhufucdev.bukkithelper.fadeIn
-import com.zhufucdev.bukkithelper.fadeOut
+import com.zhufucdev.bukkithelper.*
 import com.zhufucdev.bukkithelper.ui.DateValueFormatter
 import com.zhufucdev.bukkithelper.ui.TPSValueFormatter
 import com.zhufucdev.bukkithelper.view.ServerConnectingIcon
@@ -35,7 +32,7 @@ class HomeFragment : Fragment(), NavController.OnDestinationChangedListener {
         savedInstanceState: Bundle?
     ): View? {
         homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
         homeViewModel.context = requireContext()
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 

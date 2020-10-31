@@ -1,7 +1,10 @@
-package com.zhufucdev.bukkithelper.communicate
+package com.zhufucdev.bukkit_helper.communicate
 
 import com.zhufucdev.bukkit_helper.Command
 
+/**
+ * Represent a command request to be handled directly in server's logic.
+ */
 class CommandRequest {
     val command: Command
     val pars: List<ByteArray>

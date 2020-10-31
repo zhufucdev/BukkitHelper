@@ -1,9 +1,12 @@
-package com.zhufucdev.bukkithelper.communicate
+package com.zhufucdev.bukkit_helper.communicate
 
 import com.zhufucdev.bukkit_helper.Respond
-import com.zhufucdev.bukkit_helper.Token
 import io.netty.buffer.ByteBuf
 
+/**
+ * Holder of a command, containing the request and result.
+ * @param T Result of the command.
+ */
 abstract class ServerCommand<T> {
     abstract fun run(): CommandRequest
     abstract fun complete(data: ByteBuf)

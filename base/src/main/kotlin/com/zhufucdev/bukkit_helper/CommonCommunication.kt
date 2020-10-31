@@ -3,7 +3,6 @@ package com.zhufucdev.bukkit_helper
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufAllocator
 import io.netty.channel.ChannelHandlerContext
-import java.nio.ByteBuffer
 
 object CommonCommunication {
     const val SEPARATOR: Byte = 32

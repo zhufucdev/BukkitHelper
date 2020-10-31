@@ -2,4 +2,5 @@ include ':app'
 include ':base'
 include ':bukkit'
 rootProject.name = 'BukkitHelper'
+include 'api'
 

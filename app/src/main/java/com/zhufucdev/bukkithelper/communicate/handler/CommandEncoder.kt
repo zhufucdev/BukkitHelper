@@ -2,15 +2,13 @@ package com.zhufucdev.bukkithelper.communicate.handler
 
 import android.util.Log
 import com.zhufucdev.bukkit_helper.CommonCommunication
-import com.zhufucdev.bukkithelper.communicate.ServerCommand
-import com.zhufucdev.bukkithelper.communicate.ServerTokenCommand
+import com.zhufucdev.bukkit_helper.communicate.ServerCommand
+import com.zhufucdev.bukkit_helper.communicate.ServerTokenCommand
 import com.zhufucdev.bukkithelper.communicate.TimeToken
 import io.netty.buffer.ByteBuf
-import io.netty.channel.ChannelFutureListener
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelOutboundHandlerAdapter
 import io.netty.channel.ChannelPromise
-import io.netty.handler.codec.MessageToByteEncoder
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.jvm.isAccessible
 
@@ -50,7 +48,7 @@ class CommandEncoder(private val stack: ArrayList<ServerCommand<*>>, private val
                 *request.pars.toTypedArray()
             )
         }
-        Log.d("${msg::class.simpleName}#${msg.hashCode()}","request = ${request.command.name}, pars = ${request.pars.joinToString { it.contentToString() }}")
+        Log.d("${msg::class.simpleName}#${msg.hashCode()}","request = ${request.command.code}, pars = ${request.pars.joinToString { it.contentToString() }}")
         ctx.write(out, promise)
     }
 }

@@ -1,6 +1,6 @@
 package com.zhufucdev.bukkithelper.communicate
 
-import android.util.Log
+import com.zhufucdev.bukkit_helper.communicate.ServerCommand
 import com.zhufucdev.bukkit_helper.communicate.SizeBasedFrameDecoder
 import com.zhufucdev.bukkit_helper.communicate.SizeBasedFrameEncoder
 import com.zhufucdev.bukkithelper.communicate.command.GetServerTime
@@ -13,7 +13,6 @@ import io.netty.channel.*
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioSocketChannel
-import io.netty.handler.codec.LineBasedFrameDecoder
 import kotlin.concurrent.thread
 import kotlin.math.abs
 
@@ -132,9 +131,6 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
             })
         }
         val f = b.connect(host, port)
-        f.addListener {
-            if (!it.isSuccess) onComplete(-2)
-        }
         f.channel().closeFuture().addListener {
             workers.shutdownGracefully()
         }
@@ -148,7 +144,10 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
                 onComplete(-1)
                 f.channel().close()
             }
-            f.sync().channel().writeAndFlush(this).sync()
+            f.addListener {
+                if (!it.isSuccess) onComplete(-2)
+                else f.channel().writeAndFlush(this)
+            }
         }
         return f.channel()
     }
@@ -205,16 +204,5 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
         f.channel().close().sync()
         token = null
         if (ServerManager.connected == this) ServerManager.connected = null
-    }
-
-    override fun equals(other: Any?): Boolean = other is Server
-            && other.name == name && other.host == host && other.port == port && other.key == key
-
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + host.hashCode()
-        result = 31 * result + port
-        result = 31 * result + key.hashCode()
-        return result
     }
 }

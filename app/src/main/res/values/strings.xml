@@ -45,4 +45,6 @@
     <string name="text_connection_timeout">Connection timeout</string>
     <string name="title_undo">Undo</string>
     <string name="text_deleted">Deleted %s</string>
+    <string name="text_tps">Calculate and count server\'s TPS.</string>
+    <string name="text_no_description">No description provided.</string>
 </resources>

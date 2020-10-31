@@ -8,13 +8,23 @@ import com.google.gson.JsonParser
 import com.zhufucdev.bukkithelper.communicate.LoginResult
 import com.zhufucdev.bukkithelper.communicate.Server
 import com.zhufucdev.bukkithelper.communicate.listener.LoginListener
+import com.zhufucdev.bukkithelper.ui.ChartFormatter
 
 object ServerManager {
     const val LOCAL_TOKEN_HOLDER = "local"
 
     private var mDefaultServer: Server? = null
     fun clearDefault() {
+        val previous = mDefaultServer ?: return
         mDefaultServer = null
+        // <editor-fold collapsed="true" desc="Save to preference">
+        preference.edit().apply {
+            val obj = JsonParser.parseString(preference.getString(previous.name, "")).asJsonObject
+            obj.remove("default")
+            putString(previous.name, obj.toString())
+            apply()
+        }
+        // </editor-fold>
     }
     var default: Server
         get() = mDefaultServer ?: list.first()
@@ -94,7 +104,7 @@ object ServerManager {
             apply()
         }
         if (mDefaultServer == server) {
-            clearDefault()
+            mDefaultServer = null
         }
     }
 

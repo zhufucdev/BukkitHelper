@@ -1,10 +1,10 @@
 package com.zhufucdev.bukkithelper.communicate.command
 
-import com.zhufucdev.bukkit_helper.Command
+import com.zhufucdev.bukkit_helper.KnownCommand
 import com.zhufucdev.bukkit_helper.CommonCommunication
 import com.zhufucdev.bukkit_helper.toLong
-import com.zhufucdev.bukkithelper.communicate.CommandRequest
-import com.zhufucdev.bukkithelper.communicate.ServerCommand
+import com.zhufucdev.bukkit_helper.communicate.CommandRequest
+import com.zhufucdev.bukkit_helper.communicate.ServerCommand
 import io.netty.buffer.ByteBuf
 
 class GetServerTime : ServerCommand<Long>() {
@@ -12,7 +12,7 @@ class GetServerTime : ServerCommand<Long>() {
     var timeStart = -1L
     override fun run(): CommandRequest {
         timeStart = System.currentTimeMillis()
-        return CommandRequest(Command.TIME)
+        return CommandRequest(KnownCommand.TIME)
     }
     override fun complete(data: ByteBuf) {
         val end = System.currentTimeMillis()

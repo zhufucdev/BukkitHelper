@@ -8,8 +8,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.zhufucdev.bukkithelper.impl.CommonContext
+import com.zhufucdev.bukkithelper.impl.CommonServer
 import com.zhufucdev.bukkithelper.manager.DataRefreshDelay
 import com.zhufucdev.bukkithelper.manager.KeyManager
+import com.zhufucdev.bukkithelper.manager.PluginManager
 import com.zhufucdev.bukkithelper.manager.ServerManager
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +36,10 @@ class MainActivity : AppCompatActivity() {
         KeyManager.init(this)
         ServerManager.init(this)
         DataRefreshDelay.init(this)
+        CommonContext.init(applicationContext)
+        CommonServer.init()
+        PluginManager.BuiltIn.registerAll()
+        PluginManager.loadAll()
         // </editor-fold>
     }
 

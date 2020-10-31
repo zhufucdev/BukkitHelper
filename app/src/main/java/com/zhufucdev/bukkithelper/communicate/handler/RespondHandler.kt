@@ -4,7 +4,7 @@ import android.util.Log
 import com.zhufucdev.bukkit_helper.CommonCommunication
 import com.zhufucdev.bukkit_helper.Respond
 import com.zhufucdev.bukkit_helper.toInt
-import com.zhufucdev.bukkithelper.communicate.ServerCommand
+import com.zhufucdev.bukkit_helper.communicate.ServerCommand
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
