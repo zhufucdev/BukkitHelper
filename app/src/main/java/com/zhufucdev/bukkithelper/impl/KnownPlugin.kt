@@ -5,7 +5,7 @@ import com.zhufucdev.bukkit_helper.Plugin
 import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.impl.builtin.Descriptor
 
-class KnownPlugin<T: Plugin>(private val clazz: Class<T>) : AbstractPlugin() {
+class KnownPlugin<T : Plugin>(private val clazz: Class<T>) : AbstractPlugin() {
     override val name: String
         get() = clazz.simpleName
     override val description: String =

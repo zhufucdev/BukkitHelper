@@ -64,14 +64,13 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
                 if (!f.isSuccess) onComplete(LoginResult.CONNECTION_FAILED)
                 else {
                     cFuture = f
-                    ServerManager.connected = this
                     login()
                 }
             } catch (e: Exception) {
                 onComplete(LoginResult.FAILED)
             } finally {
                 cFuture?.channel()?.closeFuture()?.sync()
-                ServerManager.connected = null
+                ServerManager.invokeDisconnection(this)
                 disconnectListeners.forEach { it.invoke() }
             }
         }
@@ -86,6 +85,7 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
             Login(key, latency.toInt()).apply {
                 addCompleteListener {
                     token = it.second
+                    ServerManager.invokeConnection(this@Server)
                     onComplete(it.first)
                 }
                 addFailureListener {
@@ -203,6 +203,6 @@ class Server(val name: String, val host: String, val port: Int, val key: Prefere
         val f = cFuture ?: error("Server is not connected.")
         f.channel().close().sync()
         token = null
-        if (ServerManager.connected == this) ServerManager.connected = null
+        ServerManager.invokeDisconnection(this)
     }
 }

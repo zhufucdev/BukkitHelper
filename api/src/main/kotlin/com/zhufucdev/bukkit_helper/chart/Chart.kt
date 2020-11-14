@@ -7,17 +7,20 @@ import com.zhufucdev.bukkit_helper.DynamicList
  */
 class Chart {
     val series = DynamicList<Series>()
+    val type: ChartType
     var xFormat: ValueFormat? = null
     var yFormat: ValueFormat? = null
     var rightYFormat: ValueFormat? = null
 
-    constructor(series: List<Series>) {
+    constructor(series: List<Series>, type: ChartType) : this(type) {
         this.series.addAll(series)
     }
 
-    constructor(series: Series) {
+    constructor(series: Series, type: ChartType) : this(type) {
         this.series.add(series)
     }
 
-    constructor()
+    constructor(type: ChartType) {
+        this.type = type
+    }
 }

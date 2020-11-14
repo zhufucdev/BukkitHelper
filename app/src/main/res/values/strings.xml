@@ -5,7 +5,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="text_no_connection">No server is connected</string>
     <string name="title_clock_late">Your Clock is Late</string>
-    <string name="text_clock_late">"Make sure the difference between clock of your device and the one of the server is less than half a minute.\n "
+    <string name="text_clock_late">"Make sure the difference between clock of your device and the one of the server is
+        less than half a minute.\n "
     </string>
     <string name="action_connect">Connect</string>
     <string name="title_nickname">Nickname</string>

@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.zhufucdev.bukkit_helper.DynamicList
+import com.zhufucdev.bukkit_helper.chart.Chart
 import com.zhufucdev.bukkit_helper.plugin.ChartPlugin
 import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.communicate.LoginResult
@@ -19,6 +21,8 @@ import com.zhufucdev.bukkithelper.communicate.listener.LoginListener
 import com.zhufucdev.bukkithelper.impl.AbstractPlugin
 import com.zhufucdev.bukkithelper.manager.PluginManager
 import com.zhufucdev.bukkithelper.manager.ServerManager
+import com.zhufucdev.bukkithelper.ui.api_chart.ChartParser
+import com.zhufucdev.bukkithelper.ui.api_chart.ChartViewAdapter
 
 class HomeViewModel : ViewModel() {
     private val handler = Handler(Looper.getMainLooper())
@@ -48,13 +52,13 @@ class HomeViewModel : ViewModel() {
         private set
 
     private var previousConnected: Server? = null
+    private val charts = DynamicList<Chart>()
+    private val pluginConcerned get() = PluginManager[ChartPlugin::class.java]
+    private lateinit var chartViewAdapter: ChartViewAdapter
     private fun updateInfo(login: LoginResult = LoginResult.SUCCESS) {
         val server = ServerManager.connected
 
-        watchForPlugins()
         // Main Concern: ChartPlugin
-        val plugins = PluginManager[ChartPlugin::class.java]
-        plugins.disableAll()
 
         if (server == null) {
             handler.post {
@@ -73,9 +77,21 @@ class HomeViewModel : ViewModel() {
 
         if (login != LoginResult.SUCCESS) return // TODO: Handle Login Failure Better
 
-        plugins.enableAll()
+        // <editor-fold desc="Draw charts">
+        val collect = arrayListOf<Chart>()
+        pluginConcerned.forEach {
+            if (it.status < PluginManager.Status.AFTER_ENABLE) return@forEach
+            val chart = (it.instance as ChartPlugin).chart
+            if (!charts.contains(chart)) charts.add(chart)
+            collect.add(chart)
+        }
+        charts.retainAll(collect)
+        // Adapter
+        if (!::chartViewAdapter.isInitialized) {
+            chartViewAdapter = ChartViewAdapter(charts)
+            _chartAdapter.postValue(chartViewAdapter)
+        }
 
-        // <editor-fold desc="Dynamic">
         // <editor-fold desc="List players" defaultstate="collapsed">
         run {
             val playerDataSet = arrayListOf<Entry>()
@@ -87,7 +103,12 @@ class HomeViewModel : ViewModel() {
                 server.channel.writeAndFlush(PlayerChangeListenCommand().apply {
                     addCompleteListener {
                         if (it != null) {
-                            playerDataSet.add(Entry((System.currentTimeMillis() - timeStart).toFloat(), it.size.toFloat()))
+                            playerDataSet.add(
+                                Entry(
+                                    (System.currentTimeMillis() - timeStart).toFloat(),
+                                    it.size.toFloat()
+                                )
+                            )
                             notifyNextPlayerChange()
                         }
                     }
@@ -107,35 +128,16 @@ class HomeViewModel : ViewModel() {
         // </editor-fold>
     }
 
-    private val pluginEnabled: (AbstractPlugin, Throwable?) -> Unit = { plugin, _ ->
-
-    }
-    private val pluginDisabled: (AbstractPlugin, Throwable?) -> Unit = { plugin, _ ->
-
-    }
-    override fun onCleared() {
-        super.onCleared()
-        PluginManager.apply {
-            removeEnabledListener(pluginEnabled)
-            removeDisabledListener(pluginDisabled)
-        }
-    }
-
-    private fun watchForPlugins() {
-        PluginManager.apply {
-            addEnabledListener(pluginEnabled)
-            addDisabledListener(pluginDisabled)
-        }
-    }
-
     private val _status = MutableLiveData<ConnectionStatus>()
     private val _connectionName = MutableLiveData<String>()
     private val _tpsData = MutableLiveData<LineData>()
     private val _playerData = MutableLiveData<LineData>()
+    private val _chartAdapter = MutableLiveData<ChartViewAdapter>()
     val connectionStatus: LiveData<ConnectionStatus> = _status
     val connectionName: LiveData<String> = _connectionName
     val tpsData: LiveData<LineData> = _tpsData
     val playerData: LiveData<LineData> = _playerData
+    val chartAdapter: LiveData<ChartViewAdapter> = _chartAdapter
 
     enum class ConnectionStatus {
         CONNECTING, CONNECTED, DISCONNECTED

@@ -13,7 +13,7 @@ class PluginPartition(
 
     /**
      * Enable any parted plugin. If a plugin is not loaded, it will be loaded first.
-     * @return A [Map] mapping a [AbstractPlugin] that failed to be enabled with its [Throwable].
+     * @return A [Map] mapping each [AbstractPlugin] that failed to be enabled with its [Throwable].
      */
     fun enableAll(): Map<AbstractPlugin, Throwable> {
         val exceptions = hashMapOf<AbstractPlugin, Throwable>()
@@ -32,7 +32,7 @@ class PluginPartition(
 
     /**
      * Disable any enabled plugin of this partition.
-     * @return A [Map] mapping a [AbstractPlugin] that failed to be disabled with its [Throwable].
+     * @return A [Map] mapping each [AbstractPlugin] that failed to be disabled with its [Throwable].
      */
     fun disableAll(): Map<AbstractPlugin, Throwable> {
         val exceptions = hashMapOf<AbstractPlugin, Throwable>()

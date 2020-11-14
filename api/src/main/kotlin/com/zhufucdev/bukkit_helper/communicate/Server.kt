@@ -15,7 +15,7 @@ interface Server {
 
     companion object : Server {
         private var mImpl: Server? = null
-        private val impl get() = mImpl ?: error("API not ready.")
+        private val impl get() = mImpl ?: throw NotImplementedError("API not ready.")
         fun setImplementation(impl: Server) {
             val validate = Thread.currentThread().stackTrace
                 .any { it.className == "com.zhufucdev.bukkithelper.impl.CommonServer" }

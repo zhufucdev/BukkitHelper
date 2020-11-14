@@ -38,6 +38,14 @@ class MainActivity : AppCompatActivity() {
         DataRefreshDelay.init(this)
         CommonContext.init(applicationContext)
         CommonServer.init()
+        // </editor-fold>
+        // <editor-fold desc="Plugin" defaultstate="collapsed">
+        ServerManager.addConnectionListener {
+            PluginManager.enableAll()
+        }
+        ServerManager.addDisconnectionListener {
+            PluginManager.disableAll()
+        }
         PluginManager.BuiltIn.registerAll()
         PluginManager.loadAll()
         // </editor-fold>

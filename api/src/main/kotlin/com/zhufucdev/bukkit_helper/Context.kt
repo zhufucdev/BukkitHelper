@@ -18,7 +18,7 @@ interface Context {
     companion object: Context {
         private var mImplement: Context? = null
         private val impl: Context
-            get() = mImplement ?: error("API not ready.")
+            get() = mImplement ?: throw NotImplementedError("API not ready.")
 
         fun setImplementation(context: Context) {
             val validate = Thread.currentThread().stackTrace

@@ -50,7 +50,7 @@
                               android:layout_height="wrap_content"
                               android:text="@string/title_server_connected"
                               android:textSize="@dimen/text_title_size"
-                              android:textColor="?attr/colorOnPrimary"
+                              android:textColor="?attr/colorOnPrimarySurface"
                               app:layout_constraintTop_toTopOf="parent"
                               app:layout_constraintStart_toStartOf="parent"/>
                     <TextView android:id="@+id/text_connect_content"
@@ -64,7 +64,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
-                            app:tint="?attr/colorOnPrimary"
+                            app:tint="?attr/colorOnPrimarySurface"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -75,11 +75,10 @@
                       android:text="@string/title_server_monitor"
                       android:textColor="?attr/colorOnSurface"
                       android:textSize="20sp"/>
-            <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chart_tps"
+            <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/chart_size_normal"
-                    android:layout_margin="@dimen/widget_margin_normal"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycler_chart_list"/>
             <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/chart_players"
                     android:layout_width="match_parent"

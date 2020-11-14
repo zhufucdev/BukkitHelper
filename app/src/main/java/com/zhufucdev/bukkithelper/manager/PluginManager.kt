@@ -1,14 +1,10 @@
 package com.zhufucdev.bukkithelper.manager
 
-import com.zhufucdev.bukkit_helper.Context
-import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.impl.AbstractPlugin
 import com.zhufucdev.bukkithelper.impl.KnownPlugin
 import com.zhufucdev.bukkithelper.impl.PluginPartition
-import com.zhufucdev.bukkithelper.impl.builtin.Descriptor
-import com.zhufucdev.bukkithelper.impl.builtin.PlayerCounter
+import com.zhufucdev.bukkithelper.impl.builtin.TPSMonitor
 import kotlin.jvm.internal.Reflection
-import kotlin.reflect.KClass
 import kotlin.reflect.full.isSuperclassOf
 
 @Suppress("UNCHECKED_CAST")
@@ -132,7 +128,7 @@ object PluginManager {
     }
 
     object BuiltIn {
-        val known get() = listOf(PlayerCounter::class.java)
+        val known get() = listOf(TPSMonitor::class.java)
         fun registerAll() {
             known.forEach { register(KnownPlugin(it)) }
         }

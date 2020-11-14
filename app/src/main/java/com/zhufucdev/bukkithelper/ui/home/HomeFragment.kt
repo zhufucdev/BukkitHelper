@@ -11,7 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
-import com.github.mikephil.charting.animation.Easing
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.google.android.material.card.MaterialCardView
@@ -103,13 +104,13 @@ class HomeFragment : Fragment(), NavController.OnDestinationChangedListener {
             ?: homeViewModel.connect()
         // </editor-fold>
         // <editor-fold desc="Sync data">
-        val tpsChart: LineChart = root.findViewById(R.id.chart_tps)
+        val chartRecyclerView: RecyclerView = root.findViewById(R.id.recycler_chart_list)
         val playerChart: LineChart = root.findViewById(R.id.chart_players)
-        tpsChart.description = Description().apply { text = requireContext().getString(R.string.title_tps) }
-        tpsChart.xAxis.valueFormatter = TPSValueFormatter(requireContext())
-        homeViewModel.tpsData.observe(viewLifecycleOwner) {
-            tpsChart.data = it
-            tpsChart.invalidate()
+        homeViewModel.chartAdapter.observe(viewLifecycleOwner) {
+            chartRecyclerView.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = it
+            }
         }
         val dateFormat = DateValueFormatter(homeViewModel.timeStart)
         playerChart.description = Description().apply { text = requireContext().getString(R.string.title_player_online) }

@@ -2,13 +2,11 @@ package com.zhufucdev.bukkithelper.manager
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.zhufucdev.bukkithelper.communicate.LoginResult
 import com.zhufucdev.bukkithelper.communicate.Server
 import com.zhufucdev.bukkithelper.communicate.listener.LoginListener
-import com.zhufucdev.bukkithelper.ui.ChartFormatter
 
 object ServerManager {
     const val LOCAL_TOKEN_HOLDER = "local"
@@ -26,6 +24,7 @@ object ServerManager {
         }
         // </editor-fold>
     }
+
     var default: Server
         get() = mDefaultServer ?: list.first()
         set(value) {
@@ -128,6 +127,39 @@ object ServerManager {
 
     fun disconnectCurrent() {
         connected?.disconnect()
+    }
+
+    private val connectionListeners = arrayListOf<(Server) -> Unit>()
+    private val disconnectionListeners = arrayListOf<(Server) -> Unit>()
+
+    fun addConnectionListener(l: (Server) -> Unit) {
+        if (!connectionListeners.contains(l))
+            connectionListeners.add(l)
+    }
+
+    fun removeConnectionListener(l: (Server) -> Unit) {
+        connectionListeners.remove(l)
+    }
+
+    fun addDisconnectionListener(l: (Server) -> Unit) {
+        if (!disconnectionListeners.contains(l))
+            disconnectionListeners.add(l)
+    }
+
+    fun removeDisconnectionListener(l: (Server) -> Unit) {
+        disconnectionListeners.remove(l)
+    }
+
+    fun invokeConnection(server: Server) {
+        connected = server
+        connectionListeners.forEach { it.invoke(server) }
+    }
+
+    fun invokeDisconnection(server: Server) {
+        if (connected == server) {
+            connected = null
+            disconnectionListeners.forEach { it.invoke(server) }
+        }
     }
 
     /**
