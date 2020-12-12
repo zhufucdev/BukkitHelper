@@ -23,6 +23,9 @@ import com.zhufucdev.bukkithelper.R
  * Utility that binds [Chart] with MPChart
  */
 object ChartParser {
+    private val binding = hashMapOf<Chart, com.github.mikephil.charting.charts.Chart<*>>()
+    fun getBinding(chart: Chart): com.github.mikephil.charting.charts.Chart<*>? = binding[chart]
+
     fun bind(chart: Chart, to: com.github.mikephil.charting.charts.Chart<*>) {
         when (to) {
             is LineChart -> {
@@ -62,6 +65,8 @@ object ChartParser {
                 invalidate()
             }
         }
+        to.tag = chart
+        binding[chart] = to
     }
 
     fun bind(chart: Chart, to: ChartViewAdapter.ChartHolder) {

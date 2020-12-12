@@ -7,4 +7,15 @@ abstract class GroupComponent(val children: List<Component>) : Component() {
             it.parent = this
         }
     }
+
+    override var ui: UserInterface? = null
+        set(value) {
+            field = value
+            children.forEach { it.ui = value }
+        }
+
+    override fun markImplemented() {
+        children.forEach { it.markImplemented() }
+        super.markImplemented()
+    }
 }

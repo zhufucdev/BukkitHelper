@@ -58,6 +58,7 @@ class HomeFragment : Fragment(), NavController.OnDestinationChangedListener {
                 navController.navigate(R.id.action_navigation_home_to_serverSelection)
             }
         }
+
         return root
     }
 

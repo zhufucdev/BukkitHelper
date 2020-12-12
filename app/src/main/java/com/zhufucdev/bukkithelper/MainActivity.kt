@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zhufucdev.bukkithelper.impl.CommonContext
 import com.zhufucdev.bukkithelper.impl.CommonServer
+import com.zhufucdev.bukkithelper.impl.link.CommonLink
 import com.zhufucdev.bukkithelper.manager.DataRefreshDelay
 import com.zhufucdev.bukkithelper.manager.KeyManager
 import com.zhufucdev.bukkithelper.manager.PluginManager
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         DataRefreshDelay.init(this)
         CommonContext.init(applicationContext)
         CommonServer.init()
+        CommonLink.init()
         // </editor-fold>
         // <editor-fold desc="Plugin" defaultstate="collapsed">
         ServerManager.addConnectionListener {
