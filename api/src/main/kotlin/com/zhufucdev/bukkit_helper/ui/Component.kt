@@ -5,7 +5,15 @@ import com.zhufucdev.bukkit_helper.workflow.Linkable
 
 open class Component : Implementable(), Linkable {
     var height: Int = WRAP_CONTENT
+        set(value) {
+            field = value
+            parent?.redraw()
+        }
     var width: Int = WRAP_CONTENT
+        set(value) {
+            field = value
+            parent?.redraw()
+        }
 
     override val label = Text(this::class.simpleName.toString())
 

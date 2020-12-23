@@ -9,6 +9,7 @@ import com.zhufucdev.bukkit_helper.communicate.Server
 import com.zhufucdev.bukkit_helper.plugin.ChartPlugin
 import com.zhufucdev.bukkit_helper.plugin.UIPlugin
 import com.zhufucdev.bukkit_helper.ui.*
+import com.zhufucdev.bukkit_helper.ui.component.Button
 import com.zhufucdev.bukkit_helper.ui.component.TextFrame
 import com.zhufucdev.bukkit_helper.ui.layout.LinearLayout
 import com.zhufucdev.bukkit_helper.workflow.Link
@@ -26,8 +27,14 @@ class TPSMonitor : Plugin(), ChartPlugin, UIPlugin {
 
     /* UI */
     val container: GroupComponent = LinearLayout(
-        TextFrame(Text(R.string.app_name), color = Color.BLUE, size = 24),
+        TextFrame(Text(R.string.app_name, Color.BLUE, size = 24)),
         TextFrame(Text("is great.")),
+        Button(Text("Yes")).apply {
+            Link.builder()
+                .from(this)
+                .to(Context.homeFragment)
+                .build()
+        },
         gravity = LinearLayout.Gravity.CENTER,
         width = Component.MATCH_PARENT
     )

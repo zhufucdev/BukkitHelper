@@ -5,6 +5,7 @@ import com.zhufucdev.bukkit_helper.Implementable
 class UserInterface(override val label: Text, val rootComponent: Component) : Implementable() {
     init {
         rootComponent.ui = this
+        collect.add(this)
     }
 
     private var impl: ((Component) -> Boolean)? = null
@@ -22,5 +23,11 @@ class UserInterface(override val label: Text, val rootComponent: Component) : Im
     override fun markImplemented() {
         rootComponent.markImplemented()
         super.markImplemented()
+    }
+
+    companion object {
+        private val collect = arrayListOf<UserInterface>()
+        val collection get() = collect.toList()
+        fun byHash(hashCode: Int) = collect.find { it.hashCode() == hashCode }
     }
 }

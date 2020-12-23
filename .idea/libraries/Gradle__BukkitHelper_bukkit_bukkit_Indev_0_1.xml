@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: BukkitHelper.bukkit.bukkit-Indev-0.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bukkit/build/libs/bukkit-Indev-0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

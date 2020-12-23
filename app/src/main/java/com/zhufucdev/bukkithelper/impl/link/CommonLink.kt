@@ -10,6 +10,7 @@ import com.zhufucdev.bukkit_helper.ui.UserInterface
 import com.zhufucdev.bukkit_helper.workflow.Link
 import com.zhufucdev.bukkit_helper.workflow.Linkable
 import com.zhufucdev.bukkithelper.R
+import com.zhufucdev.bukkithelper.impl.link.destination.HomeFragment
 import com.zhufucdev.bukkithelper.ui.api_chart.ChartParser
 import com.zhufucdev.bukkithelper.ui.plugin_ui.UIHolder
 
@@ -51,16 +52,27 @@ class CommonLink(from: Linkable, primaryDestination: Linkable, secondaryDestinat
 
     private fun navigateTo(dest: Linkable) {
         fun asUI(ui: UserInterface) {
-            val bundle = bundleOf("ui" to ui)
-            navController.navigate(R.id.action_navigation_home_to_navigation_plugin_ui, bundle)
+            val bundle = bundleOf("uiCode" to ui.hashCode())
+            navController.createDeepLink()
+                .setDestination(R.id.navigation_plugin_ui)
+                .setArguments(bundle)
+                .setGraph(navController.graph)
+                .createPendingIntent()
+                .send()
         }
+
+        fun asFragment(id: Int) {
+            navController.createDeepLink()
+                .setDestination(id)
+                .setGraph(navController.graph)
+                .createPendingIntent()
+                .send()
+        }
+
         when (dest) {
-            is UserInterface -> {
-                asUI(dest)
-            }
-            is Component -> {
-                asUI(dest.ui ?: error(from, dest, "ui not implemented."))
-            }
+            is UserInterface -> asUI(dest)
+            is Component -> asUI(dest.ui ?: error(from, dest, "ui not implemented."))
+            is HomeFragment -> asFragment(R.id.navigation_home)
         }
     }
 

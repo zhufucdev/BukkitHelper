@@ -17,7 +17,8 @@ class PluginUIFragment : Fragment() {
     private lateinit var ui: UserInterface
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ui = requireArguments().get("ui") as UserInterface
+        ui = UserInterface.byHash(requireArguments().get("uiCode") as Int)
+            ?: throw NullPointerException("uiCode is not defined.")
 
         ui.setRedrawImplementation {
             val view = requireView().findViewWithTag<View>(it) ?: return@setRedrawImplementation false

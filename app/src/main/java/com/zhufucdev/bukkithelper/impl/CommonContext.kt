@@ -3,6 +3,8 @@ package com.zhufucdev.bukkithelper.impl
 import android.os.Build
 import com.zhufucdev.bukkit_helper.Context
 import com.zhufucdev.bukkit_helper.DynamicRefreshInterval
+import com.zhufucdev.bukkit_helper.workflow.Linkable
+import com.zhufucdev.bukkithelper.impl.link.destination.HomeFragment
 import com.zhufucdev.bukkithelper.manager.DataRefreshDelay
 import java.util.*
 
@@ -14,6 +16,10 @@ object CommonContext : Context {
     }
 
     override fun getString(id: Int, vararg args: String): String = context.getString(id, *args)
+
+    override val homeFragment: Linkable
+        get() = HomeFragment
+
     override val locale: Locale
         get() =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) context.resources.configuration.locales[0]

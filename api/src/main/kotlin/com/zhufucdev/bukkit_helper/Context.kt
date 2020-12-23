@@ -1,12 +1,15 @@
 package com.zhufucdev.bukkit_helper
 
+import com.zhufucdev.bukkit_helper.workflow.Linkable
 import java.util.*
 
 /**
  * Use [Context.Companion] to fetch internal info.
  */
 interface Context {
+    // Resources
     fun getString(id: Int, vararg args: String): String
+    val homeFragment: Linkable
 
     // Settings
     val locale: Locale
@@ -34,6 +37,12 @@ interface Context {
          * @param args Arguments to be used.
          */
         override fun getString(id: Int, vararg args: String): String = impl.getString(id, *args)
+
+        /**
+         * A [Linkable] representing the app's home screen.
+         */
+        override val homeFragment: Linkable
+            get() = impl.homeFragment
 
         /**
          * App preferred locale.

@@ -7,26 +7,43 @@ import com.zhufucdev.bukkit_helper.Context
  */
 class Text: () -> String {
     private val impl: () -> String
+    val color: Color?
+    val size: Int?
 
     /**
      * Constructs a supplier text, which is convenient for user-triggered language change.
+     *
+     * Note that [color] and [size] selections may be ignored by availability.
+     * @param size Text size in dp if possible.
      */
-    constructor(supplier: () -> String) {
+    constructor(supplier: () -> String, color: Color? = null, size: Int? = null) {
         impl = supplier
+        this.color = color
+        this.size = size
     }
 
     /**
      * Constructs a constant text.
+     *
+     * Note that [color] and [size] selection may be ignored by availability.
+     * @param size Text size in dp if possible.
      */
-    constructor(constant: String) {
+    constructor(constant: String, color: Color? = null, size: Int? = null) {
         impl = { constant }
+        this.color = color
+        this.size = size
     }
 
     /**
      * Constructs a resource text.
+     *
+     * Note that [color] and [size] selection may be ignored by availability.
+     * @param size Text size in dp if possible.
      */
-    constructor(resID: Int) {
+    constructor(resID: Int, color: Color? = null, size: Int? = null) {
         impl = { Context.getString(resID) }
+        this.color = color
+        this.size = size
     }
 
     override fun invoke(): String = impl.invoke()
