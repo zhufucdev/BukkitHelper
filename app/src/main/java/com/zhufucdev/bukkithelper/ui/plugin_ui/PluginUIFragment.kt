@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.zhufucdev.bukkit_helper.ui.GroupComponent
 import com.zhufucdev.bukkit_helper.ui.UserInterface
-import com.zhufucdev.bukkithelper.ui.api_ui.UIParser
+import com.zhufucdev.bukkithelper.impl.UIParser
 
 /**
  * A [Fragment] that works with [UIParser].
@@ -17,7 +17,7 @@ class PluginUIFragment : Fragment() {
     private lateinit var ui: UserInterface
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ui = UserInterface.byHash(requireArguments().get("uiCode") as Int)
+        ui = UserInterface.byHashCode(requireArguments().get("uiCode") as Int)
             ?: throw NullPointerException("uiCode is not defined.")
 
         ui.setRedrawImplementation {
@@ -28,6 +28,7 @@ class PluginUIFragment : Fragment() {
                     addView(UIParser.parse(it, requireContext()))
                 }
             } else {
+                UIParser.apply(view, it)
                 view.postInvalidate()
             }
             true

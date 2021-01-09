@@ -1,4 +1,4 @@
-package com.zhufucdev.bukkithelper.ui.api_chart
+package com.zhufucdev.bukkithelper.impl.chart
 
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.Entry

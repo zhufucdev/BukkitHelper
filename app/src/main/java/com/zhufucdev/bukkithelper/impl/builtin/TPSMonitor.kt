@@ -10,8 +10,10 @@ import com.zhufucdev.bukkit_helper.plugin.ChartPlugin
 import com.zhufucdev.bukkit_helper.plugin.UIPlugin
 import com.zhufucdev.bukkit_helper.ui.*
 import com.zhufucdev.bukkit_helper.ui.component.Button
+import com.zhufucdev.bukkit_helper.ui.component.TextEdit
 import com.zhufucdev.bukkit_helper.ui.component.TextFrame
 import com.zhufucdev.bukkit_helper.ui.layout.LinearLayout
+import com.zhufucdev.bukkit_helper.workflow.Execute
 import com.zhufucdev.bukkit_helper.workflow.Link
 import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.communicate.command.TPSFetchCommand
@@ -26,13 +28,25 @@ class TPSMonitor : Plugin(), ChartPlugin, UIPlugin {
     override val chart: Chart = Chart(main, ChartType.LINE, Text(R.string.title_tps)).apply { xFormat = format }
 
     /* UI */
+    val textFrame = TextFrame(Text.EMPTY)
+    val textEdit = TextEdit(initialText = Text("is great.")).apply {
+        Link.builder()
+            .from(this)
+            .to(TextEdit.ContentChanged {
+                textFrame.text = it.after
+            })
+            .build()
+    }
     val container: GroupComponent = LinearLayout(
         TextFrame(Text(R.string.app_name, Color.BLUE, size = 24)),
-        TextFrame(Text("is great.")),
+        textFrame,
+        textEdit,
         Button(Text("Yes")).apply {
             Link.builder()
                 .from(this)
-                .to(Context.homeFragment)
+                .to(Execute {
+                    textFrame.text = textEdit.content.format(color = Color.GREEN)
+                })
                 .build()
         },
         gravity = LinearLayout.Gravity.CENTER,

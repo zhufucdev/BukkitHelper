@@ -1,9 +1,8 @@
-package com.zhufucdev.bukkithelper.ui.api_chart
+package com.zhufucdev.bukkithelper.impl.chart
 
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
-import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -13,7 +12,6 @@ import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.zhufucdev.bukkit_helper.DynamicList
 import com.zhufucdev.bukkit_helper.chart.Chart
 import com.zhufucdev.bukkit_helper.chart.ChartElement
 import com.zhufucdev.bukkit_helper.chart.ChartType

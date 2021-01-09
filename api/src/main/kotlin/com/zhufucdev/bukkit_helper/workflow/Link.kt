@@ -12,8 +12,8 @@ package com.zhufucdev.bukkit_helper.workflow
  */
 abstract class Link constructor(
     val from: Linkable,
-    val primaryDestination: Linkable,
-    val secondaryDestinations: List<Linkable>
+    val primaryDestination: Navigatable,
+    val secondaryDestinations: List<Navigatable>
 ) {
     /**
      * Perform the primary trigger manually.
@@ -39,13 +39,13 @@ abstract class Link constructor(
         fun from(linkable: Linkable): LinkBuilder
 
         /**
-         * Multiple [Linkable]s to be navigated to.
+         * Multiple [Navigatable]s to be navigated to.
          *
          * The first one will be the [primaryDestination], which has the priority of
          * being navigated to with a simple click.
          * @see Link
          */
-        fun to(linkable: Linkable): LinkBuilder
+        fun to(linkable: Navigatable): LinkBuilder
 
         fun build(): Link
     }

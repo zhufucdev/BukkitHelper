@@ -1,4 +1,4 @@
-package com.zhufucdev.bukkithelper.ui.api_chart
+package com.zhufucdev.bukkithelper.impl.chart
 
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zhufucdev.bukkit_helper.DynamicList
 import com.zhufucdev.bukkit_helper.Implementable
 import com.zhufucdev.bukkit_helper.chart.Chart
-import com.zhufucdev.bukkit_helper.ui.Component
 import com.zhufucdev.bukkithelper.R
 
 /**

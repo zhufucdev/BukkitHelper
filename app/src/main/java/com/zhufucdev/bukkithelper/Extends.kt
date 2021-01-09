@@ -4,10 +4,16 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.provider.Settings
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import androidx.core.view.children
 import androidx.core.view.isVisible
+import com.zhufucdev.bukkit_helper.ui.Color
+import com.zhufucdev.bukkit_helper.ui.Text
 import kotlin.math.roundToLong
 
 fun animateScale(context: Context): Float =
@@ -48,4 +54,19 @@ fun View.fadeOut() {
         lastAnimator[this@fadeOut] = this
         start()
     }
+}
+
+fun TextView.getMText(replacement: String = ""): Text {
+    val text = if (replacement.isEmpty()) this.text else replacement
+    val color = Color.fromARGB(currentTextColor)
+    val size = (textSize / resources.displayMetrics.densityDpi * DisplayMetrics.DENSITY_DEFAULT).toInt()
+    return Text(text.toString(), color, size)
+}
+
+fun <T : View> ViewGroup.findViewWithType(clazz: Class<T>): T? {
+    for (child in children.iterator()) {
+        if (clazz.isInstance(child)) return child as T
+        else if (child is ViewGroup) return child.findViewWithType(clazz) ?: continue
+    }
+    return null
 }

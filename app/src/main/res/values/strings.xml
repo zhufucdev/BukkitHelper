@@ -48,4 +48,6 @@
     <string name="text_deleted">Deleted %s</string>
     <string name="text_tps">Calculate and count server\'s TPS.</string>
     <string name="text_no_description">No description provided.</string>
+    <item name="text_edit_tag_last_primary_watcher" type="id"/>
+    <item name="text_edit_tag_last_secondary_watcher" type="id"/>
 </resources>

@@ -7,26 +7,24 @@ import androidx.navigation.findNavController
 import com.zhufucdev.bukkit_helper.chart.Chart
 import com.zhufucdev.bukkit_helper.ui.Component
 import com.zhufucdev.bukkit_helper.ui.UserInterface
-import com.zhufucdev.bukkit_helper.workflow.Link
-import com.zhufucdev.bukkit_helper.workflow.Linkable
+import com.zhufucdev.bukkit_helper.workflow.*
 import com.zhufucdev.bukkithelper.R
+import com.zhufucdev.bukkithelper.impl.UIParser
 import com.zhufucdev.bukkithelper.impl.link.destination.HomeFragment
-import com.zhufucdev.bukkithelper.ui.api_chart.ChartParser
+import com.zhufucdev.bukkithelper.impl.chart.ChartParser
 import com.zhufucdev.bukkithelper.ui.plugin_ui.UIHolder
 
 /**
  * An implementation of [Link] that collects all its instance.
  */
-class CommonLink(from: Linkable, primaryDestination: Linkable, secondaryDestinations: List<Linkable>) :
+class CommonLink(from: Linkable, primaryDestination: Navigatable, secondaryDestinations: List<Navigatable>) :
     Link(from, primaryDestination, secondaryDestinations) {
     private lateinit var navController: NavController
 
     init {
         fun asComponent(component: Component) {
             component.addImplementedListener {
-                val view = UIHolder[component.ui]?.findViewWithTag<View?>(component)
-                    ?: error(from, primaryDestination, "ui is not implemented.")
-
+                val view = UIParser.findViewByComponent<View>(component)
                 view.setOnClickListener {
                     performPrimary()
                 }
@@ -34,6 +32,7 @@ class CommonLink(from: Linkable, primaryDestination: Linkable, secondaryDestinat
                 navController = view.findNavController()
             }
         }
+
         when (from) {
             is Component -> asComponent(from)
             is UserInterface -> asComponent(from.rootComponent)
@@ -48,9 +47,11 @@ class CommonLink(from: Linkable, primaryDestination: Linkable, secondaryDestinat
             }
             else -> throw UnsupportedOperationException("${from::class.simpleName} as starting point is not supported.")
         }
+
+        Linker.checkAndListen(this)
     }
 
-    private fun navigateTo(dest: Linkable) {
+    private fun navigateTo(dest: Navigatable) {
         fun asUI(ui: UserInterface) {
             val bundle = bundleOf("uiCode" to ui.hashCode())
             navController.createDeepLink()
@@ -73,6 +74,8 @@ class CommonLink(from: Linkable, primaryDestination: Linkable, secondaryDestinat
             is UserInterface -> asUI(dest)
             is Component -> asUI(dest.ui ?: error(from, dest, "ui not implemented."))
             is HomeFragment -> asFragment(R.id.navigation_home)
+            is Execute -> Linker.asExecute(dest)
+            else -> error(from, dest, "${dest::class.simpleName} is not to be navigated to manually.")
         }
     }
 
@@ -86,15 +89,14 @@ class CommonLink(from: Linkable, primaryDestination: Linkable, secondaryDestinat
 
     override fun disconnect() {
         fun asComponent(component: Component): View {
-            val view = UIHolder[component.ui]?.findViewWithTag<View?>(from)
-                ?: error(from, primaryDestination, "ui is not implemented.")
-
+            val view = UIParser.findViewByComponent<View>(component)
             view.setOnClickListener(null)
             return view
         }
         when (from) {
             is Component -> asComponent(from)
             is UserInterface -> asComponent(from.rootComponent)
+            else -> throw UnsupportedOperationException("Disconnecting ${from::class.simpleName} is not supported.")
         }
     }
 
@@ -103,7 +105,9 @@ class CommonLink(from: Linkable, primaryDestination: Linkable, secondaryDestinat
             setImplementation { CommonLinkBuilder() }
         }
 
-        private fun error(a: Linkable, b: Linkable, msg: String): Nothing =
-            kotlin.error("Unable to build link between ${a.label.invoke()} and ${b.label.invoke()}: $msg")
+        fun error(a: Linkable, b: Navigatable, msg: String): Nothing {
+            val labelB = if (b is Linkable) b.label.invoke() else b::class.simpleName
+            kotlin.error("Unable to build link between ${a.label.invoke()} and $labelB: $msg")
+        }
     }
 }

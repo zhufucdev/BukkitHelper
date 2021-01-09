@@ -28,6 +28,6 @@ class UserInterface(override val label: Text, val rootComponent: Component) : Im
     companion object {
         private val collect = arrayListOf<UserInterface>()
         val collection get() = collect.toList()
-        fun byHash(hashCode: Int) = collect.find { it.hashCode() == hashCode }
+        fun byHashCode(hashCode: Int) = collect.find { it.hashCode() == hashCode }
     }
 }

@@ -19,5 +19,13 @@ open class Color(val alpha: Int, val red: Int, val green: Int, val blue: Int) {
         val BLUE get() = Color(255, 0, 0, 255)
         val BLACK get() = Color(255, 0, 0, 0)
         val WHITE get() = Color(255, 255, 255, 255)
+
+        fun fromARGB(color: Int): Color {
+            val a = color.shr(24)
+            val r = color.shr(16) - a.shl(8)
+            val g = color.shr(8) - r.shl(8) - a.shl(16)
+            val b = color - a.shl(24) - g.shl(16) - r.shl(8)
+            return Color(a, r, g, b)
+        }
     }
 }

@@ -2,6 +2,9 @@ package com.zhufucdev.bukkit_helper
 
 import com.zhufucdev.bukkit_helper.workflow.Linkable
 
+/**
+ * Represents an API element, which is implemented internally.
+ */
 abstract class Implementable : Linkable {
     private val implListeners = arrayListOf<() -> Unit>()
     private var isImplemented = false
@@ -24,4 +27,6 @@ abstract class Implementable : Linkable {
         implListeners.forEach { it.invoke() }
         implListeners.clear()
     }
+
+    open fun receive(data: Map<Any, Any?>) {}
 }

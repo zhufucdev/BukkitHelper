@@ -10,6 +10,9 @@ class Text: () -> String {
     val color: Color?
     val size: Int?
 
+    val isEmpty: Boolean
+        get() = invoke().isEmpty()
+
     /**
      * Constructs a supplier text, which is convenient for user-triggered language change.
      *
@@ -47,4 +50,10 @@ class Text: () -> String {
     }
 
     override fun invoke(): String = impl.invoke()
+
+    fun format(color: Color? = null, size: Int? = null) = Text(impl, color ?: this.color, size ?: this.size)
+
+    companion object {
+        val EMPTY get() = Text("")
+    }
 }

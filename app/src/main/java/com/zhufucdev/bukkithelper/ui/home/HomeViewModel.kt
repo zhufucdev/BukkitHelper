@@ -18,11 +18,9 @@ import com.zhufucdev.bukkithelper.communicate.Server
 import com.zhufucdev.bukkithelper.communicate.command.PlayerChangeListenCommand
 import com.zhufucdev.bukkithelper.communicate.command.PlayerListCommand
 import com.zhufucdev.bukkithelper.communicate.listener.LoginListener
-import com.zhufucdev.bukkithelper.impl.AbstractPlugin
 import com.zhufucdev.bukkithelper.manager.PluginManager
 import com.zhufucdev.bukkithelper.manager.ServerManager
-import com.zhufucdev.bukkithelper.ui.api_chart.ChartParser
-import com.zhufucdev.bukkithelper.ui.api_chart.ChartViewAdapter
+import com.zhufucdev.bukkithelper.impl.chart.ChartViewAdapter
 
 class HomeViewModel : ViewModel() {
     private val handler = Handler(Looper.getMainLooper())
