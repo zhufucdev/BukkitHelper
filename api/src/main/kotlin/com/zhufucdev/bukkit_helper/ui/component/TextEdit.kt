@@ -1,11 +1,10 @@
 package com.zhufucdev.bukkit_helper.ui.component
 
-import com.zhufucdev.bukkit_helper.ui.ChangedContent
+import com.zhufucdev.bukkit_helper.ui.data.ChangedContent
 import com.zhufucdev.bukkit_helper.ui.Component
 import com.zhufucdev.bukkit_helper.ui.ComponentListener
-import com.zhufucdev.bukkit_helper.ui.Text
+import com.zhufucdev.bukkit_helper.ui.data.Text
 import com.zhufucdev.bukkit_helper.workflow.Executable
-import com.zhufucdev.bukkit_helper.workflow.Link
 
 class TextEdit(hint: Text = Text.EMPTY, initialText: Text = Text.EMPTY) : Component() {
     private var _content: Text = initialText

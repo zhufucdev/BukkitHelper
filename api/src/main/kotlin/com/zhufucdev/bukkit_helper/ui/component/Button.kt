@@ -1,7 +1,7 @@
 package com.zhufucdev.bukkit_helper.ui.component
 
 import com.zhufucdev.bukkit_helper.ui.Component
-import com.zhufucdev.bukkit_helper.ui.Text
+import com.zhufucdev.bukkit_helper.ui.data.Text
 
 class Button(text: Text, borderless: Boolean = false) : Component() {
     var text: Text = text

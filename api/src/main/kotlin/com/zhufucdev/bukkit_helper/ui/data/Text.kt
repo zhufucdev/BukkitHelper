@@ -1,4 +1,4 @@
-package com.zhufucdev.bukkit_helper.ui
+package com.zhufucdev.bukkit_helper.ui.data
 
 import com.zhufucdev.bukkit_helper.Context
 

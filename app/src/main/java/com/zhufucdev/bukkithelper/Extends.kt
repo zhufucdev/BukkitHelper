@@ -9,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnStart
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import com.zhufucdev.bukkit_helper.ui.Color
-import com.zhufucdev.bukkit_helper.ui.Text
+import com.zhufucdev.bukkit_helper.ui.data.Color
+import com.zhufucdev.bukkit_helper.ui.data.Gravity
+import com.zhufucdev.bukkit_helper.ui.data.Text
 import kotlin.math.roundToLong
 
 fun animateScale(context: Context): Float =
@@ -69,4 +69,12 @@ fun <T : View> ViewGroup.findViewWithType(clazz: Class<T>): T? {
         else if (child is ViewGroup) return child.findViewWithType(clazz) ?: continue
     }
     return null
+}
+
+fun Gravity.android() = when (this) {
+    Gravity.START -> android.view.Gravity.START
+    Gravity.END -> android.view.Gravity.END
+    Gravity.CENTER -> android.view.Gravity.CENTER
+    Gravity.CENTER_VERTICAL -> android.view.Gravity.CENTER_VERTICAL
+    Gravity.CENTER_HORIZONTAL -> android.view.Gravity.CENTER_HORIZONTAL
 }

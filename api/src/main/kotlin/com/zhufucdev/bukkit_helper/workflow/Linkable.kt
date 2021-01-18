@@ -1,6 +1,6 @@
 package com.zhufucdev.bukkit_helper.workflow
 
-import com.zhufucdev.bukkit_helper.ui.Text
+import com.zhufucdev.bukkit_helper.ui.data.Text
 
 /**
  * Represents a widget that can be interacted with

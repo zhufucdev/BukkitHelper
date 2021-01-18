@@ -1,4 +1,4 @@
-package com.zhufucdev.bukkit_helper.ui
+package com.zhufucdev.bukkit_helper.ui.data
 
 open class Color(val alpha: Int, val red: Int, val green: Int, val blue: Int) {
     fun toARGB(): Int {

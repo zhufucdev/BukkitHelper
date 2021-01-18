@@ -2,8 +2,7 @@ package com.zhufucdev.bukkit_helper.chart
 
 import com.zhufucdev.bukkit_helper.DynamicList
 import com.zhufucdev.bukkit_helper.Implementable
-import com.zhufucdev.bukkit_helper.ui.Text
-import com.zhufucdev.bukkit_helper.workflow.Linkable
+import com.zhufucdev.bukkit_helper.ui.data.Text
 
 /**
  * Represents a set of [Series], which can be drawn on screen.

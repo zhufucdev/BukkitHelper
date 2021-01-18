@@ -4,7 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import com.google.android.material.textfield.TextInputLayout
-import com.zhufucdev.bukkit_helper.ui.ChangedContent
+import com.zhufucdev.bukkit_helper.ui.data.ChangedContent
 import com.zhufucdev.bukkit_helper.ui.Component
 import com.zhufucdev.bukkit_helper.ui.ComponentListener
 import com.zhufucdev.bukkit_helper.ui.component.TextEdit

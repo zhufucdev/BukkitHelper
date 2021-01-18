@@ -12,6 +12,9 @@ import com.zhufucdev.bukkit_helper.ui.*
 import com.zhufucdev.bukkit_helper.ui.component.Button
 import com.zhufucdev.bukkit_helper.ui.component.TextEdit
 import com.zhufucdev.bukkit_helper.ui.component.TextFrame
+import com.zhufucdev.bukkit_helper.ui.data.Color
+import com.zhufucdev.bukkit_helper.ui.data.Gravity
+import com.zhufucdev.bukkit_helper.ui.data.Text
 import com.zhufucdev.bukkit_helper.ui.layout.LinearLayout
 import com.zhufucdev.bukkit_helper.workflow.Execute
 import com.zhufucdev.bukkit_helper.workflow.Link
@@ -28,6 +31,7 @@ class TPSMonitor : Plugin(), ChartPlugin, UIPlugin {
     override val chart: Chart = Chart(main, ChartType.LINE, Text(R.string.title_tps)).apply { xFormat = format }
 
     /* UI */
+    val title = TextFrame(Text(R.string.app_name, Color.BLUE, size = 24))
     val textFrame = TextFrame(Text.EMPTY)
     val textEdit = TextEdit(initialText = Text("is great.")).apply {
         Link.builder()
@@ -36,9 +40,10 @@ class TPSMonitor : Plugin(), ChartPlugin, UIPlugin {
                 textFrame.text = it.after
             })
             .build()
+        width = Component.MATCH_PARENT
     }
     val container: GroupComponent = LinearLayout(
-        TextFrame(Text(R.string.app_name, Color.BLUE, size = 24)),
+        title,
         textFrame,
         textEdit,
         Button(Text("Yes")).apply {
@@ -49,9 +54,12 @@ class TPSMonitor : Plugin(), ChartPlugin, UIPlugin {
                 })
                 .build()
         },
-        gravity = LinearLayout.Gravity.CENTER,
+        gravity = Gravity.CENTER
+    ).apply {
         width = Component.MATCH_PARENT
-    )
+        layoutGravity[title] = Gravity.START
+        layoutGravity[textFrame] = Gravity.END
+    }
     override val ui: UserInterface = UserInterface(Text(R.string.title_tps), container).apply {
         Link.builder()
             .from(chart).to(this)

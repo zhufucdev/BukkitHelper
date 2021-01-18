@@ -4,23 +4,21 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.view.updateLayoutParams
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.zhufucdev.bukkit_helper.ui.Component
 import com.zhufucdev.bukkit_helper.ui.GroupComponent
-import com.zhufucdev.bukkit_helper.ui.Text
 import com.zhufucdev.bukkit_helper.ui.component.Button
 import com.zhufucdev.bukkit_helper.ui.component.TextEdit
 import com.zhufucdev.bukkit_helper.ui.component.TextFrame
+import com.zhufucdev.bukkit_helper.ui.data.Text
 import com.zhufucdev.bukkit_helper.ui.layout.LinearLayout
-import com.zhufucdev.bukkit_helper.ui.layout.LinearLayout.Gravity.*
 import com.zhufucdev.bukkithelper.R
+import com.zhufucdev.bukkithelper.android
 import com.zhufucdev.bukkithelper.findViewWithType
 import com.zhufucdev.bukkithelper.getMText
 import com.zhufucdev.bukkithelper.ui.plugin_ui.UIHolder
@@ -38,8 +36,19 @@ object UIParser {
                 height = component.height
             }
 
-    private fun addChildren(component: GroupComponent, to: ViewGroup) {
-        component.children.forEach { to.addView(parse(it, to.context)) }
+    private fun <T : ViewGroup.LayoutParams> addChildren(
+        component: GroupComponent,
+        to: ViewGroup,
+        paraClass: Class<T>,
+        paraApply: T.(Component) -> Unit
+    ) {
+        component.children.forEach {
+            val view = parse(it, to.context)
+            val parameter = paraClass.getConstructor(ViewGroup.LayoutParams::class.java).newInstance(view.layoutParams)
+            paraApply.invoke(parameter, it)
+            view.layoutParams = parameter
+            to.addView(view)
+        }
     }
 
     private fun parseTextView(view: TextView, text: Text) {
@@ -52,15 +61,12 @@ object UIParser {
         layout.orientation =
             if (component.isVertical) android.widget.LinearLayout.VERTICAL
             else android.widget.LinearLayout.HORIZONTAL
-        layout.gravity =
-            when (component.gravity) {
-                START -> Gravity.START
-                END -> Gravity.END
-                CENTER -> Gravity.CENTER
-                CENTER_VERTICAL -> Gravity.CENTER_VERTICAL
-                CENTER_HORIZONTAL -> Gravity.CENTER_HORIZONTAL
+        layout.gravity = component.gravity.android()
+        addChildren(component, layout, android.widget.LinearLayout.LayoutParams::class.java) {
+            component.layoutGravity[it]?.android()?.let { g ->
+                this.gravity = g
             }
-        addChildren(component, layout)
+        }
     }
 
     private fun textWatcherFor(view: TextInputEditText, c: TextEdit) = object : TextWatcher {

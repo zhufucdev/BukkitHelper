@@ -2,6 +2,8 @@ package com.zhufucdev.bukkit_helper.ui.layout
 
 import com.zhufucdev.bukkit_helper.ui.Component
 import com.zhufucdev.bukkit_helper.ui.GroupComponent
+import com.zhufucdev.bukkit_helper.ui.data.Gravity
+import com.zhufucdev.bukkit_helper.ui.data.LayoutParameter
 
 class LinearLayout : GroupComponent {
     private var mVertical: Boolean
@@ -21,28 +23,21 @@ class LinearLayout : GroupComponent {
             redraw()
         }
 
+    val layoutGravity = LayoutParameter<Gravity>(this)
+
     constructor(
         children: List<Component>,
         vertical: Boolean = true,
-        gravity: Gravity = Gravity.START,
-        width: Int = WRAP_CONTENT,
-        height: Int = WRAP_CONTENT
+        gravity: Gravity = Gravity.START
     ) : super(children) {
         mVertical = vertical
         mGravity = gravity
-        this.width = width
-        this.height = height
     }
 
     constructor(
         vararg children: Component,
         vertical: Boolean = true,
-        gravity: Gravity = Gravity.START,
-        width: Int = WRAP_CONTENT,
-        height: Int = WRAP_CONTENT
-    ) : this(children.toList(), vertical, gravity, width, height)
+        gravity: Gravity = Gravity.START
+    ) : this(children.toList(), vertical, gravity)
 
-    enum class Gravity {
-        START, END, CENTER, CENTER_VERTICAL, CENTER_HORIZONTAL
-    }
 }

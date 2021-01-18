@@ -1,6 +1,7 @@
 package com.zhufucdev.bukkit_helper.ui
 
 import com.zhufucdev.bukkit_helper.Implementable
+import com.zhufucdev.bukkit_helper.ui.data.Text
 
 class UserInterface(override val label: Text, val rootComponent: Component) : Implementable() {
     init {
