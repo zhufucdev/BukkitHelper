@@ -13,7 +13,9 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.zhufucdev.bukkit_helper.ui.data.Color
 import com.zhufucdev.bukkit_helper.ui.data.Gravity
+import com.zhufucdev.bukkit_helper.ui.data.Space
 import com.zhufucdev.bukkit_helper.ui.data.Text
+import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
 fun animateScale(context: Context): Float =
@@ -59,7 +61,7 @@ fun View.fadeOut() {
 fun TextView.getMText(replacement: String = ""): Text {
     val text = if (replacement.isEmpty()) this.text else replacement
     val color = Color.fromARGB(currentTextColor)
-    val size = (textSize / resources.displayMetrics.densityDpi * DisplayMetrics.DENSITY_DEFAULT).toInt()
+    val size = convertUnit(textSize, LengthUnit.Dp).toInt()
     return Text(text.toString(), color, size)
 }
 
@@ -77,4 +79,29 @@ fun Gravity.android() = when (this) {
     Gravity.CENTER -> android.view.Gravity.CENTER
     Gravity.CENTER_VERTICAL -> android.view.Gravity.CENTER_VERTICAL
     Gravity.CENTER_HORIZONTAL -> android.view.Gravity.CENTER_HORIZONTAL
+}
+
+enum class LengthUnit {
+    Px, Dp
+}
+
+fun convertUnit(source: Float, target: LengthUnit, densityDpi: Int): Float =
+    if (target == LengthUnit.Px)
+        source * densityDpi / DisplayMetrics.DENSITY_DEFAULT
+    else
+        source / densityDpi * DisplayMetrics.DENSITY_DEFAULT
+
+fun View.convertUnit(source: Float, target: LengthUnit): Float {
+    val ddpi = resources.displayMetrics.densityDpi
+    return convertUnit(source, target, ddpi)
+}
+
+fun Space.convertToPx(context: Context): Space {
+    val ddpi = context.resources.displayMetrics.densityDpi
+    return Space(
+        top = convertUnit(top.toFloat(), LengthUnit.Px, ddpi).roundToInt(),
+        bottom = convertUnit(bottom.toFloat(), LengthUnit.Px, ddpi).roundToInt(),
+        start = convertUnit(start.toFloat(), LengthUnit.Px, ddpi).roundToInt(),
+        end = convertUnit(end.toFloat(), LengthUnit.Px, ddpi).roundToInt()
+    )
 }

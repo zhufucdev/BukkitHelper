@@ -14,6 +14,7 @@ import com.zhufucdev.bukkit_helper.ui.component.TextEdit
 import com.zhufucdev.bukkit_helper.ui.component.TextFrame
 import com.zhufucdev.bukkit_helper.ui.data.Color
 import com.zhufucdev.bukkit_helper.ui.data.Gravity
+import com.zhufucdev.bukkit_helper.ui.data.Space
 import com.zhufucdev.bukkit_helper.ui.data.Text
 import com.zhufucdev.bukkit_helper.ui.layout.LinearLayout
 import com.zhufucdev.bukkit_helper.workflow.Execute
@@ -54,11 +55,13 @@ class TPSMonitor : Plugin(), ChartPlugin, UIPlugin {
                 })
                 .build()
         },
-        gravity = Gravity.CENTER
+        gravity = Gravity.CENTER,
+        padding = Space.all(12)
     ).apply {
         width = Component.MATCH_PARENT
         layoutGravity[title] = Gravity.START
         layoutGravity[textFrame] = Gravity.END
+        margin[textFrame] = Space(end = 120)
     }
     override val ui: UserInterface = UserInterface(Text(R.string.title_tps), container).apply {
         Link.builder()

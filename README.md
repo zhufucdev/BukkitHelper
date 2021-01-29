@@ -60,13 +60,13 @@ listeners.
 An example to fetch TPS(a measurement of server's smoothness) constantly.
 ```kotlin
 val format
-    get() = object : ValueFormat() {
-        val sdf = SimpleDateFormat("kk:mm:ss", Context.locale)
-        override fun axis(value: Float): String {
-            val receiveTime = (value * 1000.0).toInt() + timeStart
-            return sdf.format(Date(receiveTime))
-        }
+get() = object : ValueFormat() {
+    val sdf = SimpleDateFormat("kk:mm:ss", Context.locale)
+    override fun axis(value: Float): String {
+        val receiveTime = (value * 1000.0).toInt() + timeStart
+        return sdf.format(Date(receiveTime))
     }
+}
 var timeStart = System.currentTimeMillis()
 
 val main: Series = Series(DynamicList(), Text(R.string.title_tps))
@@ -75,8 +75,8 @@ val chart: Chart = Chart(main, ChartType.LINE, Text(R.string.title_tps)).apply {
 fun timeElapsed(): Long = System.currentTimeMillis() - timeStart
 
 fixedRateTimer(
-    name = "TPS-Task",
-    period = Context.dynamicRefreshInterval[DynamicRefreshInterval.KnownName.TPS].toLong()
+            name = "TPS-Task",
+            period = Context.dynamicRefreshInterval[DynamicRefreshInterval.KnownName.TPS].toLong()
 ) {
     val command = TPSFetchCommand()
     command.addCompleteListener {
@@ -90,3 +90,4 @@ fixedRateTimer(
     Server.sendCommand(command)
 }
 ```
+![Chart-1](image/Chart-1.gif)

@@ -1,6 +1,7 @@
 package com.zhufucdev.bukkit_helper.ui
 
 import com.zhufucdev.bukkit_helper.Implementable
+import com.zhufucdev.bukkit_helper.ui.data.Space
 import com.zhufucdev.bukkit_helper.ui.data.Text
 import com.zhufucdev.bukkit_helper.workflow.Linkable
 

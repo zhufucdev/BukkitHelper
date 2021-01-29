@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.view.updatePadding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.zhufucdev.bukkit_helper.ui.Component
@@ -17,10 +18,7 @@ import com.zhufucdev.bukkit_helper.ui.component.TextEdit
 import com.zhufucdev.bukkit_helper.ui.component.TextFrame
 import com.zhufucdev.bukkit_helper.ui.data.Text
 import com.zhufucdev.bukkit_helper.ui.layout.LinearLayout
-import com.zhufucdev.bukkithelper.R
-import com.zhufucdev.bukkithelper.android
-import com.zhufucdev.bukkithelper.findViewWithType
-import com.zhufucdev.bukkithelper.getMText
+import com.zhufucdev.bukkithelper.*
 import com.zhufucdev.bukkithelper.ui.plugin_ui.UIHolder
 
 /**
@@ -36,18 +34,23 @@ object UIParser {
                 height = component.height
             }
 
-    private fun <T : ViewGroup.LayoutParams> addChildren(
+    /**
+     * Make all children in place in a [GroupComponent].
+     */
+    private fun <T : ViewGroup.LayoutParams> applyChildren(
         component: GroupComponent,
         to: ViewGroup,
         paraClass: Class<T>,
         paraApply: T.(Component) -> Unit
     ) {
         component.children.forEach {
-            val view = parse(it, to.context)
+            var viewExisting = false
+            val view = to.findViewWithTag<View>(it)?.also { viewExisting = true } ?: parse(it, to.context)
             val parameter = paraClass.getConstructor(ViewGroup.LayoutParams::class.java).newInstance(view.layoutParams)
             paraApply.invoke(parameter, it)
             view.layoutParams = parameter
-            to.addView(view)
+
+            if (!viewExisting) to.addView(view)
         }
     }
 
@@ -61,8 +64,21 @@ object UIParser {
         layout.orientation =
             if (component.isVertical) android.widget.LinearLayout.VERTICAL
             else android.widget.LinearLayout.HORIZONTAL
+        // Self
+        val isRTL = layout.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
         layout.gravity = component.gravity.android()
-        addChildren(component, layout, android.widget.LinearLayout.LayoutParams::class.java) {
+        val aPadding = component.padding.convertToPx(layout.context)
+        if (isRTL) layout.setPadding(aPadding.end, aPadding.top, aPadding.start, aPadding.bottom)
+        else layout.setPadding(aPadding.start, aPadding.top, aPadding.end, aPadding.bottom)
+        // Children
+        applyChildren(component, layout, android.widget.LinearLayout.LayoutParams::class.java) {
+            component.margin[it]?.let { s ->
+                val space = s.convertToPx(layout.context)
+                if (isRTL)
+                    setMargins(space.end, space.top, space.start, space.bottom)
+                else
+                    setMargins(space.start, space.top, space.end, space.bottom)
+            }
             component.layoutGravity[it]?.android()?.let { g ->
                 this.gravity = g
             }
@@ -83,6 +99,7 @@ object UIParser {
 
     /**
      * Apply every setting required by [component] to a [view] of its type.
+     * @throws ClassCastException If the [view] is not compatible with the [component].
      */
     fun apply(view: View, component: Component) {
         when (component) {

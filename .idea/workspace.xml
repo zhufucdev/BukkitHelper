@@ -38,18 +38,23 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93afc6b2-2c1e-4613-b9bd-741464dad464" name="Default Changelist" comment="Bug fix: Component size set is invalidate; Added LayoutParameter.kt">
-      <change afterPath="$PROJECT_DIR$/image/UI-1.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/image/UI-2.gif" afterDir="false" />
+    <list default="true" id="93afc6b2-2c1e-4613-b9bd-741464dad464" name="Default Changelist" comment="Update README.md">
+      <change afterPath="$PROJECT_DIR$/image/Chart-1.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/ui/Component.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/ui/Component.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/ui/data/Space.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/ui/data/Space.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/ui/layout/LinearLayout.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/ui/layout/LinearLayout.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/Extends.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/Extends.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/UIParser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/UIParser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/builtin/TPSMonitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/builtin/TPSMonitor.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_30" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="adb-4df969b4-anVzbU._adb-tls-connect._tcp." />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -151,6 +156,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../../Android" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
     <property name="jdk.selected.PYTHON_MODULE" value="Python 3.8" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/image" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -159,6 +165,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Build Variants" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.5091954" />
@@ -212,17 +219,6 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method v="2">
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Clean" type="GradleRunConfiguration" factoryName="Gradle">
@@ -302,7 +298,10 @@
       <workItem from="1610200712971" duration="149000" />
       <workItem from="1610718248415" duration="1527000" />
       <workItem from="1610923483436" duration="4448000" />
-      <workItem from="1610977851776" duration="2764000" />
+      <workItem from="1610977851776" duration="2962000" />
+      <workItem from="1611726635004" duration="32000" />
+      <workItem from="1611836670768" duration="283000" />
+      <workItem from="1611883274740" duration="3567000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit.">
       <created>1598432892249</created>
@@ -416,7 +415,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610928102295</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Update README.md">
+      <created>1610980651169</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1610980651169</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -452,18 +458,8 @@
     <MESSAGE value="Added Button.kt; Introduced virtual destinations." />
     <MESSAGE value="Added TextEdit.kt; Listeners implemented." />
     <MESSAGE value="Bug fix: Component size set is invalidate; Added LayoutParameter.kt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fix: Component size set is invalidate; Added LayoutParameter.kt" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/UIParser.kt</url>
-          <line>30</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Update README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update README.md" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

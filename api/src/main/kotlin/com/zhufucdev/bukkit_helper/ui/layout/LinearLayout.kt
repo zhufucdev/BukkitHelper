@@ -4,40 +4,46 @@ import com.zhufucdev.bukkit_helper.ui.Component
 import com.zhufucdev.bukkit_helper.ui.GroupComponent
 import com.zhufucdev.bukkit_helper.ui.data.Gravity
 import com.zhufucdev.bukkit_helper.ui.data.LayoutParameter
+import com.zhufucdev.bukkit_helper.ui.data.Space
 
 class LinearLayout : GroupComponent {
-    private var mVertical: Boolean
-    private var mGravity: Gravity
-
     var isVertical: Boolean
-        get() = mVertical
         set(value) {
-            mVertical = value
+            field = value
             redraw()
         }
 
     var gravity: Gravity
-        get() = mGravity
         set(value) {
-            mGravity = value
+            field = value
+            redraw()
+        }
+
+    var padding: Space
+        set(value) {
+            field = value
             redraw()
         }
 
     val layoutGravity = LayoutParameter<Gravity>(this)
+    val margin = LayoutParameter<Space>(this)
 
     constructor(
         children: List<Component>,
         vertical: Boolean = true,
-        gravity: Gravity = Gravity.START
+        gravity: Gravity = Gravity.START,
+        padding: Space = Space.EMPTY
     ) : super(children) {
-        mVertical = vertical
-        mGravity = gravity
+        isVertical = vertical
+        this.gravity = gravity
+        this.padding = padding
     }
 
     constructor(
         vararg children: Component,
         vertical: Boolean = true,
-        gravity: Gravity = Gravity.START
-    ) : this(children.toList(), vertical, gravity)
+        gravity: Gravity = Gravity.START,
+        padding: Space = Space.EMPTY
+    ) : this(children.toList(), vertical, gravity, padding)
 
 }
