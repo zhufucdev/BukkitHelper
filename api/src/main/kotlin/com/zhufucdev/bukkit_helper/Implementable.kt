@@ -25,7 +25,6 @@ abstract class Implementable : Linkable {
     open fun markImplemented() {
         isImplemented = true
         implListeners.forEach { it.invoke() }
-        implListeners.clear()
     }
 
     open fun receive(data: Map<Any, Any?>) {}

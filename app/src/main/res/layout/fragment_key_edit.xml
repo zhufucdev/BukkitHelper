@@ -26,7 +26,7 @@
             android:hint="@string/title_key_content"
             app:errorEnabled="true"
             app:endIconMode="custom"
-            app:endIconDrawable="@drawable/ic_auto_fix">
+            app:endIconDrawable="@drawable/ic_auto_fix_24">
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_content"
                 android:layout_width="match_parent"

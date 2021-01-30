@@ -12,7 +12,6 @@ import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.impl.UIParser
 import com.zhufucdev.bukkithelper.impl.link.destination.HomeFragment
 import com.zhufucdev.bukkithelper.impl.chart.ChartParser
-import com.zhufucdev.bukkithelper.ui.plugin_ui.UIHolder
 
 /**
  * An implementation of [Link] that collects all its instance.
@@ -38,11 +37,11 @@ class CommonLink(from: Linkable, primaryDestination: Navigatable, secondaryDesti
             is UserInterface -> asComponent(from.rootComponent)
             is Chart -> {
                 from.addImplementedListener {
-                    val view = ChartParser.getBinding(from) ?: error(from, primaryDestination, "chart not implemented.")
-                    view.setOnClickListener {
-                        performPrimary()
+                    val holder = ChartParser.getBinding(from) ?: error(from, primaryDestination, "chart not implemented.")
+                    holder.parent.setOpenListener {
+                        if (it == from) performPrimary()
                     }
-                    navController = view.findNavController()
+                    navController = holder.toolbar.findNavController()
                 }
             }
             else -> throw UnsupportedOperationException("${from::class.simpleName} as starting point is not supported.")
