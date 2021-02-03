@@ -3,7 +3,7 @@ package com.zhufucdev.bukkit_helper
 /**
  * A wrapper of [ArrayList] that monitors changes of its elements.
  */
-class DynamicList<T> : MutableList<T> {
+open class DynamicList<T> : MutableList<T> {
     constructor()
 
     constructor(wrap: List<T>) {

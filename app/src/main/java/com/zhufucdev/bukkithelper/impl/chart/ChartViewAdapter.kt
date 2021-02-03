@@ -2,10 +2,8 @@ package com.zhufucdev.bukkithelper.impl.chart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.zhufucdev.bukkit_helper.DynamicList
-import com.zhufucdev.bukkit_helper.Implementable
 import com.zhufucdev.bukkit_helper.chart.Chart
 import com.zhufucdev.bukkithelper.R
 

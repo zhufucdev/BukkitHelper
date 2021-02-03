@@ -1,3 +1,3 @@
-package com.zhufucdev.bukkithelper.impl.builtin
+package com.zhufucdev.bukkithelper.impl
 
 annotation class Descriptor(val description: Int)

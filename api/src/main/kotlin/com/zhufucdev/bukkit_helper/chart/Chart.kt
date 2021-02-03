@@ -10,21 +10,22 @@ import com.zhufucdev.bukkit_helper.ui.data.Text
 class Chart : Implementable {
     val series = DynamicList<Series>()
     override val label: Text
-    val type: ChartType
-    var xFormat: ValueFormat? = null
-    var yFormat: ValueFormat? = null
-    var rightYFormat: ValueFormat? = null
+    val configuration: ChartConfiguration
 
-    constructor(series: List<Series>, type: ChartType, label: Text) : this(type, label) {
+    val type: ChartType get() = configuration.type
+
+    constructor(series: List<Series>, label: Text, configuration: ChartConfiguration)
+            : this(label, configuration) {
         this.series.addAll(series)
     }
 
-    constructor(series: Series, type: ChartType, label: Text) : this(type, label) {
+    constructor(series: Series, label: Text, configuration: ChartConfiguration)
+            : this(label, configuration) {
         this.series.add(series)
     }
 
-    constructor(type: ChartType, label: Text) {
-        this.type = type
+    constructor(label: Text, configuration: ChartConfiguration) {
         this.label = label
+        this.configuration = configuration
     }
 }

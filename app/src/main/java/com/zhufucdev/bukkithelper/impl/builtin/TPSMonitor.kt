@@ -1,10 +1,8 @@
 package com.zhufucdev.bukkithelper.impl.builtin
 
-import com.zhufucdev.bukkit_helper.Context
-import com.zhufucdev.bukkit_helper.DynamicList
-import com.zhufucdev.bukkit_helper.DynamicRefreshInterval
-import com.zhufucdev.bukkit_helper.Plugin
+import com.zhufucdev.bukkit_helper.*
 import com.zhufucdev.bukkit_helper.chart.*
+import com.zhufucdev.bukkit_helper.chart.configuration.LineChartConfiguration
 import com.zhufucdev.bukkit_helper.communicate.Server
 import com.zhufucdev.bukkit_helper.plugin.ChartPlugin
 import com.zhufucdev.bukkit_helper.plugin.UIPlugin
@@ -21,6 +19,7 @@ import com.zhufucdev.bukkit_helper.workflow.Execute
 import com.zhufucdev.bukkit_helper.workflow.Link
 import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.communicate.command.TPSFetchCommand
+import com.zhufucdev.bukkithelper.impl.Descriptor
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
@@ -29,10 +28,17 @@ import kotlin.concurrent.fixedRateTimer
 class TPSMonitor : Plugin(), ChartPlugin, UIPlugin {
     /* Chart */
     private val main: Series = Series(DynamicList(), Text(R.string.title_tps))
-    override val chart: Chart = Chart(main, ChartType.LINE, Text(R.string.title_tps)).apply { xFormat = format }
+    override val chart: Chart = Chart(
+        series = main,
+        label = Text(R.string.title_tps),
+        LineChartConfiguration(
+            xFormat = format,
+            mode = LineChartConfiguration.Mode.CUBIC_BEZIER
+        )
+    )
 
     /* UI */
-    val title = TextFrame(Text(R.string.app_name, Color.BLUE, size = 24))
+    val title = TextFrame(Text(R.string.app_name, Color.BLUE, size = 24F))
     val textFrame = TextFrame(Text.EMPTY)
     val textEdit = TextEdit(initialText = Text("is great.")).apply {
         Link.builder()
@@ -88,10 +94,6 @@ class TPSMonitor : Plugin(), ChartPlugin, UIPlugin {
                     command.addCompleteListener {
                         if (it == null) return@addCompleteListener
                         main.data.add(ChartElement(timeElapsed() / 1000F, it.toFloat()))
-                        if (main.data.size > 1000) {
-                            // Boundary is 1000
-                            main.data.removeAt(0)
-                        }
                     }
                     Server.sendCommand(command)
                 }

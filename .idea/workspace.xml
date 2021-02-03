@@ -12,7 +12,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
@@ -38,32 +38,33 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93afc6b2-2c1e-4613-b9bd-741464dad464" name="Default Changelist" comment="Space.kt implemented.">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_databinding_viewbinding_4_0_2_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/chart/ChartHolder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_baseline_settings_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_chart_holder.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/menu/chart_title_menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_android_extensions_runtime_1_4_21_jar.xml" beforeDir="false" />
+    <list default="true" id="93afc6b2-2c1e-4613-b9bd-741464dad464" name="Default Changelist" comment="Bug fix.">
+      <change afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/DynamicPool.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/ChartConfiguration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/configuration/BarChartConfiguration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/configuration/LineChartConfiguration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/configuration/PieChartConfiguration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/Descriptor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/Implementable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/Implementable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/DynamicList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/DynamicList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/Chart.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/Chart.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/ChartElement.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/ChartElement.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/ChartType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/chart/ChartType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/ui/data/Text.kt" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/kotlin/com/zhufucdev/bukkit_helper/ui/data/Text.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/Extends.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/Extends.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/KnownPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/KnownPlugin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/builtin/Descriptor.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/builtin/TPSMonitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/builtin/TPSMonitor.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/chart/ChartParser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/chart/ChartParser.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/chart/ChartViewAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/chart/ChartViewAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/link/CommonLink.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/link/CommonLink.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_auto_fix.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_auto_fix_24.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_key_edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_key_edit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="192.168.124.4:40697" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="adb-4df969b4-LrTVFc._adb-tls-connect._tcp." />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -117,11 +118,11 @@
         <option value="Kotlin Sealed Class" />
         <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
-        <option value="Kotlin Data Class" />
         <option value="Kotlin File" />
         <option value="layoutResourceFile" />
-        <option value="Kotlin Class" />
         <option value="resourceFile" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -157,8 +158,8 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_2_API_30" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-12-12T05:10:10.610810400Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="adb-4df969b4-anVzbU._adb-tls-connect._tcp." />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-01-31T03:23:17.899008Z" />
     <property name="ResourceManagerPrefKey.ResourceType" value="DRAWABLE" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -166,9 +167,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../../Android" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="full.screen.before.presentation.mode" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="jdk.selected.PYTHON_MODULE" value="Python 3.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/image" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Source" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -179,7 +181,7 @@
     <property name="project.structure.last.edited" value="Build Variants" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.5091954" />
-    <property name="settings.editor.selected.configurable" value="preferences.language.Kotlin" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Android Logcat" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -195,8 +197,8 @@
       <recent name="D:\IdeaProjects\BukkitHelper\app\src\main\java\com\zhufucdev\bukkithelper\ui\connect" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
-      <recent name="com.zhufucdev.bukkit_helper.ui.data" />
       <recent name="com.zhufucdev.bukkithelper.impl" />
+      <recent name="com.zhufucdev.bukkit_helper.ui.data" />
       <recent name="com.zhufucdev.bukkit_helper.ui.component" />
       <recent name="com.zhufucdev.bukkit_helper.ui.component.edit_text" />
       <recent name="com.zhufucdev.bukkithelper.ui.plugin_ui" />
@@ -325,7 +327,16 @@
       <workItem from="1611883274740" duration="3712000" />
       <workItem from="1611927737833" duration="4523000" />
       <workItem from="1611961952966" duration="22000" />
-      <workItem from="1611961991286" duration="4446000" />
+      <workItem from="1611961991286" duration="4556000" />
+      <workItem from="1612049020654" duration="1827000" />
+      <workItem from="1612052737355" duration="98000" />
+      <workItem from="1612052852359" duration="32000" />
+      <workItem from="1612052900717" duration="39000" />
+      <workItem from="1612052955390" duration="8272000" />
+      <workItem from="1612144098984" duration="59000" />
+      <workItem from="1612144434537" duration="224000" />
+      <workItem from="1612144679629" duration="55000" />
+      <workItem from="1612356805833" duration="6390000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit.">
       <created>1598432892249</created>
@@ -453,7 +464,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611886912560</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Bug fix.">
+      <created>1611966547062</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1611966547062</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -491,7 +509,8 @@
     <MESSAGE value="Bug fix: Component size set is invalidate; Added LayoutParameter.kt" />
     <MESSAGE value="Update README.md" />
     <MESSAGE value="Space.kt implemented." />
-    <option name="LAST_COMMIT_MESSAGE" value="Space.kt implemented." />
+    <MESSAGE value="Bug fix." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fix." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -500,11 +519,6 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/link/CommonLink.kt</url>
           <line>38</line>
           <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/zhufucdev/bukkithelper/impl/chart/ChartViewAdapter.kt</url>
-          <line>48</line>
-          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
