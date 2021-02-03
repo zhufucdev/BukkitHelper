@@ -70,7 +70,11 @@ get() = object : ValueFormat() {
 var timeStart = System.currentTimeMillis()
 
 val main: Series = Series(DynamicList(), Text(R.string.title_tps))
-val chart: Chart = Chart(main, ChartType.LINE, Text(R.string.title_tps)).apply { xFormat = format }
+val chart: Chart = Chart(
+    series = main,
+    label = Text(R.string.title_tps),
+    LineChartConfiguration(xFormat = format)
+)
 
 fun timeElapsed(): Long = System.currentTimeMillis() - timeStart
 
