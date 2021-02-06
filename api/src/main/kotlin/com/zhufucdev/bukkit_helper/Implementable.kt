@@ -10,12 +10,9 @@ abstract class Implementable : Linkable {
     private var isImplemented = false
 
     fun addImplementedListener(l: () -> Unit) {
-        if (!isImplemented) {
-            if (implListeners.contains(l)) return
-            implListeners.add(l)
-        } else {
-            l.invoke()
-        }
+        if (implListeners.contains(l)) return
+        if (isImplemented) l.invoke()
+        implListeners.add(l)
     }
 
     fun removeImplementedListener(l: () -> Unit) {

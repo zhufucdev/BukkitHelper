@@ -37,7 +37,8 @@
     <string name="title_unit_s">%ss</string>
     <string name="title_server_monitor">Server Monitor</string>
     <string name="title_player_count">Player Count</string>
-    <string name="title_player_online">Player Online</string>
+    <string name="title_player_monitor">Player Monitor</string>
+    <string name="text_player_monitor">Count online players.</string>
     <string name="title_server_selection">Select Server</string>
     <string name="title_latency">%sms behind</string>
     <string name="text_latency_test_failed">Failed to test latency: %s: %s.</string>

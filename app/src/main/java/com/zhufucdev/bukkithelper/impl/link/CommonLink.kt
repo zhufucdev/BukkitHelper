@@ -1,9 +1,11 @@
 package com.zhufucdev.bukkithelper.impl.link
 
 import android.view.View
+import androidx.collection.arrayMapOf
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.google.common.collect.ArrayListMultimap
 import com.zhufucdev.bukkit_helper.chart.Chart
 import com.zhufucdev.bukkit_helper.ui.Component
 import com.zhufucdev.bukkit_helper.ui.UserInterface
@@ -37,9 +39,10 @@ class CommonLink(from: Linkable, primaryDestination: Navigatable, secondaryDesti
             is UserInterface -> asComponent(from.rootComponent)
             is Chart -> {
                 from.addImplementedListener {
-                    val holder = ChartParser.getBinding(from) ?: error(from, primaryDestination, "chart not implemented.")
-                    holder.parent.setOpenListener {
-                        if (it == from) performPrimary()
+                    val holder =
+                        ChartParser.getBinding(from) ?: error(from, primaryDestination, "chart not implemented.")
+                    holder.setOpenListener {
+                        performPrimary()
                     }
                     navController = holder.toolbar.findNavController()
                 }
@@ -48,6 +51,8 @@ class CommonLink(from: Linkable, primaryDestination: Navigatable, secondaryDesti
         }
 
         Linker.checkAndListen(this)
+
+        markLink(this)
     }
 
     private fun navigateTo(dest: Navigatable) {
@@ -92,11 +97,20 @@ class CommonLink(from: Linkable, primaryDestination: Navigatable, secondaryDesti
             view.setOnClickListener(null)
             return view
         }
+
+        fun asChart(chart: Chart) {
+            chart.addImplementedListener {
+                val holder = ChartParser.getBinding(chart) ?: error("$chart not implemented.")
+                holder.setOpenListener(null)
+            }
+        }
         when (from) {
             is Component -> asComponent(from)
             is UserInterface -> asComponent(from.rootComponent)
+            is Chart -> asChart(from)
             else -> throw UnsupportedOperationException("Disconnecting ${from::class.simpleName} is not supported.")
         }
+        markDisconnect(this)
     }
 
     companion object {
@@ -104,9 +118,51 @@ class CommonLink(from: Linkable, primaryDestination: Navigatable, secondaryDesti
             setImplementation { CommonLinkBuilder() }
         }
 
+        private val links = ArrayListMultimap.create<Linkable, Link>()
+        private fun markLink(link: Link) {
+            val array = links[link.from]
+            if (array.isEmpty())
+                referredToListeners[link.from]?.forEach { it(link) }
+            if (!array.contains(link))
+                array.add(link)
+        }
+
+        private fun markDisconnect(link: Link) {
+            val array = links[link.from]
+            if (array.remove(link) && array.isEmpty())
+                notReferredToListeners[link.from]?.forEach { it.invoke() }
+        }
+
+        private val referredToListeners = ArrayListMultimap.create<Linkable, (Link) -> Unit>()
+        private val notReferredToListeners = ArrayListMultimap.create<Linkable, () -> Unit>()
+
+        /**
+         * @param l Called the first time when the [Link].from
+         * is linked.
+         */
+        fun addReferredToListener(to: Linkable, l: (Link) -> Unit) {
+            val array = referredToListeners[to]
+            if (array.contains(l)) return
+            array.add(l)
+
+            if (links.containsKey(to)) l(links[to]!!.first())
+        }
+
+        /**
+         * @param l Called when all Links have been disconnected
+         * from [Link].from.
+         */
+        fun addNotReferredToListener(to: Linkable, l: () -> Unit) {
+            val array = notReferredToListeners[to]
+            if (array.contains(l)) return
+            array.add(l)
+
+            if (!links.containsKey(to)) l()
+        }
+
         fun error(a: Linkable, b: Navigatable, msg: String): Nothing {
             val labelB = if (b is Linkable) b.label.invoke() else b::class.simpleName
-            kotlin.error("Unable to build link between ${a.label.invoke()} and $labelB: $msg")
+            error("Unable to build link between ${a.label.invoke()} and $labelB: $msg")
         }
     }
 }

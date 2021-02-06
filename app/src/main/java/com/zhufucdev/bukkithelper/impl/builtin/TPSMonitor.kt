@@ -33,7 +33,7 @@ class TPSMonitor : Plugin(), ChartPlugin, UIPlugin {
         label = Text(R.string.title_tps),
         LineChartConfiguration(
             xFormat = format,
-            mode = LineChartConfiguration.Mode.CUBIC_BEZIER
+            commonMode = LineChartConfiguration.Mode.STEPPED
         )
     )
 

@@ -18,11 +18,13 @@ import com.github.mikephil.charting.data.*
 import com.zhufucdev.bukkit_helper.chart.Chart
 import com.zhufucdev.bukkit_helper.chart.ChartElement
 import com.zhufucdev.bukkit_helper.chart.ChartType
+import com.zhufucdev.bukkit_helper.chart.Series
 import com.zhufucdev.bukkit_helper.chart.configuration.BarChartConfiguration
 import com.zhufucdev.bukkit_helper.chart.configuration.LineChartConfiguration
 import com.zhufucdev.bukkit_helper.chart.configuration.PieChartConfiguration
 import com.zhufucdev.bukkithelper.R
 import com.zhufucdev.bukkithelper.android
+import com.zhufucdev.bukkithelper.impl.link.CommonLink
 import com.zhufucdev.bukkithelper.plus
 import kotlin.reflect.KCallable
 
@@ -40,7 +42,7 @@ object ChartParser {
         val toEntry: (ChartElement) -> Entry
         val invalidate: () -> Unit
         val dataSet: Class<*>
-        var dataSetPreference: ((DataSet<*>) -> Unit)? = null
+        var dataSetPreference: ((DataSet<*>, Series) -> Unit)? = null
         val chartData: ChartData<*>
         when (to) {
             is LineChart -> {
@@ -57,11 +59,16 @@ object ChartParser {
 
                 // <editor-fold desc="Appearance">
                 val config = chart.configuration as LineChartConfiguration
-                dataSetPreference = {
-                    (it as LineDataSet).mode = config.mode.android()
-                    it.setDrawCircles(config.dot)
-                    it.setDrawCircleHole(config.dotHole)
-                }
+                if (config.commonMode != null)
+                    dataSetPreference = { data, _ ->
+                        (data as LineDataSet).mode = config.commonMode!!.android()
+                        data.setDrawCircles(config.drawDot)
+                        data.setDrawCircleHole(config.drawDotHole)
+                    }
+                else
+                    dataSetPreference = { data, s ->
+                        (data as LineDataSet).mode = config.modes!![s]?.android() ?: LineDataSet.Mode.CUBIC_BEZIER
+                    }
                 config.xFormat?.let { to.xAxis.valueFormatter = it + chart }
                 config.leftFormat?.let { to.axisLeft.valueFormatter = it + chart }
                 config.rightFormat?.let { to.axisRight.valueFormatter = it + chart }
@@ -126,7 +133,7 @@ object ChartParser {
             }
             val dataSetInstance = dataSet.getConstructor(List::class.java, String::class.java)
                 .newInstance(dataArray, s.label.invoke()) as DataSet<Entry>
-            dataSetPreference?.invoke(dataSetInstance)
+            dataSetPreference?.invoke(dataSetInstance, s)
             s.data.addAdditionListener { element, _ ->
                 dataSetInstance.addEntry(toEntry(element))
                 invalidate()
@@ -140,13 +147,15 @@ object ChartParser {
         to.tag = chart
         // </editor-fold>
 
-        // <editor-fold desc="UI">
+        // <editor-fold desc="Appearance">
         to.description.apply {
             val description = chart.configuration.description
             text = description.invoke()
             description.color?.let { textColor = it.toARGB() }
             description.size?.let { textSize = it }
         }
+        if (to is BarLineChartBase)
+            to.setMaxVisibleValueCount(10)
         to.data = chartData
         to.invalidate()
         // </editor-fold>
@@ -156,8 +165,16 @@ object ChartParser {
      * Adjust [chart]'s view.
      */
     private fun bind(chart: Chart, toolbar: Toolbar, view: com.github.mikephil.charting.charts.Chart<*>) {
+        // Toolbar
         toolbar.title = chart.label.invoke()
         MenuInflater(toolbar.context).inflate(R.menu.chart_title_menu, toolbar.menu)
+        val itemOpen = toolbar.menu.findItem(R.id.chart_open)
+        CommonLink.addReferredToListener(chart) {
+            itemOpen.isVisible = true
+        }
+        CommonLink.addNotReferredToListener(chart) {
+            itemOpen.isVisible = false
+        }
 
         val colorOnSurface =
             if (view.context.resources.configuration.uiMode

@@ -106,19 +106,11 @@ class HomeFragment : Fragment(), NavController.OnDestinationChangedListener {
         // </editor-fold>
         // <editor-fold desc="Sync data">
         val chartRecyclerView: RecyclerView = root.findViewById(R.id.recycler_chart_list)
-        val playerChart: LineChart = root.findViewById(R.id.chart_players)
         homeViewModel.chartAdapter.observe(viewLifecycleOwner) {
             chartRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = it
             }
-        }
-        val dateFormat = DateValueFormatter(homeViewModel.timeStart)
-        playerChart.description = Description().apply { text = requireContext().getString(R.string.title_player_online) }
-        playerChart.xAxis.valueFormatter = dateFormat
-        homeViewModel.playerData.observe(viewLifecycleOwner) {
-            playerChart.data = it
-            playerChart.invalidate()
         }
         // </editor-fold>
     }

@@ -12,5 +12,4 @@ class BarChartConfiguration(
     val rightFormat: ValueFormat? = null,
     val drawValueAboveBar: Boolean = false,
     val showMaxValue: Boolean = false
-) :
-    ChartConfiguration(ChartType.BAR, description, xFormat)
+) : ChartConfiguration(ChartType.BAR, description, xFormat)

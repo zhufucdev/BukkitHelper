@@ -32,14 +32,6 @@ class ChartViewAdapter(private val charts: DynamicList<Chart>) : RecyclerView.Ad
     override fun onBindViewHolder(holder: ChartHolder, position: Int) {
         val chart = charts[position]
         ChartParser.bind(chart, holder)
-
-        holder.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.settings -> settingsListener?.invoke(chart) != null
-                R.id.open -> openListener?.invoke(chart) != null
-                else -> false
-            }
-        }
     }
 
     override fun onViewAttachedToWindow(holder: ChartHolder) {
@@ -49,14 +41,5 @@ class ChartViewAdapter(private val charts: DynamicList<Chart>) : RecyclerView.Ad
 
     override fun getItemCount(): Int = charts.size
 
-    private var settingsListener: ((Chart) -> Unit)? = null
-    private var openListener: ((Chart) -> Unit)? = null
 
-    fun setSettingsListener(l: (Chart) -> Unit) {
-        settingsListener = l
-    }
-
-    fun setOpenListener(l: (Chart) -> Unit) {
-        openListener = l
-    }
 }

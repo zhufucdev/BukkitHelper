@@ -1,8 +1,10 @@
 package com.zhufucdev.bukkithelper.manager
 
+import com.zhufucdev.bukkit_helper.Plugin
 import com.zhufucdev.bukkithelper.impl.AbstractPlugin
 import com.zhufucdev.bukkithelper.impl.KnownPlugin
 import com.zhufucdev.bukkithelper.impl.PluginPartition
+import com.zhufucdev.bukkithelper.impl.builtin.PlayerMonitor
 import com.zhufucdev.bukkithelper.impl.builtin.TPSMonitor
 import kotlin.jvm.internal.Reflection
 import kotlin.reflect.full.isSuperclassOf
@@ -128,9 +130,9 @@ object PluginManager {
     }
 
     object BuiltIn {
-        val known get() = listOf(TPSMonitor::class.java)
+        val known get() = listOf(TPSMonitor::class.java, PlayerMonitor::class.java)
         fun registerAll() {
-            known.forEach { register(KnownPlugin(it)) }
+            known.forEach { register(KnownPlugin(it as Class<Plugin>)) }
         }
     }
 }

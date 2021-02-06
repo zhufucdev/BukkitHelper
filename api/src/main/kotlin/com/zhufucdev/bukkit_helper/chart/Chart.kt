@@ -24,7 +24,7 @@ class Chart : Implementable {
         this.series.add(series)
     }
 
-    constructor(label: Text, configuration: ChartConfiguration) {
+    private constructor(label: Text, configuration: ChartConfiguration) {
         this.label = label
         this.configuration = configuration
     }

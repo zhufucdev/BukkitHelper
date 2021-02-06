@@ -75,7 +75,7 @@ class HomeViewModel : ViewModel() {
 
         if (login != LoginResult.SUCCESS) return // TODO: Handle Login Failure Better
 
-        // <editor-fold desc="Draw charts">
+        // <editor-fold desc="Charts">
         val collect = arrayListOf<Chart>()
         pluginConcerned.forEach {
             if (it.status < PluginManager.Status.AFTER_ENABLE) return@forEach
@@ -89,52 +89,15 @@ class HomeViewModel : ViewModel() {
             chartViewAdapter = ChartViewAdapter(charts)
             _chartAdapter.postValue(chartViewAdapter)
         }
-
-        // <editor-fold desc="List players" defaultstate="collapsed">
-        run {
-            val playerDataSet = arrayListOf<Entry>()
-            fun getPlayerData() = LineData(LineDataSet(playerDataSet, context.getString(R.string.title_player_count)))
-            fun notifyNextPlayerChange() {
-                handler.post {
-                    _playerData.value = getPlayerData()
-                }
-                server.channel.writeAndFlush(PlayerChangeListenCommand().apply {
-                    addCompleteListener {
-                        if (it != null) {
-                            playerDataSet.add(
-                                Entry(
-                                    (System.currentTimeMillis() - timeStart).toFloat(),
-                                    it.size.toFloat()
-                                )
-                            )
-                            notifyNextPlayerChange()
-                        }
-                    }
-                })
-            }
-
-            server.channel.writeAndFlush(PlayerListCommand().apply {
-                addCompleteListener {
-                    if (it != null) {
-                        playerDataSet.add(Entry((System.currentTimeMillis() - timeStart).toFloat(), it.size.toFloat()))
-                        notifyNextPlayerChange()
-                    }
-                }
-            })
-        }
-        // </editor-fold>
         // </editor-fold>
     }
 
     private val _status = MutableLiveData<ConnectionStatus>()
     private val _connectionName = MutableLiveData<String>()
-    private val _tpsData = MutableLiveData<LineData>()
     private val _playerData = MutableLiveData<LineData>()
     private val _chartAdapter = MutableLiveData<ChartViewAdapter>()
     val connectionStatus: LiveData<ConnectionStatus> = _status
     val connectionName: LiveData<String> = _connectionName
-    val tpsData: LiveData<LineData> = _tpsData
-    val playerData: LiveData<LineData> = _playerData
     val chartAdapter: LiveData<ChartViewAdapter> = _chartAdapter
 
     enum class ConnectionStatus {
